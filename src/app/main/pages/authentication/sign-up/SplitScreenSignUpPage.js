@@ -7,6 +7,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { darken } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
@@ -43,6 +45,7 @@ const defaultValues = {
 
 function SplitScreenSignUpPage() {
   const [period, setPeriod] = useState('month');
+  const [value, setValue] = useState('one');
 
   const { control, formState, handleSubmit, reset } = useForm({
     mode: 'onChange',
@@ -56,6 +59,10 @@ function SplitScreenSignUpPage() {
     reset(defaultValues);
   }
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
@@ -65,6 +72,12 @@ function SplitScreenSignUpPage() {
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
             Sign up
           </Typography>
+          <Box sx={{ width: '100%' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example">
+              <Tab value="one" label="Persona Natura" wrapped />
+              <Tab value="two" label="Agentel e Immobiliaria" />
+            </Tabs>
+          </Box>
           <div className="flex items-baseline mt-2 font-medium">
             <motion.div
               initial={{ opacity: 0 }}
@@ -100,7 +113,10 @@ function SplitScreenSignUpPage() {
                   Agentel e Immobiliaria
                 </Box>
               </Box>
-            </motion.div> 
+            </motion.div>
+          </div>
+          <div className="flex items-baseline mt-2 font-medium">
+            <Typography>Already have an account?</Typography>
             <Link className="ml-4" to="/sign-in">
               Sign in
             </Link>

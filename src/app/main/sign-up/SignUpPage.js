@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
+import { InputLabel, OutlinedInput } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -12,6 +18,8 @@ import _ from '@lodash';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import Paper from '@mui/material/Paper';
 import FormHelperText from '@mui/material/FormHelperText';
 import jwtService from '../../auth/services/jwtService';
@@ -39,6 +47,15 @@ const defaultValues = {
 };
 
 function SignUpPage() {
+  const [value, setTab] = useState('one');
+  const [prueValues, setprueValues] = useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
   const { control, formState, handleSubmit, reset } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -66,6 +83,22 @@ function SignUpPage() {
         });
       });
   }
+  const handleChange = (event, newValue) => {
+    setTab(newValue);
+  };
+  const handleChangeDos = (prop) => (event) => {
+    setprueValues({ ...prueValues, [prop]: event.target.value });
+  };
+  const handleClickShowPassword = () => {
+    setprueValues({
+      ...prueValues,
+      showPassword: !prueValues.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -76,13 +109,18 @@ function SignUpPage() {
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
             Sign up
           </Typography>
+          <Box sx={{ width: '100%' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example">
+              <Tab value="one" label="Persona Natura" wrapped />
+              <Tab value="two" label="Agentel e Immobiliaria" />
+            </Tabs>
+          </Box>
           <div className="flex items-baseline mt-2 font-medium">
             <Typography>Already have an account?</Typography>
             <Link className="ml-4" to="/sign-in">
               Sign in
             </Link>
           </div>
-
           <form
             name="registerForm"
             noValidate
@@ -107,7 +145,6 @@ function SignUpPage() {
                 />
               )}
             />
-
             <Controller
               name="email"
               control={control}
@@ -130,16 +167,29 @@ function SignUpPage() {
               name="password"
               control={control}
               render={({ field }) => (
-                <TextField
+                <OutlinedInput
                   {...field}
                   className="mb-24"
-                  label="Password"
-                  type="password"
+                  type={prueValues.showPassword ? 'text' : 'password'}
                   error={!!errors.password}
+                  value={prueValues.password}
                   helperText={errors?.password?.message}
-                  variant="outlined"
-                  required
                   fullWidth
+                  required
+                  onChange={handleChangeDos('password')}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {prueValues.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="password"
                 />
               )}
             />
@@ -175,7 +225,38 @@ function SignUpPage() {
                 </FormControl>
               )}
             />
-
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    {...field}
+                    type={prueValues.showPassword ? 'text' : 'password'}
+                    error={!!errors.password}
+                    value={prueValues.password}
+                    helperText={errors?.password?.message}
+                    fullWidth
+                    required
+                    onChange={handleChangeDos('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {prueValues.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              )}
+            />
             <Button
               variant="contained"
               color="secondary"
@@ -273,3 +354,35 @@ function SignUpPage() {
 }
 
 export default SignUpPage;
+/* <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    {...field}
+                    type={prueValues.showPassword ? 'text' : 'password'}
+                    error={!!errors.password}
+                    value={prueValues.password}
+                    helperText={errors?.password?.message}
+                    fullWidth
+                    required
+                    onChange={handleChangeDos('password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {prueValues.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              )}
+            /> */
