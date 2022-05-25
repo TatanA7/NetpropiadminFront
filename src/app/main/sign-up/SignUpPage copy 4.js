@@ -1,6 +1,6 @@
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Tab, Tabs } from '@mui/material';
-import { useState } from 'react';
+import { FormControlLabel, Switch, Tab, Tabs, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ const SignUpPage = () => {
   }
 
   return (
-    <div className="flex  flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
+    <div>
       <FormProvider {...methods}>
         <FusePageCarded
           content={
@@ -49,17 +49,17 @@ const SignUpPage = () => {
                   variant="scrollable"
                   scrollButtons="auto"
                 >
-                  <Tab className="h-64" label="Persona natura" />
-                  <Tab className="h-64" label="Agente e Immobiliaria" />
+                  <Tab className="h-64" label="Basic Info" />
+                  <Tab className="h-64" label="Shipping" />
                 </Tabs>
               </Box>
 
-              <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
+              <div className="p-16 sm:p-24 max-w-3xl">
                 <div className={tabValue !== 0 ? 'hidden' : ''}>
                   <BasicInfoTab />
                 </div>
 
-                <div className={tabValue !== 1 ? 'hidden' : ''}>
+                <div className={tabValue !== 4 ? 'hidden' : ''}>
                   <ShippingTab />
                 </div>
               </div>

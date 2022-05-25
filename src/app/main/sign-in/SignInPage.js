@@ -15,6 +15,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
+import {useTranslation} from 'react-i18next';
 import jwtService from '../../auth/services/jwtService';
 
 /**
@@ -35,6 +36,7 @@ const defaultValues = {
 };
 
 function SignInPage() {
+  const {t} = useTranslation('mailApp');
 
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: 'onChange',
@@ -238,8 +240,7 @@ function SignInPage() {
             <div>our community</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">
-            Fuse helps developers to build organized and well coded dashboards full of beautiful and
-            rich modules. Join us and start building your application today.
+            {t('COMPOSE')}
           </div>
           <div className="flex items-center mt-32">
             <AvatarGroup
