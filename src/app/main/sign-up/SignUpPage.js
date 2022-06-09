@@ -3,8 +3,6 @@ import { useForm } from 'react-hook-form';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { Tab, Tabs } from '@mui/material';
@@ -100,16 +98,20 @@ function SignUpPage() {
       </Paper>
 
       <Box
-        className="relative hidden md:flex flex-auto items-center justify-center h-full p-64 lg:px-112 overflow-hidden"
-        sx={{
-          backgroundImage: `url('assets/images/logo/background-netpropi.jpg')`,
-          boxSizing: 'border-box',
-          objectFit: 'cover',
-          backgroundSize: 'contain',
-        }}
+        className="relative hidden md:flex flex-auto items-center justify-center h-full overflow-hidden"
+        // sx={{
+        //   backgroundImage: `url('assets/images/logo/background-netpropi.jpg')`,
+        //   objectFit: 'cover',
+        //   // minWidth: '100%',
+        //   // minHeight: '100%',
+        // }}
       >
-        {/* <img src="assets/images/logo/background-netpropi.jpg" alt="background" /> */}
-        <Box
+        <img
+          src="assets/images/logo/netpropiBackground.jpg"
+          alt="background"
+          style={{ objectFit: 'cover', minWidth: '100%', minHeight: '100%' }}
+        />
+        {/* <Box
           component="g"
           sx={{ color: 'primary.light' }}
           className="opacity-20"
@@ -119,9 +121,9 @@ function SignUpPage() {
         >
           <circle r="234" cx="196" cy="23" />
           <circle r="234" cx="790" cy="491" />
-        </Box>
+        </Box> */}
 
-        <Box
+        {/* <Box
           component="svg"
           className="absolute -top-64 -right-64 opacity-20"
           sx={{ color: 'primary.light' }}
@@ -143,15 +145,15 @@ function SignUpPage() {
             </pattern>
           </defs>
           <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)" />
-        </Box>
+        </Box> */}
 
-        <div className="z-10 relative w-full max-w-2xl">
+        {/* <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-gray-100">
             <div>Welcome to</div>
             <div>our community</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">
-             Join us and start building your new life today.
+            Join us and start building your new life today.
           </div>
           <div className="flex items-center mt-32">
             <AvatarGroup
@@ -171,7 +173,7 @@ function SignUpPage() {
               More than 17k Real Estates joined us, it's your turn
             </div>
           </div>
-        </div>
+        </div> */}
       </Box>
     </div>
   );

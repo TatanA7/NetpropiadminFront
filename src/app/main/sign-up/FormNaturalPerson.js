@@ -1,5 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -56,6 +58,12 @@ const FormNatutalPerson = () => {
         });
       });
   }
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
 
   return (
     <>
@@ -155,7 +163,7 @@ const FormNatutalPerson = () => {
         <Button
           variant="contained"
           color="secondary"
-          className="w-full mt-24"
+          className="w-full mt-24 mb-24"
           aria-label="Register"
           disabled={_.isEmpty(dirtyFields) || !isValid}
           type="submit"
@@ -163,6 +171,21 @@ const FormNatutalPerson = () => {
         >
           Create your free account
         </Button>
+        <GoogleLogin
+          clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy="single_host_origin"
+        />
+        <FacebookLogin
+          appId="1027278951512859"
+          autoLoad
+          fields="name,email,picture"
+          textButton="Login"
+          callback={responseFacebook}
+          icon="fa-facebook"
+        />
       </form>
     </>
   );
