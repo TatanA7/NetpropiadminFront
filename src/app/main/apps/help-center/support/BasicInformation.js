@@ -1,6 +1,4 @@
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,6 +6,8 @@ import _ from '@lodash';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { useState } from 'react';
 
 const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
@@ -18,6 +18,7 @@ const schema = yup.object().shape({
 });
 
 function BasicInformation() {
+  const [selectedCategory, setSelectedCategory] = useState('');
   const { control, handleSubmit, watch, formState } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -33,28 +34,17 @@ function BasicInformation() {
   if (_.isEmpty(form)) {
     return null;
   }
+  function handleSelectedCategory(event) {
+    setSelectedCategory(event.target.value);
+  }
 
   return (
-    <div className="flex flex-col items-center p-24 sm:p-40 container">
+    <div className="flex flex-col items-center p-24 sm:p-20 container">
       <div className="flex flex-col w-full max-w-4xl">
-        <div className="sm:mt-32">
-          <Button
-            component={Link}
-            to="/apps/help-center"
-            color="secondary"
-            startIcon={<FuseSvgIcon>heroicons-outline:arrow-narrow-left</FuseSvgIcon>}
-          >
-            Back to Help Center
-          </Button>
-        </div>
-        <div className="mt-8 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight">
-          soy basic
-        </div>
-
-        <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
+        <Paper className="mt-2 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="px-0 sm:px-24">
-            <div className="mb-24">
-              <Typography color="text.secondary">Precio total</Typography>
+            <div className="mb-12">
+              <Typography color="text.secondary">Nombre de propiedad*</Typography>
             </div>
             <div className="space-y-32">
               <Controller
@@ -64,8 +54,8 @@ function BasicInformation() {
                   <TextField
                     className="w-full"
                     {...field}
-                    label="Ingrese valor del canon de arriendo"
-                    placeholder="Ingrese valor del canon de arriendo"
+                    label="Ingrese nombre asociado a la propiedad"
+                    placeholder="Ingrese nombre asociado a la propiedad"
                     id="name"
                     error={!!errors.name}
                     helperText={errors?.name?.message}
@@ -75,10 +65,9 @@ function BasicInformation() {
                   />
                 )}
               />
-              <div className="mb-24">
-                <Typography color="text.secondary">Valor de administración</Typography>
+              <div className="mb-8">
+                <Typography color="text.secondary">Descripción de propiedad*</Typography>
               </div>
-
               <Controller
                 control={control}
                 name="email"
@@ -86,9 +75,9 @@ function BasicInformation() {
                   <TextField
                     {...field}
                     className="mt-16 w-full"
-                    label="Ingrese valor de administración
+                    label="Descripción de propiedad*
                     "
-                    placeholder="Ingrese valor de administración
+                    placeholder="Descripción de propiedad*
                     "
                     variant="outlined"
                     fullWidth
@@ -98,6 +87,23 @@ function BasicInformation() {
                   />
                 )}
               />
+              <div className="mb-8">
+                <Typography color="text.secondary">Tipo de propiedad*</Typography>
+              </div>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Tipo de propiedad*</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedCategory}
+                  label="Tipo de propiedad"
+                  onChange={handleSelectedCategory}
+                >
+                  <MenuItem value={10}>casa</MenuItem>
+                  <MenuItem value={20}>Apartaestudio</MenuItem>
+                  <MenuItem value={30}>Oficina</MenuItem>
+                </Select>
+              </FormControl>
               <div className="mb-24">
                 <Typography color="text.secondary">Otros costos relacionados</Typography>
               </div>
@@ -120,14 +126,6 @@ function BasicInformation() {
               />
             </div>
           </form>
-          <div className="mb-24">
-            <Typography className="text-2xl font-bold tracking-tight">
-              Submit your request
-            </Typography>
-            <Typography color="text.secondary">
-              Your request will be processed and our support staff will get back to you in 24 hours.
-            </Typography>
-          </div>
           <div className="flex items-center justify-between mt-32">
             <Button className="mx-8">Cancelar</Button>
             <Button

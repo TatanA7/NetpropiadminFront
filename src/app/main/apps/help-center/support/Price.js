@@ -120,6 +120,9 @@ function Price() {
               />
             </div>
           </form>
+          <div className="mb-12  mt-12 md:mt-96 md:text-6xl font-extrabold tracking-tight leading-7 sm:leading-10 text-center">
+            <Typography>Agregar otro costo relacionado</Typography>
+          </div>
           <div className="flex items-center justify-between mt-32">
             <Button className="mx-8">Cancelar</Button>
             <Button

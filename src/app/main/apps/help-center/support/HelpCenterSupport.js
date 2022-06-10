@@ -53,18 +53,20 @@ function HelpCenterSupport() {
           <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
           <span className="mx-8">Add</span>
         </Button>
-        <Tabs
-          selectionFollowsFocus
-          value={currentTab}
-          onChange={handleChange}
-          textColor="secondary"
-          indicatorColor="secondary"
-          aria-label="secondary tabs example"
-        >
-          <Tab label="Información básica" />
-          <Tab label="Imágenes de la propiedad" />
-          <Tab label="Precio" />
-        </Tabs>
+        <div className="flex justify-center mt-10">
+          <Tabs
+            selectionFollowsFocus
+            value={currentTab}
+            onChange={handleChange}
+            textColor="secondary"
+            indicatorColor="secondary"
+            aria-label="secondary tabs example"
+          >
+            <Tab label="Información básica" />
+            <Tab label="Imágenes de la propiedad" />
+            <Tab label="Precio" />
+          </Tabs>
+        </div>
         {/* {currentTab === '0' ? <Price /> : <PropertyImages />} */}
         {currentTab === 0 && <BasicInformation />}
         {currentTab === 1 && <PropertyImages />}
