@@ -2,13 +2,14 @@ import { useForm } from 'react-hook-form';
 import _ from '@lodash';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { Button, Tab, Tabs } from '@mui/material';
+import { Button, Paper, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import Price from './Price';
 import PropertyImages from './PropertyImages';
 import BasicInformation from './BasicInformation';
+import ProductImagesTab from './ProductImagesTab';
 
 const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
@@ -41,9 +42,9 @@ function HelpCenterSupport() {
   };
 
   return (
-    <div className="flex flex-col items-center p-24 sm:p-40 container">
+    <div className="flex flex-col items-center p-24 sm:p-40 rounded-2xl container">
       <div className="flex flex-col w-full max-w-4xl">
-        <Button
+        {/* <Button
           className="mx-8"
           variant="contained"
           color="secondary"
@@ -52,7 +53,7 @@ function HelpCenterSupport() {
         >
           <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
           <span className="mx-8">Add</span>
-        </Button>
+        </Button> */}
         <div className="flex justify-center mt-10">
           <Tabs
             selectionFollowsFocus
@@ -69,7 +70,7 @@ function HelpCenterSupport() {
         </div>
         {/* {currentTab === '0' ? <Price /> : <PropertyImages />} */}
         {currentTab === 0 && <BasicInformation />}
-        {currentTab === 1 && <PropertyImages />}
+        {currentTab === 1 && <ProductImagesTab />}
         {currentTab === 2 && <Price />}
       </div>
     </div>

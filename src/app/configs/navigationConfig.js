@@ -11,7 +11,7 @@ const navigationConfig = [
   {
     id: 'propertiesexample-component',
     title: 'Properties',
-    translate: 'Properties',
+    translate: 'Propiedades',
     type: 'item',
     icon: 'heroicons-outline:star',
     url: 'properties',

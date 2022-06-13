@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -8,6 +7,7 @@ import _ from '@lodash';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 
 const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
@@ -37,26 +37,12 @@ function Price() {
   return (
     <div className="flex flex-col items-center p-24 sm:p-40 container">
       <div className="flex flex-col w-full max-w-4xl">
-        <div className="sm:mt-32">
-          <Button
-            component={Link}
-            to="/apps/help-center"
-            color="secondary"
-            startIcon={<FuseSvgIcon>soy price tolo</FuseSvgIcon>}
-          >
-            Back to Help Center
-          </Button>
-        </div>
-        <div className="mt-8 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight">
-          Soy Price
-        </div>
-
         <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="px-0 sm:px-24">
             <div className="mb-24">
               <Typography color="text.secondary">Precio total</Typography>
             </div>
-            <div className="space-y-32">
+            <div className="space-y-20">
               <Controller
                 control={control}
                 name="name"
@@ -120,10 +106,16 @@ function Price() {
               />
             </div>
           </form>
-          <div className="mb-12  mt-12 md:mt-96 md:text-6xl font-extrabold tracking-tight leading-7 sm:leading-10 text-center">
-            <Typography>Agregar otro costo relacionado</Typography>
+          <div className="mb-12  mt-12 md:mt-24 md:text-6xl   sm:leading-10 text-center">
+            <Button className="mx-8 " variant="contained" component={NavLinkAdapter} to="new/edit">
+              <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
+              <span className="mx-8 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
+                {' '}
+                Agregar otro costo relacionado
+              </span>
+            </Button>
           </div>
-          <div className="flex items-center justify-between mt-32">
+          <div className="flex items-center justify-between mt-32 p-24">
             <Button className="mx-8">Cancelar</Button>
             <Button
               className="mx-8"

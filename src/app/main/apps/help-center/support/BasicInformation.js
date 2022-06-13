@@ -19,6 +19,13 @@ const schema = yup.object().shape({
 
 function BasicInformation() {
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [stratum, setStratum] = useState('');
+  const [rooms, setRooms] = useState('');
+  const [toilets, setToilets] = useState('');
+  const [area, setArea] = useState('');
+  const [lotInMeters, setLotInMeters] = useState('');
+  const [parking, setParking] = useState('');
+  const [garage, setGarage] = useState('');
   const { control, handleSubmit, watch, formState } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -37,16 +44,37 @@ function BasicInformation() {
   function handleSelectedCategory(event) {
     setSelectedCategory(event.target.value);
   }
+  function handleSelectedStratum(event) {
+    setStratum(event.target.value);
+  }
+  function handleSelectedRooms(event) {
+    setRooms(event.target.value);
+  }
+  function handleSelectedToilets(event) {
+    setToilets(event.target.value);
+  }
+  function handleSelectedArea(event) {
+    setArea(event.target.value);
+  }
+  function handleSelectedLotInMeters(event) {
+    setLotInMeters(event.target.value);
+  }
+  function handleSelectedParking(event) {
+    setParking(event.target.value);
+  }
+  function handleSelectedGarage(event) {
+    setGarage(event.target.value);
+  }
 
   return (
     <div className="flex flex-col items-center p-24 sm:p-20 container">
       <div className="flex flex-col w-full max-w-4xl">
-        <Paper className="mt-2 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
+        <Paper className="mt-12 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="px-0 sm:px-24">
-            <div className="mb-12">
+            <div className="mb-24">
               <Typography color="text.secondary">Nombre de propiedad*</Typography>
             </div>
-            <div className="space-y-32">
+            <div className="space-y-20">
               <Controller
                 control={control}
                 name="name"
@@ -75,9 +103,9 @@ function BasicInformation() {
                   <TextField
                     {...field}
                     className="mt-16 w-full"
-                    label="Descripción de propiedad*
+                    label="Descripción de propiedad
                     "
-                    placeholder="Descripción de propiedad*
+                    placeholder="Descripción de propiedad
                     "
                     variant="outlined"
                     fullWidth
@@ -104,8 +132,8 @@ function BasicInformation() {
                   <MenuItem value={30}>Oficina</MenuItem>
                 </Select>
               </FormControl>
-              <div className="mb-24">
-                <Typography color="text.secondary">Otros costos relacionados</Typography>
+              <div className="mb-8">
+                <Typography color="text.secondary">Dirección de propiedad*</Typography>
               </div>
               <Controller
                 control={control}
@@ -113,9 +141,9 @@ function BasicInformation() {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    className="mt-16 w-full"
-                    label="Otros costos relacionados"
-                    placeholder="Otros costos relacionados"
+                    className="mt-8 w-full"
+                    label="Dirección de propiedad"
+                    placeholder="Dirección de propiedad"
                     variant="outlined"
                     fullWidth
                     error={!!errors.subject}
@@ -124,9 +152,113 @@ function BasicInformation() {
                   />
                 )}
               />
+              <FormControl sx={{ minWidth: 300 }}>
+                <InputLabel id="demo-simple-select-label">Estrato</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={stratum}
+                  label="Estrato"
+                  onChange={handleSelectedStratum}
+                >
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                </Select>
+              </FormControl>
+              <div className="flex items-center justify-between">
+                <FormControl sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Número de cuartos*</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={rooms}
+                    label="Número de cuartos"
+                    onChange={handleSelectedRooms}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Número de baños*</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={toilets}
+                    label="Número de baños"
+                    onChange={handleSelectedToilets}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="flex items-center justify-between">
+                <FormControl sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Área en metros*</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={area}
+                    label="Área en metros"
+                    onChange={handleSelectedArea}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Lote en metros*</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={lotInMeters}
+                    label="Lote en metros"
+                    onChange={handleSelectedLotInMeters}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="flex items-center justify-between">
+                <FormControl sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Parqueadero*</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={parking}
+                    label="parqueadero"
+                    onChange={handleSelectedParking}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ minWidth: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Garaje*</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={garage}
+                    label="Garaje"
+                    onChange={handleSelectedGarage}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
             </div>
           </form>
-          <div className="flex items-center justify-between mt-32">
+          <div className="flex items-center justify-between mt-32 p-24">
             <Button className="mx-8">Cancelar</Button>
             <Button
               className="mx-8"
