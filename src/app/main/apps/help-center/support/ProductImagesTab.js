@@ -145,12 +145,12 @@ function ProductImagesTab(props) {
                     color="secondary"
                     component="label"
                     htmlFor="button-file"
-                    sx={{
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                          ? lighten(theme.palette.background.default, 0.4)
-                          : lighten(theme.palette.background.default, 0.02),
-                    }}
+                    // sx={{
+                    //   backgroundColor: (theme) =>
+                    //     theme.palette.mode === 'light'
+                    //       ? lighten(theme.palette.background.default, 0.4)
+                    //       : lighten(theme.palette.background.default, 0.02),
+                    // }}
                   >
                     <input
                       accept="image/*"

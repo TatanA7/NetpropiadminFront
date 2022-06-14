@@ -13,6 +13,8 @@ const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
   name: yup.string().required('You must enter a name'),
   subject: yup.string().required('You must enter a subject'),
+  area: yup.string().required('You must enter a subject'),
+  lote: yup.string().required('You must enter a subject'),
   message: yup.string().required('You must enter a message'),
   email: yup.string().email('You must enter a valid email').required('You must enter a email'),
 });
@@ -130,6 +132,17 @@ function BasicInformation() {
                   <MenuItem value={10}>casa</MenuItem>
                   <MenuItem value={20}>Apartaestudio</MenuItem>
                   <MenuItem value={30}>Oficina</MenuItem>
+                  <MenuItem value={40}>Casa Lote</MenuItem>
+                  <MenuItem value={50}>Casa Campestre</MenuItem>
+                  <MenuItem value={60}>Apartamento</MenuItem>
+                  <MenuItem value={70}>Consultorio</MenuItem>
+                  <MenuItem value={80}>Local</MenuItem>
+                  <MenuItem value={90}>Bodega</MenuItem>
+                  <MenuItem value={100}>Lote</MenuItem>
+                  <MenuItem value={110}>Finca</MenuItem>
+                  <MenuItem value={120}>Cabaña</MenuItem>
+                  <MenuItem value={130}>Habitación</MenuItem>
+                  <MenuItem value={140}>Parqueadero</MenuItem>
                 </Select>
               </FormControl>
               <div className="mb-8">
@@ -164,6 +177,9 @@ function BasicInformation() {
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
                   <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={6}>6</MenuItem>
                 </Select>
               </FormControl>
               <div className="flex items-center justify-between">
@@ -179,6 +195,9 @@ function BasicInformation() {
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
                   </Select>
                 </FormControl>
                 <FormControl sx={{ minWidth: 300 }}>
@@ -193,12 +212,15 @@ function BasicInformation() {
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
                   </Select>
                 </FormControl>
               </div>
               <div className="flex items-center justify-between">
                 <FormControl sx={{ minWidth: 300 }}>
-                  <InputLabel id="demo-simple-select-label">Área en metros*</InputLabel>
+                  {/* <InputLabel id="demo-simple-select-label">Área en metros*</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -206,13 +228,29 @@ function BasicInformation() {
                     label="Área en metros"
                     onChange={handleSelectedArea}
                   >
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                  </Select>
+                    <MenuItem value={1}>mts</MenuItem>
+                  
+                  </Select> */}
+                  <Controller
+                    control={control}
+                    name="area"
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        className="mt-8 w-full"
+                        label="Área en mts2"
+                        placeholder="Área en mts2"
+                        variant="outlined"
+                        fullWidth
+                        error={!!errors.subject}
+                        helperText={errors?.subject?.message}
+                        required
+                      />
+                    )}
+                  />
                 </FormControl>
                 <FormControl sx={{ minWidth: 300 }}>
-                  <InputLabel id="demo-simple-select-label">Lote en metros*</InputLabel>
+                  {/* <InputLabel id="demo-simple-select-label">Lote en metros*</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -223,7 +261,24 @@ function BasicInformation() {
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
-                  </Select>
+                  </Select> */}
+                  <Controller
+                    control={control}
+                    name="lote"
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        className="mt-8 w-full"
+                        label="Lote en mts2"
+                        placeholder="Lote en mts2"
+                        variant="outlined"
+                        fullWidth
+                        error={!!errors.subject}
+                        helperText={errors?.subject?.message}
+                        required
+                      />
+                    )}
+                  />
                 </FormControl>
               </div>
               <div className="flex items-center justify-between">
@@ -236,9 +291,12 @@ function BasicInformation() {
                     label="parqueadero"
                     onChange={handleSelectedParking}
                   >
+                    <MenuItem value={0}>0</MenuItem>
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
                   </Select>
                 </FormControl>
                 <FormControl sx={{ minWidth: 300 }}>
@@ -250,9 +308,12 @@ function BasicInformation() {
                     label="Garaje"
                     onChange={handleSelectedGarage}
                   >
+                    <MenuItem value={0}>0</MenuItem>
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
                   </Select>
                 </FormControl>
               </div>
