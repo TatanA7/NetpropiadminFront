@@ -9,12 +9,49 @@ i18next.addResourceBundle('ar', 'navigation', ar);
 
 const navigationConfig = [
   {
-    id: 'propertiesexample-component',
-    title: 'Properties',
-    translate: 'Propiedades',
-    type: 'item',
-    icon: 'heroicons-outline:star',
-    url: 'properties',
+    id: 'panel',
+    title: 'Panel de Administración',
+    type: 'group',
+    icon: 'heroicons-outline:home',
+    translate: 'PANEL',
+    children: [
+      {
+        id: 'panel-dashboard',
+        title: 'Panel',
+        type: 'collapse',
+        icon: 'heroicons-outline:cloud',
+        translate: 'SUBPANEL',
+        children: [
+          {
+            id: 'propertiesexample-component',
+            title: 'Properties',
+            translate: 'Propiedades',
+            type: 'item',
+            icon: 'heroicons-outline:star',
+            url: 'properties',
+          },
+          {
+            id: 'panel-inquilinos',
+            title: 'Inquilinos',
+            type: 'item',
+            url: 'inquilinos',
+            end: true,
+          },
+          {
+            id: 'panel-transacciones',
+            title: 'Transacciones',
+            type: 'item',
+            url: 'transacciones',
+          },
+          {
+            id: 'panel-afectaciones',
+            title: 'Afectaciones',
+            type: 'item',
+            url: 'afectaciones',
+          },
+        ],
+      },
+    ],
   },
 ];
 
