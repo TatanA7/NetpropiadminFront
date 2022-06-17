@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "module": "ES2022",
+        "target": "ES2022",
+        "declaration": true,
+        "moduleResolution": "node",
+        "noUnusedLocals": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "noImplicitAny": false
+    },
+    "include": [
+        "./*.ts"
+    ]
+}

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createReducer from './rootReducer';
+import { api } from '../../@gql-sdk/dist/api'
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('./rootReducer', () => {
@@ -8,7 +9,9 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   });
 }
 
-const middlewares = [];
+const middlewares = [
+  api.middleware
+];
 
 if (process.env.NODE_ENV === 'development') {
   const { createLogger } = require(`redux-logger`);
@@ -27,7 +30,9 @@ const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
 });
 
-store.asyncReducers = {};
+store.asyncReducers = {
+  [api.reducerPath]: api.reducer,
+};
 
 export const injectReducer = (key, reducer) => {
   if (store.asyncReducers[key]) {

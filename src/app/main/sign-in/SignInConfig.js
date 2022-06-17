@@ -1,7 +1,13 @@
-import SignInPage from './SignInPage';
+import i18next from 'i18next';
+import { lazy } from 'react';
+// import SignInPage from './SignInPage';
+import en from './i18n/en';
 import authRoles from '../../auth/authRoles';
 
-const SignInConfig = {
+const SignInPage = lazy(() => import('./SignInPage'));
+i18next.addResourceBundle('en', 'signInPage', en);
+
+const  SignInConfig = {
   settings: {
     layout: {
       config: {

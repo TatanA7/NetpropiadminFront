@@ -1,0 +1,11 @@
+schema:
+  - http://localhost:3001/graphql
+documents: './**/*.graphql'
+generates:
+  ./src/@gql-sdk/api.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-rtk-query:
+          importBaseApiFrom: './baseApi'
+          exportHooks: true

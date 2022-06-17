@@ -1,3 +1,10 @@
+import FusePageCarded from '@fuse/core/FusePageCarded';
+import { Tab, Tabs } from '@mui/material';
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+
+// import FusePageCarded from '@fuse/core/FusePageCarded';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import Typography from '@mui/material/Typography';
@@ -11,56 +18,30 @@ import jwtService from '../../auth/services/jwtService';
 import FormNatutalPerson from './FormNaturalPerson';
 import FormRealEstate from './FormRealEstate';
 
-/**
- * Form Validation Schema
- */
-const schema = yup.object().shape({
-  displayName: yup.string().required('You must enter display name'),
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
-  password: yup
-    .string()
-    .required('Please enter your password.')
-    .min(8, 'Password is too short - should be 8 chars minimum.'),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-  acceptTermsConditions: yup.boolean().oneOf([true], 'The terms and conditions must be accepted.'),
-});
+import BasicInfoTab from './BasicInfoTab';
+import ShippingTab from './ShippingTab';
 
-const defaultValues = {
-  displayName: '',
-  email: '',
-  password: '',
-  passwordConfirm: '',
-  acceptTermsConditions: false,
-};
+const SignUpPage = () => {
+  const [tabValue, setTabValue] = useState(0);
+  const schema = yup.object().shape({
+    name: yup
+      .string()
+      .required('You must enter a product name')
+      .min(5, 'The product name must be at least 5 characters'),
+  });
 
 function SignUpPage() {
   const [currentTab, setCurrentTab] = useState('0');
   const { control, formState, handleSubmit, reset } = useForm({
     mode: 'onChange',
-    defaultValues,
+    defaultValues: {},
     resolver: yupResolver(schema),
   });
+  const { reset, watch, control, onChange, formState } = methods;
+  const form = watch();
 
-  const { isValid, dirtyFields, errors, setError } = formState;
-
-  function onSubmit({ displayName, password, email }) {
-    jwtService
-      .createUser({
-        displayName,
-        password,
-        email,
-      })
-      .then((user) => {
-        // No need to do anything, registered user data will be set at app/auth/AuthContext
-      })
-      .catch((_errors) => {
-        _errors.forEach((error) => {
-          setError(error.type, {
-            type: 'manual',
-            message: error.message,
-          });
-        });
-      });
+  function handleTabChange(event, value) {
+    setTabValue(value);
   }
 
   const handleChange = (event, newValue) => {
@@ -177,6 +158,6 @@ function SignUpPage() {
       </Box>
     </div>
   );
-}
+};
 
 export default SignUpPage;

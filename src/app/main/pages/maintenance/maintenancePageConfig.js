@@ -10,7 +10,7 @@ const maintenancePageConfig = {
   },
   routes: [
     {
-      path: 'pages/maintenance',
+      path: '/pages/maintenance',
       element: <MaintenancePage />,
     },
   ],
