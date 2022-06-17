@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+// import GoogleLogin from 'react-google-login';
+// import FacebookLogin from 'react-facebook-login';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -17,11 +17,10 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
-import {useTranslation} from 'react-i18next';
+import decode from 'jwt-decode';
+import { useTranslation } from 'react-i18next';
 import jwtService from '../../auth/services/jwtService';
-import { useLoginMutation } from '../../../@gql-sdk/dist/api'
-import decode from 'jwt-decode'
-
+import { useLoginMutation } from '../../../@gql-sdk/dist/api';
 
 /**
  * Form Validation Schema
@@ -41,9 +40,9 @@ const defaultValues = {
 };
 
 function SignInPage() {
-  const {t} = useTranslation('mailApp');
-  const [login, loginResult] = useLoginMutation()
-  
+  const { t } = useTranslation('mailApp');
+  const [login, loginResult] = useLoginMutation();
+
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -57,48 +56,46 @@ function SignInPage() {
     setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
 
-
   useEffect(() => {
-    if (loginResult.isUninitialized) return
-    if (loginResult.status === 'pending') return
+    if (loginResult.isUninitialized) return;
+    if (loginResult.status === 'pending') return;
 
     if (loginResult.isSuccess) {
-      jwtService.setSession(loginResult.data.login.token)
-      
-      const { user } = decode(loginResult.data.login.token)
+      jwtService.setSession(loginResult.data.login.token);
+
+      const { user } = decode(loginResult.data.login.token);
 
       jwtService.emit('onLogin', {
         ...loginResult.data.login,
         role: 'admin',
         data: {
           displayName: `${user.name}`,
-          photoURL: ''
-        }
+          photoURL: '',
+        },
       });
-      return
+      return;
     }
 
-    if(loginResult.isError) {
-      alert(loginResult.error.name)
+    if (loginResult.isError) {
+      // eslint-disable-next-line no-alert
+      alert(loginResult.error.name);
     }
-
-    
-  }, [loginResult])
+  }, [loginResult]);
 
   const onSubmit = async ({ email, password }) => {
     login({
       loginVariables: {
         mail: email,
-        password
-      }
-    })
-  }
-  const responseGoogle = (response) => {
-    console.log(response);
+        password,
+      },
+    });
   };
-  const responseFacebook = (response) => {
-    console.log(response);
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  // };
+  // const responseFacebook = (response) => {
+  //   console.log(response);
+  // };
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -189,7 +186,7 @@ function SignInPage() {
             >
               Sign in
             </Button>
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
+            {/* <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
               <GoogleLogin
                 clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
                 buttonText="Login"
@@ -205,7 +202,7 @@ function SignInPage() {
                 callback={responseFacebook}
                 icon="fa-facebook"
               />
-            </div>
+            </div> */}
             <div className="flex items-center mt-32">
               <div className="flex-auto mt-px border-t" />
               <Typography className="mx-8" color="text.secondary">
@@ -288,9 +285,7 @@ function SignInPage() {
             <div>Welcome to</div>
             <div>our community</div>
           </div>
-          <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">
-            {t('COMPOSE')}
-          </div>
+          <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">{t('COMPOSE')}</div>
           <div className="flex items-center mt-32">
             <AvatarGroup
               sx={{
