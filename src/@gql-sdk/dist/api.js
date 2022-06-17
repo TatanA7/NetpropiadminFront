@@ -6,12 +6,34 @@ export const LoginDocument = `
   }
 }
     `;
+export const CreateUserDocument = `
+    mutation CreateUser($variable: UserInput!) {
+  createUser(variable: $variable) {
+    token
+  }
+}
+    `;
+export const CreateBuildsDocument = `
+    mutation CreateBuilds($variables: BuildsInput!) {
+  createBuilds(variables: $variables) {
+    id
+    name
+    acquired_in
+  }
+}
+    `;
 const injectedRtkApi = api.injectEndpoints({
     endpoints: (build) => ({
         Login: build.mutation({
             query: (variables) => ({ document: LoginDocument, variables })
         }),
+        CreateUser: build.mutation({
+            query: (variables) => ({ document: CreateUserDocument, variables })
+        }),
+        CreateBuilds: build.mutation({
+            query: (variables) => ({ document: CreateBuildsDocument, variables })
+        }),
     }),
 });
 export { injectedRtkApi as api };
-export const { useLoginMutation } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation } = injectedRtkApi;

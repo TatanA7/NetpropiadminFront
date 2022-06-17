@@ -10,9 +10,9 @@ const settingsConfig = {
   direction: i18n.dir(i18n.options.lng) || 'ltr', // rtl, ltr
   theme: {
     main: themesConfig.default,
-    navbar: themesConfig.defaultDark,
+    navbar: themesConfig.default,
     toolbar: themesConfig.default,
-    footer: themesConfig.defaultDark,
+    footer: themesConfig.defaul,
   },
   /*
    To make whole app auth protected by default set defaultAuth:['admin','staff','user']

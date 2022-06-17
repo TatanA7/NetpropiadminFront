@@ -1,6 +1,6 @@
 schema:
   - http://localhost:3001/graphql
-documents: './**/*.graphql'
+documents: './**/*.gql'
 generates:
   ./src/@gql-sdk/api.ts:
     plugins:

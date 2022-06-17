@@ -104,7 +104,7 @@ function ShippingTab(props) {
           <img className="w-48" src="assets/images/logo/logo_netpropi.svg" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Sign up
+            Sign up tolo
           </Typography>
           <div className="flex items-baseline mt-2 font-medium">
             <Typography>Already have an account?</Typography>

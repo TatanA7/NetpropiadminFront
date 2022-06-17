@@ -118,7 +118,7 @@ export type User = {
   businessName: Scalars['String'];
   cell_phone: Scalars['String'];
   coint: Scalars['String'];
-  created_at: Scalars['Boolean'];
+  created_at: Scalars['String'];
   facebook_id: Scalars['String'];
   google_id: Scalars['String'];
   id: Scalars['Float'];
@@ -129,7 +129,7 @@ export type User = {
   picture: Scalars['String'];
   policies: Scalars['String'];
   termsConditions: Scalars['String'];
-  updated_at: Scalars['Boolean'];
+  updated_at: Scalars['String'];
 };
 
 export type UserInput = {
@@ -151,11 +151,41 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Autentication', token: string } };
 
+export type CreateUserMutationVariables = Exact<{
+  variable: UserInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'Autentication', token: string } };
+
+export type CreateBuildsMutationVariables = Exact<{
+  variables: BuildsInput;
+}>;
+
+
+export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number, name: string, acquired_in: number } };
+
 
 export const LoginDocument = `
     mutation Login($loginVariables: LoginInput!) {
   login(loginVariables: $loginVariables) {
     token
+  }
+}
+    `;
+export const CreateUserDocument = `
+    mutation CreateUser($variable: UserInput!) {
+  createUser(variable: $variable) {
+    token
+  }
+}
+    `;
+export const CreateBuildsDocument = `
+    mutation CreateBuilds($variables: BuildsInput!) {
+  createBuilds(variables: $variables) {
+    id
+    name
+    acquired_in
   }
 }
     `;
@@ -165,9 +195,15 @@ const injectedRtkApi = api.injectEndpoints({
     Login: build.mutation<LoginMutation, LoginMutationVariables>({
       query: (variables) => ({ document: LoginDocument, variables })
     }),
+    CreateUser: build.mutation<CreateUserMutation, CreateUserMutationVariables>({
+      query: (variables) => ({ document: CreateUserDocument, variables })
+    }),
+    CreateBuilds: build.mutation<CreateBuildsMutation, CreateBuildsMutationVariables>({
+      query: (variables) => ({ document: CreateBuildsDocument, variables })
+    }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation } = injectedRtkApi;
 

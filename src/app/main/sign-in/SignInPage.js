@@ -1,4 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -18,7 +20,6 @@ import { useEffect } from 'react';
 import {useTranslation} from 'react-i18next';
 import jwtService from '../../auth/services/jwtService';
 import { useLoginMutation } from '../../../@gql-sdk/dist/api'
-import history from '@history';
 import decode from 'jwt-decode'
 
 
@@ -63,16 +64,17 @@ function SignInPage() {
 
     if (loginResult.isSuccess) {
       jwtService.setSession(loginResult.data.login.token)
-      const { name, last_name } = decode(loginResult.data.login.token)
+      
+      const { user } = decode(loginResult.data.login.token)
+
       jwtService.emit('onLogin', {
         ...loginResult.data.login,
         role: 'admin',
         data: {
-          displayName: `${name} ${last_name}`,
+          displayName: `${user.name}`,
           photoURL: ''
         }
       });
-      history.push('/pages/maintenance')
       return
     }
 
@@ -91,6 +93,12 @@ function SignInPage() {
       }
     })
   }
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -173,7 +181,7 @@ function SignInPage() {
             <Button
               variant="contained"
               color="secondary"
-              className=" w-full mt-16"
+              className=" w-full mt-16 mb-10"
               aria-label="Sign in"
               disabled={_.isEmpty(dirtyFields) || !isValid}
               type="submit"
@@ -181,7 +189,23 @@ function SignInPage() {
             >
               Sign in
             </Button>
-
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
+              <GoogleLogin
+                clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy="single_host_origin"
+              />
+              <FacebookLogin
+                appId="1027278951512859"
+                autoLoad
+                fields="name,email,picture"
+                textButton="Login"
+                callback={responseFacebook}
+                icon="fa-facebook"
+              />
+            </div>
             <div className="flex items-center mt-32">
               <div className="flex-auto mt-px border-t" />
               <Typography className="mx-8" color="text.secondary">

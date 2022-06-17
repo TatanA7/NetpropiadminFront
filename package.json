@@ -46,6 +46,8 @@
         "react-autosuggest": "10.1.0",
         "react-dom": "18.1.0",
         "react-draft-wysiwyg": "1.14.7",
+        "react-facebook-login": "^4.1.1",
+        "react-google-login": "^5.2.2",
         "react-hook-form": "7.31.1",
         "react-i18next": "11.16.9",
         "react-popper": "2.3.0",
@@ -116,8 +118,7 @@
         "analyze": "react-app-rewired build && source-map-explorer 'build/static/js/*.js' --html analyze-result.html",
         "lint": "eslint",
         "watch-codegen": "graphql-codegen --config codegen.yml --watch 'src/**/*.graphql'",
-        "gql:gen": "npx graphql-codegen --config ./src/@gql-sdk/codegen.yml",
-        "gql:build": "npx tsc -p ./src/@gql-sdk/tsconfig.json"
+        "gql:gen": "npx graphql-codegen --config ./src/@gql-sdk/codegen.yml && npx tsc -p ./src/@gql-sdk/tsconfig.json"
     },
     "engines": {
         "node": ">=14.0.0",
