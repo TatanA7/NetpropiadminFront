@@ -61,9 +61,9 @@ const FormNatutalPerson = () => {
   const responseGoogle = (response) => {
     console.log(response);
   };
-  const responseFacebook = (response) => {
-    console.log(response);
-  };
+  // const responseFacebook = (response) => {
+  //   console.log(response);
+  // };
 
   return (
     <>
@@ -150,7 +150,7 @@ const FormNatutalPerson = () => {
           name="acceptTermsConditions"
           control={control}
           render={({ field }) => (
-            <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
+            <FormControl className="items-center mb-24" error={!!errors.acceptTermsConditions}>
               <FormControlLabel
                 label="I agree to the Terms of Service and Privacy Policy"
                 control={<Checkbox size="small" {...field} />}
@@ -160,6 +160,13 @@ const FormNatutalPerson = () => {
           )}
         />
 
+        <GoogleLogin
+          clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
+          buttonText="SignUp with Google"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy="single_host_origin"
+        />
         <Button
           variant="contained"
           color="secondary"
@@ -171,21 +178,14 @@ const FormNatutalPerson = () => {
         >
           Create your free account
         </Button>
-        <GoogleLogin
-          clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy="single_host_origin"
-        />
-        <FacebookLogin
+        {/* <FacebookLogin
           appId="1027278951512859"
           autoLoad
           fields="name,email,picture"
           textButton="Login"
           callback={responseFacebook}
           icon="fa-facebook"
-        />
+        /> */}
       </form>
     </>
   );

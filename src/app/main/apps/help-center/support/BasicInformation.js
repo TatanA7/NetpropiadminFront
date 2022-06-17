@@ -100,7 +100,7 @@ function BasicInformation() {
               </div>
               <Controller
                 control={control}
-                name="email"
+                name="name"
                 render={({ field }) => (
                   <TextField
                     {...field}
