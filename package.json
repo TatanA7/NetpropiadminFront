@@ -118,8 +118,7 @@
         "analyze": "react-app-rewired build && source-map-explorer 'build/static/js/*.js' --html analyze-result.html",
         "lint": "eslint",
         "watch-codegen": "graphql-codegen --config codegen.yml --watch 'src/**/*.graphql'",
-        "gql:gen": "npx graphql-codegen --config ./src/@gql-sdk/codegen.yml",
-        "gql:build": "npx tsc -p ./src/@gql-sdk/tsconfig.json"
+        "gql:gen": "npx graphql-codegen --config ./src/@gql-sdk/codegen.yml && npx tsc -p ./src/@gql-sdk/tsconfig.json"
     },
     "engines": {
         "node": ">=14.0.0",

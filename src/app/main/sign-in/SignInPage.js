@@ -20,7 +20,6 @@ import { useEffect } from 'react';
 import {useTranslation} from 'react-i18next';
 import jwtService from '../../auth/services/jwtService';
 import { useLoginMutation } from '../../../@gql-sdk/dist/api'
-import history from '@history';
 import decode from 'jwt-decode'
 
 
@@ -65,16 +64,17 @@ function SignInPage() {
 
     if (loginResult.isSuccess) {
       jwtService.setSession(loginResult.data.login.token)
-      const { name, last_name } = decode(loginResult.data.login.token)
+      
+      const { user } = decode(loginResult.data.login.token)
+
       jwtService.emit('onLogin', {
         ...loginResult.data.login,
         role: 'admin',
         data: {
-          displayName: `${name} ${last_name}`,
+          displayName: `${user.name}`,
           photoURL: ''
         }
       });
-      history.push('/pages/maintenance')
       return
     }
 

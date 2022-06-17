@@ -3,3 +3,9 @@ mutation Login($loginVariables: LoginInput!) {
         token
     }
 }
+
+mutation CreateUser($variable: UserInput!) {
+    createUser(variable: $variable) {
+        token
+    }
+}

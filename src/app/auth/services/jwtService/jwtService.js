@@ -86,13 +86,13 @@ class JwtService extends FuseUtils.EventEmitter {
 
     try {
       this.setSession(this.getAccessToken())
-      const { name, last_name } = decode(this.getAccessToken())
+      const { user } = decode(this.getAccessToken())
 
       return {
         token: this.getAccessToken(),
         role: 'admin',
         data: {
-          displayName: `${name} ${last_name}`,
+          displayName: `${user.name}`,
           photoURL: ''
         }
       }
