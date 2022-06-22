@@ -118,7 +118,7 @@ export type User = {
   businessName: Scalars['String'];
   cell_phone: Scalars['String'];
   coint: Scalars['String'];
-  created_at: Scalars['String'];
+  created_at: Scalars['Boolean'];
   facebook_id: Scalars['String'];
   google_id: Scalars['String'];
   id: Scalars['Float'];
@@ -129,7 +129,7 @@ export type User = {
   picture: Scalars['String'];
   policies: Scalars['String'];
   termsConditions: Scalars['String'];
-  updated_at: Scalars['String'];
+  updated_at: Scalars['Boolean'];
 };
 
 export type UserInput = {
@@ -163,7 +163,7 @@ export type CreateBuildsMutationVariables = Exact<{
 }>;
 
 
-export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number, name: string, acquired_in: number } };
+export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number, name: string, address: string, estrato: number, lont_size: string, square_feet: string } };
 
 
 export const LoginDocument = `
@@ -185,7 +185,10 @@ export const CreateBuildsDocument = `
   createBuilds(variables: $variables) {
     id
     name
-    acquired_in
+    address
+    estrato
+    lont_size
+    square_feet
   }
 }
     `;

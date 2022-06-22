@@ -18,7 +18,10 @@ export const CreateBuildsDocument = `
   createBuilds(variables: $variables) {
     id
     name
-    acquired_in
+    address
+    estrato
+    lont_size
+    square_feet
   }
 }
     `;

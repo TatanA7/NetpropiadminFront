@@ -107,7 +107,7 @@ export declare type User = {
     businessName: Scalars['String'];
     cell_phone: Scalars['String'];
     coint: Scalars['String'];
-    created_at: Scalars['String'];
+    created_at: Scalars['Boolean'];
     facebook_id: Scalars['String'];
     google_id: Scalars['String'];
     id: Scalars['Float'];
@@ -118,7 +118,7 @@ export declare type User = {
     picture: Scalars['String'];
     policies: Scalars['String'];
     termsConditions: Scalars['String'];
-    updated_at: Scalars['String'];
+    updated_at: Scalars['Boolean'];
 };
 export declare type UserInput = {
     NIT?: InputMaybe<Scalars['String']>;
@@ -160,12 +160,15 @@ export declare type CreateBuildsMutation = {
         __typename?: 'Builds';
         id: number;
         name: string;
-        acquired_in: number;
+        address: string;
+        estrato: number;
+        lont_size: string;
+        square_feet: string;
     };
 };
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
-export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    acquired_in\n  }\n}\n    ";
+export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    address\n    estrato\n    lont_size\n    square_feet\n  }\n}\n    ";
 declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;

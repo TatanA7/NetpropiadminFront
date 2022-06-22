@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -5,21 +6,14 @@ import { Controller, useForm } from 'react-hook-form';
 import _ from '@lodash';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
+// import { useCreateBuildsMutation } from 'src/@gql-sdk/api';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { useState } from 'react';
-
-const defaultValues = { name: '', email: '', subject: '', message: '' };
-const schema = yup.object().shape({
-  name: yup.string().required('You must enter a name'),
-  subject: yup.string().required('You must enter a subject'),
-  area: yup.string().required('You must enter a subject'),
-  lote: yup.string().required('You must enter a subject'),
-  message: yup.string().required('You must enter a message'),
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
-});
+import { useCreateBuildsMutation } from 'src/@gql-sdk/dist/api';
 
 function BasicInformation() {
+  const [performBuild, buildingResult] = useCreateBuildsMutation();
+  // const { is }= buildingResult
   const [selectedCategory, setSelectedCategory] = useState('');
   const [stratum, setStratum] = useState('');
   const [rooms, setRooms] = useState('');
@@ -28,16 +22,84 @@ function BasicInformation() {
   const [lotInMeters, setLotInMeters] = useState('');
   const [parking, setParking] = useState('');
   const [garage, setGarage] = useState('');
+  const schema = yup.object().shape({
+    id: yup.number().required('You must enter a id'),
+    name: yup.string().required('You must enter a name'),
+    estrato: yup.number().required('You must enter a stratum'),
+    address: yup.string().required('You must enter address'),
+    lontSize: yup.string().required('You must enter lont_sice'),
+    squareFeet: yup.string().required('You must enter square_feet'),
+    subject: yup.string().required('You must enter a subject'),
+    area: yup.string().required('You must enter a subject'),
+    lote: yup.string().required('You must enter a subject'),
+    message: yup.string().required('You must enter a message'),
+    email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  });
+  const defaultValues = {
+    id: 1,
+    name: '',
+    address: '',
+    estrato: 2,
+    lontSize: '',
+    squareFeet: '',
+  };
   const { control, handleSubmit, watch, formState } = useForm({
     mode: 'onChange',
     defaultValues,
     resolver: yupResolver(schema),
   });
+  // const defaultValues = { name: '', email: '', subject: '', message: '' };
   const { isValid, dirtyFields, errors } = formState;
   const form = watch();
+  useEffect(() => {
+    if (buildingResult.isUninitialized) return;
+    if (buildingResult.status === 'pending') return;
 
-  function onSubmit(data) {
-    console.log(data);
+    if (buildingResult.isSuccess) {
+      const building = buildingResult.data.createBuilds;
+
+      building.emit('onLogin', {
+        ...buildingResult.data.createBuilds,
+        role: 'admin',
+        data: {
+          displayName: `${building.name}`,
+          photoURL: '',
+        },
+      });
+      return;
+    }
+
+    if (buildingResult.isError) {
+      // Reemplazar por un componente de notificacion
+      // eslint-disable-next-line no-alert
+      alert('Register Build failed');
+    }
+  }, [buildingResult]);
+
+  // eslint-disable-next-line camelcase
+  function onSubmit({ id, name, address, estrato, lontSize: lont_size, squareFeet: square_feet }) {
+    performBuild({
+      variables: {
+        // acquired_in,
+        id,
+        name,
+        address,
+        // cost,
+        // cupancy,
+        estrato,
+        // latitude,
+        // loan_balance,
+        // longitude,
+        lont_size,
+        // market_value,
+        // property_records,
+        // rent,
+        square_feet,
+        // units,
+        // user_id,
+        // year_built,
+      },
+    });
   }
 
   if (_.isEmpty(form)) {
@@ -100,7 +162,7 @@ function BasicInformation() {
               </div>
               <Controller
                 control={control}
-                name="email"
+                name="id"
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -111,8 +173,30 @@ function BasicInformation() {
                     "
                     variant="outlined"
                     fullWidth
-                    error={!!errors.email}
-                    helperText={errors?.email?.message}
+                    error={!!errors.id}
+                    helperText={errors?.id?.message}
+                    required
+                  />
+                )}
+              />
+              <div className="mb-8">
+                <Typography color="text.secondary">Descripción de propiedad*</Typography>
+              </div>
+              <Controller
+                control={control}
+                name="estrato"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="mt-16 w-full"
+                    label="estrato
+                    "
+                    placeholder="Estrato
+                    "
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors.estrato}
+                    helperText={errors?.estrato?.message}
                     required
                   />
                 )}
@@ -150,7 +234,7 @@ function BasicInformation() {
               </div>
               <Controller
                 control={control}
-                name="subject"
+                name="address"
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -159,8 +243,8 @@ function BasicInformation() {
                     placeholder="Dirección de propiedad"
                     variant="outlined"
                     fullWidth
-                    error={!!errors.subject}
-                    helperText={errors?.subject?.message}
+                    error={!!errors.address}
+                    helperText={errors?.address?.message}
                     required
                   />
                 )}
@@ -168,6 +252,8 @@ function BasicInformation() {
               <FormControl sx={{ minWidth: 300 }}>
                 <InputLabel id="demo-simple-select-label">Estrato</InputLabel>
                 <Select
+                  // control={control}
+                  // name="estrato"
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={stratum}
@@ -233,7 +319,7 @@ function BasicInformation() {
                   </Select> */}
                   <Controller
                     control={control}
-                    name="area"
+                    name="lontSize"
                     render={({ field }) => (
                       <TextField
                         {...field}
@@ -242,8 +328,8 @@ function BasicInformation() {
                         placeholder="Área en mts2"
                         variant="outlined"
                         fullWidth
-                        error={!!errors.subject}
-                        helperText={errors?.subject?.message}
+                        error={!!errors.lontSize}
+                        helperText={errors?.lontSize?.message}
                         required
                       />
                     )}
@@ -264,7 +350,7 @@ function BasicInformation() {
                   </Select> */}
                   <Controller
                     control={control}
-                    name="lote"
+                    name="squareFeet"
                     render={({ field }) => (
                       <TextField
                         {...field}
@@ -273,8 +359,8 @@ function BasicInformation() {
                         placeholder="Lote en mts2"
                         variant="outlined"
                         fullWidth
-                        error={!!errors.subject}
-                        helperText={errors?.subject?.message}
+                        error={!!errors.squareFeet}
+                        helperText={errors?.squareFeet?.message}
                         required
                       />
                     )}
@@ -318,19 +404,21 @@ function BasicInformation() {
                 </FormControl>
               </div>
             </div>
+            <div className="flex items-center justify-between mt-32 p-24">
+              <Button className="mx-8">Cancelar</Button>
+              <Button
+                // variant="contained"
+                aria-label="Register"
+                type="submit"
+                size="large"
+                className="mx-8"
+                color="secondary"
+                // disabled={_.isEmpty(dirtyFields) || !isValid}
+              >
+                Guardar
+              </Button>
+            </div>
           </form>
-          <div className="flex items-center justify-between mt-32 p-24">
-            <Button className="mx-8">Cancelar</Button>
-            <Button
-              className="mx-8"
-              variant="contained"
-              color="secondary"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
-              onClick={handleSubmit(onSubmit)}
-            >
-              Guardar
-            </Button>
-          </div>
         </Paper>
       </div>
     </div>
