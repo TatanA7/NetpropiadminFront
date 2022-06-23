@@ -18,9 +18,9 @@ const Root = styled('div')(({ theme }) => ({
 function Logo() {
   return (
     <Root className="flex items-center">
-      <img className="logo-icon w-32 h-32" src="assets/images/logo/logo.svg" alt="logo" />
+      <img className="logo-icon w-80    h-80" src="assets/images/logo/netpropi.svg" alt="logo" />
 
-      <div
+      {/* <div
         className="badge flex items-center py-4 px-8 mx-8 rounded"
         style={{ backgroundColor: '#121212', color: '#61DAFB' }}
       >
@@ -30,8 +30,8 @@ function Logo() {
           alt="react"
           width="16"
         />
-        <span className="react-text text-12 mx-4">React</span>
-      </div>
+      </div> */}
+        {/* <span className="react-text text-12 mx-4">Netpropi</span> */}
     </Root>
   );
 }

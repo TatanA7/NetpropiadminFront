@@ -29,11 +29,6 @@ function BasicInformation() {
     address: yup.string().required('You must enter address'),
     lontSize: yup.string().required('You must enter lont_sice'),
     squareFeet: yup.string().required('You must enter square_feet'),
-    subject: yup.string().required('You must enter a subject'),
-    area: yup.string().required('You must enter a subject'),
-    lote: yup.string().required('You must enter a subject'),
-    message: yup.string().required('You must enter a message'),
-    email: yup.string().email('You must enter a valid email').required('You must enter a email'),
   });
   const defaultValues = {
     id: 1,
@@ -52,29 +47,33 @@ function BasicInformation() {
   const { isValid, dirtyFields, errors } = formState;
   const form = watch();
   useEffect(() => {
-    if (buildingResult.isUninitialized) return;
-    if (buildingResult.status === 'pending') return;
+    console.log(errors)
+  }, [errors])
+  
+  // useEffect(() => {
+  //   if (buildingResult.isUninitialized) return;
+  //   if (buildingResult.status === 'pending') return;
 
-    if (buildingResult.isSuccess) {
-      const building = buildingResult.data.createBuilds;
+  //   if (buildingResult.isSuccess) {
+  //     const building = buildingResult.data.createBuilds;
 
-      building.emit('onLogin', {
-        ...buildingResult.data.createBuilds,
-        role: 'admin',
-        data: {
-          displayName: `${building.name}`,
-          photoURL: '',
-        },
-      });
-      return;
-    }
+  //     building.emit('onLogin', {
+  //       ...buildingResult.data.createBuilds,
+  //       role: 'admin',
+  //       data: {
+  //         displayName: `${building.name}`,
+  //         photoURL: '',
+  //       },
+  //     });
+  //     return;
+  //   }
 
-    if (buildingResult.isError) {
-      // Reemplazar por un componente de notificacion
-      // eslint-disable-next-line no-alert
-      alert('Register Build failed');
-    }
-  }, [buildingResult]);
+  //   if (buildingResult.isError) {
+  //     // Reemplazar por un componente de notificacion
+  //     // eslint-disable-next-line no-alert
+  //     alert('Register Build failed');
+  //   }
+  // }, [buildingResult]);
 
   // eslint-disable-next-line camelcase
   function onSubmit({ id, name, address, estrato, lontSize: lont_size, squareFeet: square_feet }) {
@@ -179,7 +178,7 @@ function BasicInformation() {
                   />
                 )}
               />
-              <div className="mb-8">
+              {/* <div className="mb-8">
                 <Typography color="text.secondary">Descripción de propiedad*</Typography>
               </div>
               <Controller
@@ -200,7 +199,7 @@ function BasicInformation() {
                     required
                   />
                 )}
-              />
+              /> */}
               <div className="mb-8">
                 <Typography color="text.secondary">Tipo de propiedad*</Typography>
               </div>
