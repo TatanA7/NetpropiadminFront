@@ -9,7 +9,7 @@ export const lightPaletteText = {
 
 export const darkPaletteText = {
   primary: 'rgb(255,255,255)',
-  secondary: 'rgb(148, 163, 184)',
+  secondary: 'rgb(15, 50, 153)',
   disabled: 'rgb(156, 163, 175)',
 };
 
@@ -25,19 +25,20 @@ const themesConfig = {
       },
       primary: {
         light: '#64748b',
-        main: '#1e293b',
-        dark: '#0f172a',
+        main: '#0F3299',
+        dark: '#0F3299',
         contrastText: darkPaletteText.primary,
       },
       secondary: {
-        light: '#818cf8',
+        light: '#0F3299',
         main: '#0F3299',
         dark: '#3730a3',
         contrastText: darkPaletteText.primary,
       },
       background: {
         paper: '#FFFFFF',
-        default: '#f1f5f9',
+        // default: '#f1f5f9',
+        default: '#FFFFFF',
       },
       error: {
         light: '#ffcdd2',

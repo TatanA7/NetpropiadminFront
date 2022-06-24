@@ -37,7 +37,7 @@ function Price() {
   return (
     <div className="flex flex-col items-center p-24 sm:p-40 container">
       <div className="flex flex-col w-full max-w-4xl">
-        <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
+        <Paper className="mt-12 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="px-0 sm:px-24">
             <div className="mb-24">
               <Typography color="text.secondary">Precio total</Typography>
@@ -106,23 +106,25 @@ function Price() {
               />
             </div>
           </form>
-          <div className="mb-12  mt-12 md:mt-24 md:text-6xl   sm:leading-10 text-center">
-            <Button className="mx-8 " variant="contained" component={NavLinkAdapter} to="new/edit">
+          <div className="mb-12  mt-12 md:mt-24 md:text-lg   sm:leading-10 text-center">
+            <Button className="mx-8 " variant="text" component={NavLinkAdapter} to="new/edit">
               <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
-              <span className="mx-8 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
+              <span className="mx-8   font-extrabold tracking-tight leading-tight text-center">
                 {' '}
                 Agregar otro costo relacionado
               </span>
             </Button>
           </div>
-          <div className="flex items-center justify-between mt-32 p-24">
-            <Button className="mx-8">Cancelar</Button>
+          <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20   mt-32 ">
+            <Button className="  text-blue-900 " variant="outlined">
+              Cancelar
+            </Button>
             <Button
-              className="mx-8"
-              variant="contained"
+              aria-label="Register"
+              type="submit"
+              size="large"
               color="secondary"
-              disabled={_.isEmpty(dirtyFields) || !isValid}
-              onClick={handleSubmit(onSubmit)}
+              variant="contained"
             >
               Guardar
             </Button>

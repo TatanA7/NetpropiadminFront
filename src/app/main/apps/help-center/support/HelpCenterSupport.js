@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import _ from '@lodash';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { Button, Tab, Tabs, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import Stepper from '@mui/material/Stepper';
 import { Box } from '@mui/system';
@@ -12,7 +12,7 @@ import Price from './Price';
 import BasicInformation from './BasicInformation';
 import ProductImagesTab from './ProductImagesTab';
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['Información básica', 'Imágenes de la propiedad', 'Precio'];
 
 const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
@@ -98,71 +98,66 @@ function HelpCenterSupport() {
   };
 
   return (
-    <div className="flex flex-col items-center p-24 sm:p-40 rounded-2xl container">
-      <div className="flex flex-col w-full max-w-4xl">
-        {/* <Button
-          className="mx-8"
-          variant="contained"
-          color="secondary"
-          component={NavLinkAdapter}
-          to="new/edit"
-        >
-          <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
-          <span className="mx-8">Add</span>
-        </Button> */}
-        <Box sx={{ width: '100%' }}>
-          <Stepper nonLinear activeStep={activeStep}>
-            {steps.map((label, index) => (
-              <Step key={label} completed={completed[index]}>
-                <StepButton color="inherit" onClick={handleStep(index)}>
-                  {label}
-                </StepButton>
-              </Step>
-            ))}
-          </Stepper>
+    <div className="flex flex-col    items-center p-24 sm:p-40 rounded-2xl container">
+      <div
+        style={{ backgroundColor: '#f1f5f9' }}
+        className="flex flex-col items-center   p-24 sm:p-40 rounded-2xl container"
+      >
+        <div className="flex flex-col w-full max-w-4xl">
+          <Box className="w-full">
+            <Stepper nonLinear alternativeLabel activeStep={activeStep}>
+              {steps.map((label, index) => (
+                <Step key={label} completed={completed[index]}>
+                  <StepButton color="inherit" onClick={handleStep(index)}>
+                    {label}
+                  </StepButton>
+                </Step>
+              ))}
+            </Stepper>
 
-          <div>
-            {allStepsCompleted() ? (
-              <>
-                <Typography sx={{ mt: 2, mb: 1 }}>
-                  All steps completed - you&apos;re finished
-                </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                  <Box sx={{ flex: '1 1 auto' }} />
-                  <Button onClick={handleReset}>Reset</Button>
-                </Box>
-              </>
-            ) : (
-              <>
-                {steppersPanelMap[activeStep]}
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                  <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                  <Box sx={{ flex: '1 1 auto' }} />
-                  <Button onClick={handleNext} sx={{ mr: 1 }}>
-                    Next
-                  </Button>
-                  {activeStep !== steps.length &&
-                    (completed[activeStep] ? (
-                      <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                        Step {activeStep + 1} already completed
-                      </Typography>
-                    ) : (
-                      <Button onClick={handleComplete}>
-                        {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                      </Button>
-                    ))}
-                </Box>
-              </>
-            )}
-          </div>
-        </Box>
+            <div>
+              {allStepsCompleted() ? (
+                <>
+                  <Typography sx={{ mt: 2, mb: 1 }}>
+                    All steps completed - you&apos;re finished
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                    <Box sx={{ flex: '1 1 auto' }} />
+                    <Button onClick={handleReset}>Reset</Button>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  {steppersPanelMap[activeStep]}
+                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                    <Button
+                      color="inherit"
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      sx={{ mr: 1 }}
+                    >
+                      Back
+                    </Button>
+                    <Box sx={{ flex: '1 1 auto' }} />
+                    <Button onClick={handleNext} sx={{ mr: 1 }}>
+                      Next
+                    </Button>
+                    {activeStep !== steps.length &&
+                      (completed[activeStep] ? (
+                        <Typography variant="caption" sx={{ display: 'inline-block' }}>
+                          Step {activeStep + 1} already completed
+                        </Typography>
+                      ) : (
+                        <Button onClick={handleComplete}>
+                          {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
+                        </Button>
+                      ))}
+                  </Box>
+                </>
+              )}
+            </div>
+          </Box>
+        </div>
       </div>
     </div>
   );
