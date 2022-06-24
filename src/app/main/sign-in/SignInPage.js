@@ -52,6 +52,7 @@ function SignInPage() {
 
   const { isValid, dirtyFields, errors } = formState;
 
+  // usuario
   useEffect(() => {
     setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
     setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
