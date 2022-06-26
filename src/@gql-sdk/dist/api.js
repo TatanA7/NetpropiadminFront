@@ -17,11 +17,6 @@ export const CreateBuildsDocument = `
     mutation CreateBuilds($variables: BuildsInput!) {
   createBuilds(variables: $variables) {
     id
-    name
-    address
-    estrato
-    lont_size
-    square_feet
   }
 }
     `;
