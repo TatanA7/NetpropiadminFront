@@ -1,5 +1,7 @@
 import i18next from 'i18next';
 
+import ProjectDashboardApp from 'src/app/dashboards/project/ProjectDashboardApp';
+import Products from 'src/app/properties/products/Products';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
@@ -18,12 +20,16 @@ const ExampleConfig = {
     },
   },
   routes: [
-    // {
-    //   path: 'example',
-    //   element: <FullScreenSignInPage />,
-    // },
+    {
+      path: 'dashboards',
+      element: <ProjectDashboardApp />,
+    },
     {
       path: 'properties',
+      element: <Products />,
+    },
+    {
+      path: 'properties/new',
       element: <HelpCenterSupport />,
     },
   ],

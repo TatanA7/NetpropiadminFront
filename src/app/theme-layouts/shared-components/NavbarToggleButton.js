@@ -1,4 +1,5 @@
 import IconButton from '@mui/material/IconButton';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFuseCurrentSettings, setDefaultSettings } from 'app/store/fuse/settingsSlice';
 import _ from '@lodash';
@@ -38,9 +39,9 @@ function NavbarToggleButton(props) {
 
 NavbarToggleButton.defaultProps = {
   children: (
-    <FuseSvgIcon size={20} color="action">
+    <ArrowBackIosIcon size={20} color="action">
       heroicons-outline:view-list
-    </FuseSvgIcon>
+    </ArrowBackIosIcon>
   ),
 };
 

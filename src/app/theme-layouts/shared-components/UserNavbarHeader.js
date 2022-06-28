@@ -27,6 +27,7 @@ const Root = styled('div')(({ theme }) => ({
 
 function UserNavbarHeader(props) {
   const user = useSelector(selectUser);
+  console.log(user)
 
   return (
     <Root className="user relative flex flex-col items-center justify-center p-16 pb-14 shadow-0">
@@ -47,7 +48,7 @@ function UserNavbarHeader(props) {
         {user.data.displayName}
       </Typography>
       <Typography className="email text-13 whitespace-nowrap font-medium" color="text.secondary">
-        {user.data.email}
+         {user.data.email}
       </Typography>
     </Root>
   );
