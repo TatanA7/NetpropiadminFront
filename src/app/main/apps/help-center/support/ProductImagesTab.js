@@ -203,60 +203,6 @@ function ProductImagesTab(props) {
         </div>
         <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
           <Controller
-            name="images"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <Box
-                sx={{
-                  backgroundColor: (theme) =>
-                    theme.palette.mode === 'light'
-                      ? lighten(theme.palette.background.default, 0.4)
-                      : lighten(theme.palette.background.default, 0.02),
-                }}
-                component="label"
-                htmlFor="button-file"
-                className="productImageUpload flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg"
-              >
-                <input
-                  accept="image/*"
-                  className="hidden"
-                  id="button-file"
-                  type="file"
-                  onChange={async (e) => {
-                    function readFileAsync() {
-                      return new Promise((resolve, reject) => {
-                        const file = e.target.files[0];
-                        if (!file) {
-                          return;
-                        }
-                        const reader = new FileReader();
-
-                        reader.onload = () => {
-                          resolve({
-                            id: FuseUtils.generateGUID(),
-                            url: `data:${file.type};base64,${btoa(reader.result)}`,
-                            type: 'image',
-                          });
-                        };
-
-                        reader.onerror = reject;
-
-                        reader.readAsBinaryString(file);
-                      });
-                    }
-
-                    const newImage = await readFileAsync();
-
-                    onChange([newImage, ...value]);
-                  }}
-                />
-                <FuseSvgIcon size={32} color="action">
-                  heroicons-outline:upload
-                </FuseSvgIcon>
-              </Box>
-            )}
-          />
-          <Controller
             name="featuredImageId"
             control={control}
             defaultValue=""

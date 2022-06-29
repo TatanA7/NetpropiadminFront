@@ -69,6 +69,7 @@ function SignInPage() {
         ...loginResult.data.login,
         role: 'admin',
         data: {
+          ...user,
           displayName: `${user.name}`,
           photoURL: '',
         },
@@ -170,7 +171,7 @@ function SignInPage() {
                 )}
               />
 
-              <Link className="text-md font-medium" to="/pages/auth/forgot-password">
+              <Link className="text-md font-medium" to="/forgot-password">
                 Forgot password?
               </Link>
             </div>

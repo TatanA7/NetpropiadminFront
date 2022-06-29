@@ -8,6 +8,7 @@ import ar from './i18n/ar';
 // import Example from './Example';
 // import SplitScreenSignUpPage from '../pages/authentication/sign-up/SplitScreenSignUpPage';
 import HelpCenterSupport from '../apps/help-center/support/HelpCenterSupport';
+import ModernForgotPasswordPage from '../pages/authentication/forgot-password/ModernForgotPasswordPage';
 
 i18next.addResourceBundle('en', 'examplePage', en);
 i18next.addResourceBundle('tr', 'examplePage', tr);
@@ -31,6 +32,10 @@ const ExampleConfig = {
     {
       path: 'properties/new',
       element: <HelpCenterSupport />,
+    },
+    {
+      path: 'forgot-password',
+      element: <ModernForgotPasswordPage />,
     },
   ],
 };
