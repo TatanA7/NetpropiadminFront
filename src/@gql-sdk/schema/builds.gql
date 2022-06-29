@@ -1,0 +1,5 @@
+mutation CreateBuilds($variables: BuildsInput!) {
+    createBuilds(variables: $variables) {
+        id
+    }
+}

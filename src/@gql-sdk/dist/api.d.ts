@@ -26,43 +26,39 @@ export declare type Autentication = {
 };
 export declare type Builds = {
     __typename?: 'Builds';
-    acquired_in: Scalars['Float'];
     address: Scalars['String'];
-    cost: Scalars['String'];
-    cupancy: Scalars['String'];
-    estrato: Scalars['Float'];
+    description: Scalars['String'];
     id: Scalars['Float'];
-    latitude: Scalars['Float'];
-    loan_balance: Scalars['String'];
-    longitude: Scalars['Float'];
-    lont_size: Scalars['String'];
-    market_value: Scalars['String'];
+    imgDescription: Scalars['String'];
+    imgName: Scalars['String'];
+    lotArea: Scalars['String'];
+    managementValue: Scalars['String'];
     name: Scalars['String'];
-    property_records: Scalars['String'];
-    rent: Scalars['String'];
-    square_feet: Scalars['String'];
-    units: Scalars['String'];
+    numberBathrooms: Scalars['Float'];
+    numberRooms: Scalars['Float'];
+    othersCost: Scalars['String'];
+    parkingLot: Scalars['String'];
+    price: Scalars['String'];
+    propertyType: Scalars['String'];
+    stratum: Scalars['Float'];
     user_id: Scalars['Float'];
-    year_built: Scalars['Float'];
 };
 export declare type BuildsInput = {
-    acquired_in: Scalars['Float'];
     address: Scalars['String'];
-    cost: Scalars['String'];
-    cupancy: Scalars['String'];
-    estrato: Scalars['Float'];
-    latitude: Scalars['Float'];
-    loan_balance: Scalars['String'];
-    longitude: Scalars['Float'];
-    lont_size: Scalars['String'];
-    market_value: Scalars['String'];
+    description: Scalars['String'];
+    imgDescription: Scalars['String'];
+    imgName: Scalars['String'];
+    lotArea: Scalars['String'];
+    managementValue: Scalars['String'];
     name: Scalars['String'];
-    property_records: Scalars['String'];
-    rent: Scalars['String'];
-    square_feet: Scalars['String'];
-    units: Scalars['String'];
-    user_id: Scalars['Float'];
-    year_built: Scalars['Float'];
+    numberBathrooms: Scalars['String'];
+    numberRooms: Scalars['String'];
+    othersCost: Scalars['String'];
+    parkingLot: Scalars['String'];
+    price: Scalars['String'];
+    propertyType: Scalars['String'];
+    stratum: Scalars['String'];
+    user_id: Scalars['String'];
 };
 export declare type BuildsUpdateInput = {
     name?: InputMaybe<Scalars['String']>;
@@ -77,6 +73,8 @@ export declare type Mutation = {
     createUser: Autentication;
     deleteBuilds: Scalars['Boolean'];
     login: Autentication;
+    loginFacebook: Autentication;
+    loginGoogle: Autentication;
     updateBuilds: Builds;
 };
 export declare type MutationCreateBuildsArgs = {
@@ -90,6 +88,12 @@ export declare type MutationDeleteBuildsArgs = {
 };
 export declare type MutationLoginArgs = {
     loginVariables: LoginInput;
+};
+export declare type MutationLoginFacebookArgs = {
+    loginVariables: LoginFacebookInput;
+};
+export declare type MutationLoginGoogleArgs = {
+    loginVariables: LoginGoogleInput;
 };
 export declare type MutationUpdateBuildsArgs = {
     fields: BuildsUpdateInput;
@@ -131,6 +135,12 @@ export declare type UserInput = {
     policies?: InputMaybe<Scalars['String']>;
     termsConditions?: InputMaybe<Scalars['String']>;
 };
+export declare type LoginFacebookInput = {
+    facebook_id: Scalars['String'];
+};
+export declare type LoginGoogleInput = {
+    google_id: Scalars['String'];
+};
 export declare type LoginMutationVariables = Exact<{
     loginVariables: LoginInput;
 }>;
@@ -159,16 +169,11 @@ export declare type CreateBuildsMutation = {
     createBuilds: {
         __typename?: 'Builds';
         id: number;
-        name: string;
-        address: string;
-        estrato: number;
-        lont_size: string;
-        square_feet: string;
     };
 };
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
-export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    address\n    estrato\n    lont_size\n    square_feet\n  }\n}\n    ";
+export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n  }\n}\n    ";
 declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
