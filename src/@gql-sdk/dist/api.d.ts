@@ -128,7 +128,7 @@ export declare type UserInput = {
     NIT?: InputMaybe<Scalars['String']>;
     businessName?: InputMaybe<Scalars['String']>;
     cell_phone: Scalars['String'];
-    last_name: Scalars['String'];
+    last_name?: InputMaybe<Scalars['String']>;
     mail: Scalars['String'];
     name: Scalars['String'];
     password: Scalars['String'];

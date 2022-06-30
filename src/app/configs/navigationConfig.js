@@ -38,7 +38,7 @@ const navigationConfig = [
         id: 'panel-dashboard',
         title: 'Panel',
         type: 'collapse',
-        icon: 'heroicons-outline:cloud',
+        icon: 'heroicons-outline:table',
         translate: 'SUBPANEL',
         children: [
           {
@@ -46,7 +46,7 @@ const navigationConfig = [
             title: 'Properties',
             translate: 'Propiedades',
             type: 'item',
-            icon: 'heroicons-outline:star',
+            icon: 'netpropi-default:building',
             url: 'properties',
           },
           {
@@ -56,6 +56,7 @@ const navigationConfig = [
             id: 'panel-inquilinos',
             title: 'Inquilinos',
             type: 'item',
+            icon: 'material-outline:family_restroom',
             url: 'inquilinos',
             end: true,
           },
@@ -63,13 +64,15 @@ const navigationConfig = [
             id: 'panel-transacciones',
             title: 'Transacciones',
             type: 'item',
+            icon: 'material-outline:request_page',
             url: 'transacciones',
           },
           {
             id: 'panel-afectaciones',
             title: 'Reportes',
             type: 'item',
-            url: 'afectaciones',
+            icon: 'material-solid:aod',
+            url: 'forgot-password',
           },
         ],
       },

@@ -22,7 +22,7 @@ function Logo() {
       <Link to="/">
         <img
           className="logo-icon    w-112   h-112"
-          src="assets/images/logo/netpropi.svg"
+          src="assets/images/logo/netpropi-sidebar.svg"
           alt="logo"
         />
       </Link>

@@ -39,9 +39,9 @@ function NavbarToggleButton(props) {
 
 NavbarToggleButton.defaultProps = {
   children: (
-    <ArrowBackIosIcon size={20} color="action">
+    <FuseSvgIcon size={20} color="action">
       heroicons-outline:view-list
-    </ArrowBackIosIcon>
+    </FuseSvgIcon>
   ),
 };
 

@@ -7,22 +7,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import _ from '@lodash';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useEffect } from 'react';
 import * as yup from 'yup';
-import JwtService from 'src/app/auth/services/jwtService';
+import decode from 'jwt-decode';
+import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
+import jwtService from '../../auth/services/jwtService';
 
 const FormRealEstate = () => {
-  const defaultValues = {
-    displayName: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    nit: '',
-    phone: '',
-    acceptTermsConditions: false,
-  };
+  const [performRegister, registerResult] = useCreateUserMutation();
+
   const schema = yup.object().shape({
-    displayName: yup.string().required('You must enter display name'),
-    email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+    name: yup.string().required('You must enter display name'),
+    cellPhone: yup.string().required('You must enter your phone'),
+    NIT: yup.string().required('Dato requerido'),
+    mail: yup.string().email('You must enter a valid email').required('You must enter a email'),
     password: yup
       .string()
       .required('Please enter your password.')
@@ -32,29 +30,76 @@ const FormRealEstate = () => {
       .boolean()
       .oneOf([true], 'The terms and conditions must be accepted.'),
   });
+  const defaultValues = {
+    name: '',
+    mail: '',
+    cellPhone: '',
+    NIT: '',
+    password: '',
+    passwordConfirm: '',
+    acceptTermsConditions: false,
+  };
   const { control, formState, handleSubmit, reset } = useForm({
     mode: 'onChange',
     defaultValues,
     resolver: yupResolver(schema),
   });
   const { isValid, dirtyFields, errors, setError } = formState;
-  function onSubmit({ displayName, password, email }) {
-    JwtService.createUser({
-      displayName,
-      password,
-      email,
-    })
-      .then((user) => {
-        // No need to do anything, registered user data will be set at app/auth/AuthContext
-      })
-      .catch((_errors) => {
-        _errors.forEach((error) => {
-          setError(error.type, {
-            type: 'manual',
-            message: error.message,
-          });
-        });
+  useEffect(() => {
+    if (registerResult.isUninitialized) return;
+    if (registerResult.status === 'pending') return;
+
+    if (registerResult.isSuccess) {
+      const { token } = registerResult.data.createUser;
+      jwtService.setSession(token);
+
+      const { user } = decode(token);
+
+      jwtService.emit('onLogin', {
+        ...registerResult.data.createUser,
+        role: 'admin',
+        data: {
+          displayName: `${user.name}`,
+          photoURL: '',
+        },
       });
+      return;
+    }
+
+    if (registerResult.isError) {
+      // Reemplazar por un componente de notificacion
+      // eslint-disable-next-line no-alert
+      alert('Register user failed');
+    }
+  }, [registerResult]);
+  // eslint-disable-next-line camelcase
+  function onSubmit({ cellPhone: cell_phone, mail, name, password, NIT }) {
+    performRegister({
+      variable: {
+        cell_phone,
+        mail,
+        NIT,
+        name,
+        password,
+      },
+    });
+
+    // JwtService.createUser({
+    //   displayName,
+    //   password,
+    //   email,
+    // })
+    //   .then((user) => {
+    //     // No need to do anything, registered user data will be set at app/auth/AuthContext
+    //   })
+    //   .catch((_errors) => {
+    //     _errors.forEach((error) => {
+    //       setError(error.type, {
+    //         type: 'manual',
+    //         message: error.message,
+    //       });
+    //     });
+    //   });
   }
   return (
     <>
@@ -65,26 +110,44 @@ const FormRealEstate = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Controller
-          name="displayName"
+          name="name"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
               className="mb-24"
-              label="Display name"
+              label="Name"
               autoFocus
-              type="name"
-              error={!!errors.displayName}
-              helperText={errors?.displayName?.message}
+              type="text"
+              error={!!errors.name}
+              helperText={errors?.name?.message}
               variant="outlined"
               required
               fullWidth
             />
           )}
         />
+        {/* <Controller
+          name="lastName"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="mb-24"
+              label="Last Name"
+              autoFocus
+              type="text"
+              error={!!errors.lastName}
+              helperText={errors?.lastName?.message}
+              variant="outlined"
+              required
+              fullWidth
+            />
+          )}
+        /> */}
 
         <Controller
-          name="email"
+          name="mail"
           control={control}
           render={({ field }) => (
             <TextField
@@ -92,15 +155,14 @@ const FormRealEstate = () => {
               className="mb-24"
               label="Email"
               type="email"
-              error={!!errors.email}
-              helperText={errors?.email?.message}
+              error={!!errors.mail}
+              helperText={errors?.mail?.message}
               variant="outlined"
               required
               fullWidth
             />
           )}
         />
-
         <Controller
           name="password"
           control={control}
@@ -137,33 +199,35 @@ const FormRealEstate = () => {
           )}
         />
         <Controller
-          name="nit"
+          name="NIT"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
               className="mb-24"
               label="Nit"
-              type="nit"
-              error={!!errors.passwordConfirm}
-              helperText={errors?.passwordConfirm?.message}
+              type="text"
+              error={!!errors.NIT}
+              helperText={errors?.NIT?.message}
               variant="outlined"
               required
               fullWidth
             />
           )}
         />
+
         <Controller
-          name="phone"
+          name="cellPhone"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
               className="mb-24"
-              label="Phone"
-              type="phone"
-              error={!!errors.passwordConfirm}
-              helperText={errors?.passwordConfirm?.message}
+              label="Cell phone"
+              autoFocus
+              type="text"
+              error={!!errors.cellPhone}
+              helperText={errors?.cellPhone?.message}
               variant="outlined"
               required
               fullWidth

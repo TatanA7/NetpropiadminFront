@@ -37,8 +37,8 @@ const themesConfig = {
       },
       background: {
         paper: '#FFFFFF',
-        // default: '#f1f5f9',
-        default: '#FFFFFF',
+        default: '#f1f5f9',
+        // default: '#FFFFFF',
       },
       error: {
         light: '#ffcdd2',

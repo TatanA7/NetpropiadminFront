@@ -157,6 +157,51 @@
       },
       "parameters": []
     },
+    "/auth/forgot-password": {
+      "get": {
+        "summary": "Forgot",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/auth_user"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "uuid": "string",
+                      "from": "string",
+                      "password": "string",
+                      "role": "string",
+                      "data": {
+                        "displayName": "string",
+                        "photoURL": "string",
+                        "email": "string",
+                        "settings": {
+                          "layout": {},
+                          "theme": {}
+                        },
+                        "shortcuts": [
+                          "string"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "auth_forgotPassword",
+        "description": "Retrieve user.",
+        "tags": [
+          "auth"
+        ]
+      },
+      "parameters": []
+    },
     "/auth/access-token": {
       "get": {
         "summary": "Sign in with access token",

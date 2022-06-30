@@ -98,7 +98,10 @@ function HelpCenterSupport() {
   };
 
   return (
-    <div className="flex flex-col    items-center p-24 sm:p-40 rounded-2xl container">
+    <div
+      style={{ backgroundColor: '#FFFFFF' }}
+      className="flex flex-col    items-center p-24 sm:p-40 rounded-2xl container"
+    >
       <div
         style={{ backgroundColor: '#f1f5f9' }}
         className="flex flex-col items-center   p-24 sm:p-40 rounded-2xl container"
