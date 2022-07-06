@@ -58,7 +58,7 @@ function ProjectDashboardAppHeader(props) {
           </Avatar>
           <div className="flex flex-col min-w-0 mx-16">
             <Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-              {`Welcome back, ${user.data.displayName}!`}
+              {`Bienvenido!, ${user.data.displayName}!`}
             </Typography>
 
             <div className="flex items-center">
