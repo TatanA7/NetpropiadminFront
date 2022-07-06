@@ -1,8 +1,7 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
-import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 import jwtServiceConfig from './jwtServiceConfig';
-import decode from 'jwt-decode'
 /* eslint-disable camelcase */
 
 class JwtService extends FuseUtils.EventEmitter {
@@ -83,45 +82,44 @@ class JwtService extends FuseUtils.EventEmitter {
   };
 
   signInWithToken = async () => {
-
     try {
-      this.setSession(this.getAccessToken())
-      const { user } = decode(this.getAccessToken())
+      this.setSession(this.getAccessToken());
+      const { user } = jwtDecode(this.getAccessToken());
 
       return {
         token: this.getAccessToken(),
         role: 'admin',
         data: {
+          ...user,
           displayName: `${user.name}`,
-          photoURL: ''
-        }
-      }
-
+          photoURL: '',
+        },
+      };
     } catch (error) {
       this.logout();
-      throw new Error('Failed to login with token.')
+      throw new Error('Failed to login with token.');
     }
 
-      // uncomment this, to login to server by token
-      // axios
-      //   .get(jwtServiceConfig.accessToken, {
-      //     data: {
-      //       access_token: this.getAccessToken(),
-      //     },
-      //   })
-      //   .then((response) => {
-      //     if (response.data.user) {
-      //       this.setSession(response.data.access_token);
-      //       resolve(response.data.user);
-      //     } else {
-      //       this.logout();
-      //       reject(new Error('Failed to login with token.'));
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     this.logout();
-      //     reject(new Error('Failed to login with token.'));
-      //   });
+    // uncomment this, to login to server by token
+    // axios
+    //   .get(jwtServiceConfig.accessToken, {
+    //     data: {
+    //       access_token: this.getAccessToken(),
+    //     },
+    //   })
+    //   .then((response) => {
+    //     if (response.data.user) {
+    //       this.setSession(response.data.access_token);
+    //       resolve(response.data.user);
+    //     } else {
+    //       this.logout();
+    //       reject(new Error('Failed to login with token.'));
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     this.logout();
+    //     reject(new Error('Failed to login with token.'));
+    //   });
   };
 
   updateUserData = (user) => {

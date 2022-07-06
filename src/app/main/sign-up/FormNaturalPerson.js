@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import GoogleLogin from 'react-google-login';
@@ -10,15 +11,12 @@ import TextField from '@mui/material/TextField';
 import _ from '@lodash';
 import FormHelperText from '@mui/material/FormHelperText';
 import * as yup from 'yup';
-import JwtService from 'src/app/auth/services/jwtService';
-import { useCreateUserMutation } from '../../../@gql-sdk/dist/api'
-import { useEffect } from 'react';
+import decode from 'jwt-decode';
+import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
 import jwtService from '../../auth/services/jwtService';
-import decode from 'jwt-decode'
 
 const FormNaturalPerson = () => {
-
-  const [performRegister, registerResult] = useCreateUserMutation()
+  const [performRegister, registerResult] = useCreateUserMutation();
 
   const schema = yup.object().shape({
     name: yup.string().required('You must enter display name'),
@@ -52,35 +50,35 @@ const FormNaturalPerson = () => {
   const { isValid, dirtyFields, errors, setError } = formState;
 
   useEffect(() => {
-    if (registerResult.isUninitialized) return
-    if (registerResult.status === 'pending') return
+    if (registerResult.isUninitialized) return;
+    if (registerResult.status === 'pending') return;
 
     if (registerResult.isSuccess) {
-      const { token } = registerResult.data.createUser
-      jwtService.setSession(token)
+      const { token } = registerResult.data.createUser;
+      jwtService.setSession(token);
 
-      const { user } = decode(token)
+      const { user } = decode(token);
 
       jwtService.emit('onLogin', {
         ...registerResult.data.createUser,
         role: 'admin',
         data: {
           displayName: `${user.name}`,
-          photoURL: ''
-        }
+          photoURL: '',
+        },
       });
-      return
+      return;
     }
 
     if (registerResult.isError) {
       // Reemplazar por un componente de notificacion
-      alert('Register user failed')
+      // eslint-disable-next-line no-alert
+      alert('Register user failed');
     }
+  }, [registerResult]);
 
-  }, [registerResult])
-
+  // eslint-disable-next-line camelcase
   function onSubmit({ cellPhone: cell_phone, lastName: last_name, mail, name, password }) {
-
     performRegister({
       variable: {
         cell_phone,
@@ -88,9 +86,9 @@ const FormNaturalPerson = () => {
         mail,
         name,
         password,
-      }
-    })
-    
+      },
+    });
+
     // JwtService.createUser({
     //   displayName,
     //   password,
@@ -108,12 +106,12 @@ const FormNaturalPerson = () => {
     //     });
     //   });
   }
-  const responseGoogle = (response) => {
-    console.log(response);
-  };
-  const responseFacebook = (response) => {
-    console.log(response);
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  // };
+  // const responseFacebook = (response) => {
+  //   console.log(response);
+  // };
 
   return (
     <>
@@ -141,7 +139,7 @@ const FormNaturalPerson = () => {
             />
           )}
         />
-        
+
         <Controller
           name="lastName"
           control={control}
@@ -160,7 +158,7 @@ const FormNaturalPerson = () => {
             />
           )}
         />
-        
+
         <Controller
           name="cellPhone"
           control={control}
@@ -259,21 +257,21 @@ const FormNaturalPerson = () => {
         >
           Create your free account
         </Button>
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
           buttonText="Login"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy="single_host_origin"
-        />
-        <FacebookLogin
+        /> */}
+        {/* <FacebookLogin
           appId="1027278951512859"
           autoLoad
           fields="name,email,picture"
           textButton="Login"
           callback={responseFacebook}
           icon="fa-facebook"
-        />
+        /> */}
       </form>
     </>
   );

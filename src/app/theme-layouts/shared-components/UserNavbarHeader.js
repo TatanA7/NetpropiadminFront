@@ -31,7 +31,8 @@ function UserNavbarHeader(props) {
   return (
     <Root className="user relative flex flex-col items-center justify-center p-16 pb-14 shadow-0">
       <div className="flex items-center justify-center mb-24">
-        <Avatar
+        {/* to show this image user profile and uncomment this line */}
+        {/* <Avatar
           sx={{
             backgroundColor: 'background.paper',
             color: 'text.secondary',
@@ -41,13 +42,13 @@ function UserNavbarHeader(props) {
           alt={user.data.displayName}
         >
           {user.data.displayName.charAt(0)}
-        </Avatar>
+        </Avatar> */}
       </div>
-      <Typography className="username text-14 whitespace-nowrap font-medium">
-        {user.data.displayName}
+      <Typography className="username text-14 whitespace-nowrap font-medium   text-red-100">
+        Inmobiliaria: {user.data.displayName}
       </Typography>
-      <Typography className="email text-13 whitespace-nowrap font-medium" color="text.secondary">
-        {user.data.email}
+      <Typography className="email text-13 whitespace-nowrap font-medium text-red-100">
+        {user.data.mail}
       </Typography>
     </Root>
   );

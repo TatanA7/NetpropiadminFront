@@ -17,8 +17,6 @@ export const CreateBuildsDocument = `
     mutation CreateBuilds($variables: BuildsInput!) {
   createBuilds(variables: $variables) {
     id
-    name
-    acquired_in
   }
 }
     `;

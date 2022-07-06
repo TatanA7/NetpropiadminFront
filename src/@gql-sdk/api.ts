@@ -21,44 +21,40 @@ export type Autentication = {
 
 export type Builds = {
   __typename?: 'Builds';
-  acquired_in: Scalars['Float'];
   address: Scalars['String'];
-  cost: Scalars['String'];
-  cupancy: Scalars['String'];
-  estrato: Scalars['Float'];
+  description: Scalars['String'];
   id: Scalars['Float'];
-  latitude: Scalars['Float'];
-  loan_balance: Scalars['String'];
-  longitude: Scalars['Float'];
-  lont_size: Scalars['String'];
-  market_value: Scalars['String'];
+  imgDescription: Scalars['String'];
+  imgName: Scalars['String'];
+  lotArea: Scalars['String'];
+  managementValue: Scalars['String'];
   name: Scalars['String'];
-  property_records: Scalars['String'];
-  rent: Scalars['String'];
-  square_feet: Scalars['String'];
-  units: Scalars['String'];
+  numberBathrooms: Scalars['Float'];
+  numberRooms: Scalars['Float'];
+  othersCost: Scalars['String'];
+  parkingLot: Scalars['String'];
+  price: Scalars['String'];
+  propertyType: Scalars['String'];
+  stratum: Scalars['Float'];
   user_id: Scalars['Float'];
-  year_built: Scalars['Float'];
 };
 
 export type BuildsInput = {
-  acquired_in: Scalars['Float'];
   address: Scalars['String'];
-  cost: Scalars['String'];
-  cupancy: Scalars['String'];
-  estrato: Scalars['Float'];
-  latitude: Scalars['Float'];
-  loan_balance: Scalars['String'];
-  longitude: Scalars['Float'];
-  lont_size: Scalars['String'];
-  market_value: Scalars['String'];
+  description: Scalars['String'];
+  imgDescription: Scalars['String'];
+  imgName: Scalars['String'];
+  lotArea: Scalars['String'];
+  managementValue: Scalars['String'];
   name: Scalars['String'];
-  property_records: Scalars['String'];
-  rent: Scalars['String'];
-  square_feet: Scalars['String'];
-  units: Scalars['String'];
-  user_id: Scalars['Float'];
-  year_built: Scalars['Float'];
+  numberBathrooms: Scalars['String'];
+  numberRooms: Scalars['String'];
+  othersCost: Scalars['String'];
+  parkingLot: Scalars['String'];
+  price: Scalars['String'];
+  propertyType: Scalars['String'];
+  stratum: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 export type BuildsUpdateInput = {
@@ -76,6 +72,8 @@ export type Mutation = {
   createUser: Autentication;
   deleteBuilds: Scalars['Boolean'];
   login: Autentication;
+  loginFacebook: Autentication;
+  loginGoogle: Autentication;
   updateBuilds: Builds;
 };
 
@@ -100,6 +98,16 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationLoginFacebookArgs = {
+  loginVariables: LoginFacebookInput;
+};
+
+
+export type MutationLoginGoogleArgs = {
+  loginVariables: LoginGoogleInput;
+};
+
+
 export type MutationUpdateBuildsArgs = {
   fields: BuildsUpdateInput;
   id: Scalars['Int'];
@@ -118,7 +126,7 @@ export type User = {
   businessName: Scalars['String'];
   cell_phone: Scalars['String'];
   coint: Scalars['String'];
-  created_at: Scalars['String'];
+  created_at: Scalars['Boolean'];
   facebook_id: Scalars['String'];
   google_id: Scalars['String'];
   id: Scalars['Float'];
@@ -129,19 +137,27 @@ export type User = {
   picture: Scalars['String'];
   policies: Scalars['String'];
   termsConditions: Scalars['String'];
-  updated_at: Scalars['String'];
+  updated_at: Scalars['Boolean'];
 };
 
 export type UserInput = {
   NIT?: InputMaybe<Scalars['String']>;
   businessName?: InputMaybe<Scalars['String']>;
   cell_phone: Scalars['String'];
-  last_name: Scalars['String'];
+  last_name?: InputMaybe<Scalars['String']>;
   mail: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
   policies?: InputMaybe<Scalars['String']>;
   termsConditions?: InputMaybe<Scalars['String']>;
+};
+
+export type LoginFacebookInput = {
+  facebook_id: Scalars['String'];
+};
+
+export type LoginGoogleInput = {
+  google_id: Scalars['String'];
 };
 
 export type LoginMutationVariables = Exact<{
@@ -163,7 +179,7 @@ export type CreateBuildsMutationVariables = Exact<{
 }>;
 
 
-export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number, name: string, acquired_in: number } };
+export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number } };
 
 
 export const LoginDocument = `
@@ -184,8 +200,6 @@ export const CreateBuildsDocument = `
     mutation CreateBuilds($variables: BuildsInput!) {
   createBuilds(variables: $variables) {
     id
-    name
-    acquired_in
   }
 }
     `;

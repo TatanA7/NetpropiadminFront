@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+// import GoogleLogin from 'react-google-login';
+// import FacebookLogin from 'react-facebook-login';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -11,18 +11,15 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
-import {useTranslation} from 'react-i18next';
+import { useEffect, useState } from 'react';
+import decode from 'jwt-decode';
+import { useTranslation } from 'react-i18next';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, InputAdornment } from '@mui/material';
 import jwtService from '../../auth/services/jwtService';
-import { useLoginMutation } from '../../../@gql-sdk/dist/api'
-import decode from 'jwt-decode'
-import ShowPassword from './ShowPassword';
-
+import { useLoginMutation } from '../../../@gql-sdk/dist/api';
 
 /**
  * Form Validation Schema
@@ -40,11 +37,11 @@ const defaultValues = {
   password: '',
   remember: true,
 };
-
 function SignInPage() {
-  const {t} = useTranslation('mailApp');
-  const [login, loginResult] = useLoginMutation()
-  
+  const { t } = useTranslation('mailApp');
+  const [login, loginResult] = useLoginMutation();
+  const [showPassword, setShowPassword] = useState(false);
+
   const { control, formState, handleSubmit, setError, setValue } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -52,68 +49,76 @@ function SignInPage() {
   });
 
   const { isValid, dirtyFields, errors } = formState;
-
-  // usuario
   useEffect(() => {
     setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
     setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
 
-
   useEffect(() => {
-    if (loginResult.isUninitialized) return
-    if (loginResult.status === 'pending') return
+    if (loginResult.isUninitialized) return;
+    if (loginResult.status === 'pending') return;
 
     if (loginResult.isSuccess) {
-      jwtService.setSession(loginResult.data.login.token)
-      
-      const { user } = decode(loginResult.data.login.token)
+      jwtService.setSession(loginResult.data.login.token);
+
+      const { user } = decode(loginResult.data.login.token);
 
       jwtService.emit('onLogin', {
         ...loginResult.data.login,
         role: 'admin',
         data: {
+          ...user,
           displayName: `${user.name}`,
-          photoURL: ''
-        }
+          photoURL: '',
+        },
       });
-      return
+      return;
     }
 
-    if(loginResult.isError) {
-      alert(loginResult.error.name)
+    if (loginResult.isError) {
+      // eslint-disable-next-line no-alert
+      alert(loginResult.error.name);
     }
-
-    
-  }, [loginResult])
+  }, [loginResult]);
 
   const onSubmit = async ({ email, password }) => {
     login({
       loginVariables: {
         mail: email,
-        password
-      }
-    })
-  }
-  const responseGoogle = (response) => {
-    console.log(response);
+        password,
+      },
+    });
   };
-  const responseFacebook = (response) => {
-    console.log(response);
+ 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
+
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-          <img className="w-50" src="assets/images/logo/logo_netpropi.svg" alt="logo" />
+          <div className="flex items-center mt-32">
+            <div className="flex-auto mt-px border-t" />
 
-          <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Sign in
-          </Typography>
-          <div className="flex items-baseline mt-2 font-medium">
-            
+            <img
+              className="w-164 items-center md:justify-center"
+              src="assets/images/logo/netpropi-sidebar.svg"
+              alt="logo"
+            />
+            <div className="flex-auto mt-px border-t" />
           </div>
+          <Typography className="mx-8 text-center" color="text.secondary">
+            Dashboard inmobiliaria
+          </Typography>
+
+          <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight text-center">
+            Bienvenido
+          </Typography>
+          <Typography className="mx-8 text-center" color="text.secondary">
+            Ingrese su email y contrseña
+          </Typography>
 
           <form
             name="loginForm"
@@ -139,7 +144,38 @@ function SignInPage() {
                   />
                   )}
             />
-            <ShowPassword />
+
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Password"
+                  type={showPassword ? 'text' : 'password'}
+                  error={!!errors.password}
+                  helperText={errors?.password?.message}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {defaultValues.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
+
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
               <Controller
                 name="remember"
@@ -147,15 +183,19 @@ function SignInPage() {
                 render={({ field }) => (
                   <FormControl>
                     <FormControlLabel
-                      label="Remember me"
+                      label="Recuerdame"
                       control={<Checkbox size="small" {...field} />}
                     />
                   </FormControl>
                 )}
               />
 
-              <Link className="text-md font-medium" to="/pages/auth/forgot-password">
-                Forgot password?
+              <Link
+                style={{ textDecoration: 'none' }}
+                className="text-md font-medium text-red-100"
+                to="/forgot-password"
+              >
+                <Typography className="mx-8 text-red-100">Olvidaste tu contraseña?</Typography>
               </Link>
             </div>
 
@@ -168,60 +208,24 @@ function SignInPage() {
               type="submit"
               size="large"
             >
-              Sign in
+              Entrar
             </Button>
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
-              <GoogleLogin
-                clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy="single_host_origin"
-              />
-              <FacebookLogin
-                appId="1027278951512859"
-                autoLoad
-                fields="name,email,picture"
-                textButton="Login"
-                callback={responseFacebook}
-                icon="fa-facebook"
-              />
-            </div>
-            <div className="flex items-center mt-32">
-              <div className="flex-auto mt-px border-t" />
-              <Typography className="mx-8" color="text.secondary">
-                Or continue with
-              </Typography>
-              <div className="flex-auto mt-px border-t" />
-            </div>
-
-            <div className="flex items-center mt-32 space-x-16">
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
-                  feather:facebook
-                </FuseSvgIcon>
-              </Button>
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
-                  feather:twitter
-                </FuseSvgIcon>
-              </Button>
-              <Button variant="outlined" className="flex-auto">
-                <FuseSvgIcon size={20} color="action">
-                  feather:github
-                </FuseSvgIcon>
-              </Button>
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
+              <Typography className="mx-8">No tienes cuenta?</Typography>
+              <Link style={{ textDecoration: 'none' }} className="ml-4" to="/sign-up">
+                <Typography className="mx-8 text-red-100">Regístrate</Typography>
+              </Link>
             </div>
           </form>
         </div>
       </Paper>
 
-      <Box
-        className="relative hidden md:flex h-full overflow-hidden"
-      >
-            <img 
-              src="assets/images/logo/netpropiBackground.jpg" 
-              style={{ objectFit: 'cover'}}></img>
+      <Box className="relative hidden md:flex flex-auto items-center justify-center h-full overflow-hidden">
+        <img
+          src="assets/images/logo/netpropiBackground.jpg"
+          alt="background"
+          style={{ objectFit: 'cover', minWidth: '100%', minHeight: '100%' }}
+        />
       </Box>
     </div>
   );
