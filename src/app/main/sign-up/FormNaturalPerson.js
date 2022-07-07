@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -12,11 +10,15 @@ import _ from '@lodash';
 import FormHelperText from '@mui/material/FormHelperText';
 import * as yup from 'yup';
 import decode from 'jwt-decode';
+import { IconButton, InputAdornment, Typography } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
 import jwtService from '../../auth/services/jwtService';
 
 const FormNaturalPerson = () => {
   const [performRegister, registerResult] = useCreateUserMutation();
+  const [showPassword, setShowPassword] = useState(false);
 
   const schema = yup.object().shape({
     name: yup.string().required('You must enter display name'),
@@ -88,30 +90,10 @@ const FormNaturalPerson = () => {
         password,
       },
     });
-
-    // JwtService.createUser({
-    //   displayName,
-    //   password,
-    //   email,
-    // })
-    //   .then((user) => {
-    //     // No need to do anything, registered user data will be set at app/auth/AuthContext
-    //   })
-    //   .catch((_errors) => {
-    //     _errors.forEach((error) => {
-    //       setError(error.type, {
-    //         type: 'manual',
-    //         message: error.message,
-    //       });
-    //     });
-    //   });
   }
-  // const responseGoogle = (response) => {
-  //   console.log(response);
-  // };
-  // const responseFacebook = (response) => {
-  //   console.log(response);
-  // };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <>
@@ -204,12 +186,25 @@ const FormNaturalPerson = () => {
               {...field}
               className="mb-24"
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors?.password?.message}
               variant="outlined"
               required
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -222,12 +217,25 @@ const FormNaturalPerson = () => {
               {...field}
               className="mb-24"
               label="Password (Confirm)"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               error={!!errors.passwordConfirm}
               helperText={errors?.passwordConfirm?.message}
               variant="outlined"
               required
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -236,13 +244,18 @@ const FormNaturalPerson = () => {
           name="acceptTermsConditions"
           control={control}
           render={({ field }) => (
-            <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
-              <FormControlLabel
-                label="I agree to the Terms of Service and Privacy Policy"
-                control={<Checkbox size="small" {...field} />}
-              />
-              <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
-            </FormControl>
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
+              <FormControl  error={!!errors.acceptTermsConditions}>
+                <FormControlLabel
+                  label="Aceptar términos y condiciones"
+                  control={<Checkbox size="small" {...field} />}
+                />
+                <Link style={{ textDecoration: 'none' }} className="ml-4" to="/forgot-password">
+                  <Typography className="mx-8 text-red-100">Link Term</Typography>
+                </Link>
+                <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
+              </FormControl>
+            </div>
           )}
         />
 
@@ -257,21 +270,6 @@ const FormNaturalPerson = () => {
         >
           Create your free account
         </Button>
-        {/* <GoogleLogin
-          clientId="143735181960-lldkclfjo0c0qh4a1u07rgtfv0f8n7lc.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy="single_host_origin"
-        /> */}
-        {/* <FacebookLogin
-          appId="1027278951512859"
-          autoLoad
-          fields="name,email,picture"
-          textButton="Login"
-          callback={responseFacebook}
-          icon="fa-facebook"
-        /> */}
       </form>
     </>
   );
