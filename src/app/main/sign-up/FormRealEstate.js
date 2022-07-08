@@ -213,8 +213,38 @@ const FormRealEstate = () => {
             />
           )}
         />
-
         <Controller
+          control={control}
+          name="cellPhone"
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Numero de celular"
+              className="mb-24"
+              placeholder="Numero de celular"
+              variant="outlined"
+              fullWidth
+              error={!!errors.cellPhone}
+              helperText={errors?.cellPhone?.message}
+              InputProps={{
+                startAdornment: (
+                  <Controller
+                    control={control}
+                    name="country"
+                    render={({ field: _field }) => (
+                      <InputAdornment position="start">
+                        +57
+                        {/* <CountryCodeSelector {..._field} /> */}
+                      </InputAdornment>
+                    )}
+                  />
+                ),
+              }}
+            />
+          )}
+        />
+
+        {/* <Controller
           name="cellPhone"
           control={control}
           render={({ field }) => (
@@ -231,7 +261,7 @@ const FormRealEstate = () => {
               fullWidth
             />
           )}
-        />
+        /> */}
 
         <Controller
           name="acceptTermsConditions"

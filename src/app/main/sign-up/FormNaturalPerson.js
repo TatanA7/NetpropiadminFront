@@ -140,7 +140,37 @@ const FormNaturalPerson = () => {
             />
           )}
         />
-
+        <Controller
+          control={control}
+          name="cellPhone"
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Numero de celular"
+              className="mb-24"
+              placeholder="Numero de celular"
+              variant="outlined"
+              fullWidth
+              error={!!errors.cellPhone}
+              helperText={errors?.cellPhone?.message}
+              InputProps={{
+                startAdornment: (
+                  <Controller
+                    control={control}
+                    name="country"
+                    render={({ field: _field }) => (
+                      <InputAdornment position="start">
+                        +57
+                        {/* <CountryCodeSelector {..._field} /> */}
+                      </InputAdornment>
+                    )}
+                  />
+                ),
+              }}
+            />
+          )}
+        />
+        {/* this line is controler to cell phone 
         <Controller
           name="cellPhone"
           control={control}
@@ -158,7 +188,7 @@ const FormNaturalPerson = () => {
               fullWidth
             />
           )}
-        />
+        /> */}
 
         <Controller
           name="mail"
@@ -245,7 +275,7 @@ const FormNaturalPerson = () => {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
-              <FormControl  error={!!errors.acceptTermsConditions}>
+              <FormControl error={!!errors.acceptTermsConditions}>
                 <FormControlLabel
                   label="Aceptar términos y condiciones"
                   control={<Checkbox size="small" {...field} />}
