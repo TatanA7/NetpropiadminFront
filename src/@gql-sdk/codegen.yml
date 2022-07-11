@@ -1,5 +1,5 @@
 schema:
-  - http://localhost:3001/graphql
+  - ${GRAPHQL_ENDPOINT}
 documents: './**/*.gql'
 generates:
   ./src/@gql-sdk/api.ts:

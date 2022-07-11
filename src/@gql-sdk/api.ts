@@ -35,30 +35,44 @@ export type Builds = {
   parkingLot: Scalars['String'];
   price: Scalars['String'];
   propertyType: Scalars['String'];
+  status: Scalars['String'];
   stratum: Scalars['Float'];
   user_id: Scalars['Float'];
 };
 
 export type BuildsInput = {
-  address: Scalars['String'];
-  description: Scalars['String'];
-  imgDescription: Scalars['String'];
-  imgName: Scalars['String'];
-  lotArea: Scalars['String'];
-  managementValue: Scalars['String'];
-  name: Scalars['String'];
-  numberBathrooms: Scalars['String'];
-  numberRooms: Scalars['String'];
-  othersCost: Scalars['String'];
-  parkingLot: Scalars['String'];
-  price: Scalars['String'];
-  propertyType: Scalars['String'];
-  stratum: Scalars['String'];
-  user_id: Scalars['String'];
+  address?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  imgDescription?: InputMaybe<Scalars['String']>;
+  imgName?: InputMaybe<Scalars['String']>;
+  lotArea?: InputMaybe<Scalars['String']>;
+  managementValue?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  numberBathrooms?: InputMaybe<Scalars['String']>;
+  numberRooms?: InputMaybe<Scalars['String']>;
+  othersCost?: InputMaybe<Scalars['String']>;
+  parkingLot?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['String']>;
+  propertyType?: InputMaybe<Scalars['String']>;
+  stratum?: InputMaybe<Scalars['String']>;
 };
 
 export type BuildsUpdateInput = {
+  address?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  imgDescription?: InputMaybe<Scalars['String']>;
+  imgName?: InputMaybe<Scalars['String']>;
+  imgs?: InputMaybe<Array<Scalars['String']>>;
+  lotArea?: InputMaybe<Scalars['String']>;
+  managementValue?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  numberBathrooms?: InputMaybe<Scalars['String']>;
+  numberRooms?: InputMaybe<Scalars['String']>;
+  othersCost?: InputMaybe<Scalars['String']>;
+  parkingLot?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['String']>;
+  propertyType?: InputMaybe<Scalars['String']>;
+  stratum?: InputMaybe<Scalars['String']>;
 };
 
 export type LoginInput = {
@@ -144,7 +158,7 @@ export type UserInput = {
   NIT?: InputMaybe<Scalars['String']>;
   businessName?: InputMaybe<Scalars['String']>;
   cell_phone: Scalars['String'];
-  last_name?: InputMaybe<Scalars['String']>;
+  last_name: Scalars['String'];
   mail: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];

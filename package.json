@@ -27,6 +27,7 @@
         "clsx": "1.1.1",
         "crypto-js": "4.1.1",
         "date-fns": "2.28.0",
+        "dotenv": "^16.0.1",
         "draft-js": "0.11.7",
         "draftjs-to-html": "0.9.1",
         "framer-motion": "6.3.3",
@@ -120,7 +121,7 @@
         "analyze": "react-app-rewired build && source-map-explorer 'build/static/js/*.js' --html analyze-result.html",
         "lint": "eslint",
         "watch-codegen": "graphql-codegen --config codegen.yml --watch 'src/**/*.graphql'",
-        "gql:gen": "npx graphql-codegen --config ./src/@gql-sdk/codegen.yml && npx tsc -p ./src/@gql-sdk/tsconfig.json"
+        "gql:gen": "npx graphql-codegen --require dotenv/config --config ./src/@gql-sdk/codegen.yml && npx tsc -p ./src/@gql-sdk/tsconfig.json"
     },
     "engines": {
         "node": ">=14.0.0",
