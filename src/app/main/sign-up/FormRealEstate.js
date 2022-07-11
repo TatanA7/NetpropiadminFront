@@ -7,14 +7,18 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import _ from '@lodash';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import decode from 'jwt-decode';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, InputAdornment } from '@mui/material';
 import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
 import jwtService from '../../auth/services/jwtService';
 
 const FormRealEstate = () => {
   const [performRegister, registerResult] = useCreateUserMutation();
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const schema = yup.object().shape({
     name: yup.string().required('You must enter display name'),
@@ -83,24 +87,10 @@ const FormRealEstate = () => {
         password,
       },
     });
-
-    // JwtService.createUser({
-    //   displayName,
-    //   password,
-    //   email,
-    // })
-    //   .then((user) => {
-    //     // No need to do anything, registered user data will be set at app/auth/AuthContext
-    //   })
-    //   .catch((_errors) => {
-    //     _errors.forEach((error) => {
-    //       setError(error.type, {
-    //         type: 'manual',
-    //         message: error.message,
-    //       });
-    //     });
-    //   });
   }
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <>
       <form
@@ -127,24 +117,6 @@ const FormRealEstate = () => {
             />
           )}
         />
-        {/* <Controller
-          name="lastName"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              className="mb-24"
-              label="Last Name"
-              autoFocus
-              type="text"
-              error={!!errors.lastName}
-              helperText={errors?.lastName?.message}
-              variant="outlined"
-              required
-              fullWidth
-            />
-          )}
-        /> */}
 
         <Controller
           name="mail"
@@ -171,12 +143,25 @@ const FormRealEstate = () => {
               {...field}
               className="mb-24"
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors?.password?.message}
               variant="outlined"
               required
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -189,12 +174,25 @@ const FormRealEstate = () => {
               {...field}
               className="mb-24"
               label="Password (Confirm)"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               error={!!errors.passwordConfirm}
               helperText={errors?.passwordConfirm?.message}
               variant="outlined"
               required
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -215,8 +213,38 @@ const FormRealEstate = () => {
             />
           )}
         />
-
         <Controller
+          control={control}
+          name="cellPhone"
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Numero de celular"
+              className="mb-24"
+              placeholder="Numero de celular"
+              variant="outlined"
+              fullWidth
+              error={!!errors.cellPhone}
+              helperText={errors?.cellPhone?.message}
+              InputProps={{
+                startAdornment: (
+                  <Controller
+                    control={control}
+                    name="country"
+                    render={({ field: _field }) => (
+                      <InputAdornment position="start">
+                        +57
+                        {/* <CountryCodeSelector {..._field} /> */}
+                      </InputAdornment>
+                    )}
+                  />
+                ),
+              }}
+            />
+          )}
+        />
+
+        {/* <Controller
           name="cellPhone"
           control={control}
           render={({ field }) => (
@@ -233,7 +261,7 @@ const FormRealEstate = () => {
               fullWidth
             />
           )}
-        />
+        /> */}
 
         <Controller
           name="acceptTermsConditions"

@@ -106,6 +106,7 @@ function BasicInformation() {
     { value: 120, label: 'Cabaña' },
     { value: 130, label: 'Habitación' },
     { value: 140, label: 'Parqueadero' },
+    { value: 150, label: 'Edificio' },
   ]
   return (
     <div className="flex flex-col items-center p-24 sm:p-20 container">

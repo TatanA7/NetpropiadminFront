@@ -69,7 +69,7 @@ function SignUpPage() {
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
-      <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
+      <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-2/3 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
           <div className="flex items-center mt-32">
             <div className="flex-auto mt-px border-t" />
@@ -97,14 +97,14 @@ function SignUpPage() {
             indicatorColor="secondary"
             aria-label="secondary tabs example"
           >
-            <Tab value="0" label="Perona Natural" />
+            <Tab value="0" label="Persona Natural" />
             <Tab value="1" label="Inmobiliaria" />
           </Tabs>
           {currentTab === '0' ? <FormNatutalPerson /> : <FormRealEstate />}
           <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
             <Typography className="mx-8">Ya tienes cuenta?</Typography>
             <Link style={{ textDecoration: 'none' }} className="ml-4" to="/sign-in">
-              <Typography className="mx-8 text-red-100">Logueate</Typography>
+              <Typography className="mx-8 text-red-100">Loguéate</Typography>
             </Link>
           </div>
         </div>
