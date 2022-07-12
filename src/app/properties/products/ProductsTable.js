@@ -19,7 +19,7 @@ import { getProducts, selectProducts, selectProductsSearchText } from '../store/
 import ProductsTableHead from './ProductsTableHead';
 
 function ProductsTable(props) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const searchText = useSelector(selectProductsSearchText);
 
@@ -33,9 +33,9 @@ function ProductsTable(props) {
     id: null,
   });
 
-  useEffect(() => {
-    dispatch(getProducts()).then(() => setLoading(false));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getProducts()).then(() => setLoading(false));
+  // }, [dispatch]);
 
   useEffect(() => {
     if (searchText.length !== 0) {
@@ -106,13 +106,13 @@ function ProductsTable(props) {
     setRowsPerPage(event.target.value);
   }
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <FuseLoading />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-full">
+  //       <FuseLoading />
+  //     </div>
+  //   );
+  // }
 
   if (data.length === 0) {
     return (
@@ -122,7 +122,7 @@ function ProductsTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no products!
+          No hay propiedades!
         </Typography>
       </motion.div>
     );

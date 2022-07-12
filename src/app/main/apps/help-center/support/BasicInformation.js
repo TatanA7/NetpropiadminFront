@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Controller, useForm } from 'react-hook-form';
-import _ from '@lodash';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { FormControl, InputLabel, Menu, MenuItem, Select, FormHelperText } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, FormHelperText } from '@mui/material';
 import { useCreateBuildsMutation } from 'src/@gql-sdk/dist/api';
+import { Link } from 'react-router-dom';
 
 function BasicInformation() {
   const [performBuild, buildingResult] = useCreateBuildsMutation();
@@ -48,7 +48,7 @@ function BasicInformation() {
     defaultValues,
     resolver: yupResolver(schema),
   });
-  
+
   const { isValid, dirtyFields, errors } = formState;
   const form = watch();
   useEffect(() => {
@@ -82,9 +82,9 @@ function BasicInformation() {
 
   // eslint-disable-next-line camelcase
   function onSubmit(data) {
-    const { area, garages, ...variables } = data
+    const { area, garages, ...variables } = data;
     performBuild({
-      variables
+      variables,
     });
   }
 
@@ -107,7 +107,7 @@ function BasicInformation() {
     { value: 130, label: 'Habitación' },
     { value: 140, label: 'Parqueadero' },
     { value: 150, label: 'Edificio' },
-  ]
+  ];
   return (
     <div className="flex flex-col items-center p-24 sm:p-20 container">
       <div className="flex flex-col w-full max-w-4xl">
@@ -171,7 +171,11 @@ function BasicInformation() {
                       error={!!errors.propertyType}
                       fullWidth
                     >
-                      {propertiesTypesOptions.map(item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>)}
+                      {propertiesTypesOptions.map((item) => (
+                        <MenuItem key={item.value} value={item.value}>
+                          {item.label}
+                        </MenuItem>
+                      ))}
                     </Select>
                     <FormHelperText>{errors?.propertyType?.message}</FormHelperText>
                   </FormControl>
@@ -214,7 +218,11 @@ function BasicInformation() {
                         fullWidth
                         variant="outlined"
                       >
-                        {[1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[1, 2, 3, 4, 5, 6].map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
                       </Select>
                     )}
                   />
@@ -236,7 +244,11 @@ function BasicInformation() {
                         fullWidth
                         variant="outlined"
                       >
-                        {[1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[1, 2, 3, 4, 5, 6].map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
                       </Select>
                     )}
                   />
@@ -256,7 +268,11 @@ function BasicInformation() {
                         fullWidth
                         variant="outlined"
                       >
-                        {[1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[1, 2, 3, 4, 5, 6].map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
                       </Select>
                     )}
                   />
@@ -314,7 +330,11 @@ function BasicInformation() {
                         fullWidth
                         variant="outlined"
                       >
-                        {[0, 1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[0, 1, 2, 3, 4, 5, 6].map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
                       </Select>
                     )}
                   />
@@ -334,7 +354,11 @@ function BasicInformation() {
                         variant="outlined"
                         fullWidth
                       >
-                        {[0, 1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[0, 1, 2, 3, 4, 5, 6].map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
                       </Select>
                     )}
                   />
@@ -343,7 +367,12 @@ function BasicInformation() {
               </div>
             </div>
             <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20   mt-32">
-              <Button className="text-blue-900 " variant="outlined">
+              <Button
+                className="text-blue-900 "
+                component={Link}
+                to="/properties"
+                variant="outlined"
+              >
                 Cancelar
               </Button>
               <Button

@@ -32,7 +32,7 @@ const FormNaturalPerson = () => {
     passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     acceptTermsConditions: yup
       .boolean()
-      .oneOf([true], 'The terms and conditions must be accepted.'),
+      .oneOf([true], 'Los términos y condiciones deben ser aceptados.'),
   });
   const defaultValues = {
     name: '',
@@ -110,7 +110,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Name"
+              label="Nombre"
               autoFocus
               type="text"
               error={!!errors.name}
@@ -129,7 +129,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Last name"
+              label="Apellido"
               autoFocus
               type="text"
               error={!!errors.lastName}
@@ -215,7 +215,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors?.password?.message}
@@ -246,7 +246,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password (Confirm)"
+              label="Confirmar Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.passwordConfirm}
               helperText={errors?.passwordConfirm?.message}
@@ -280,9 +280,14 @@ const FormNaturalPerson = () => {
                   label="Aceptar términos y condiciones"
                   control={<Checkbox size="small" {...field} />}
                 />
-                <Link style={{ textDecoration: 'none' }} className="ml-4" to="/forgot-password">
-                  <Typography className="mx-8 text-red-100">Link Term</Typography>
-                </Link>
+                <a
+                  style={{ textDecoration: 'none' }}
+                  className="ml-4"
+                  href="https://pruebas.netpropi.com/col/politicas_privacidad"
+                  // to="https://pruebas.netpropi.com/col/politicas_privacidad"
+                >
+                  <Typography className="mx-8 text-red-100">términos y condiciones</Typography>
+                </a>
                 <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
               </FormControl>
             </div>
@@ -298,7 +303,7 @@ const FormNaturalPerson = () => {
           type="submit"
           size="large"
         >
-          Create your free account
+          Crear Cuenta
         </Button>
       </form>
     </>

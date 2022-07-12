@@ -1,5 +1,5 @@
 import { orange } from '@mui/material/colors';
-import { lighten, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
 import _ from '@lodash';
 
@@ -8,8 +8,8 @@ import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import Box from '@mui/material/Box';
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Root = styled('div')(({ theme }) => ({
   '& .productImageFeaturedStar': {
@@ -229,7 +229,7 @@ function ProductImagesTab(props) {
           />
         </div>
         <div className="flex items-center justify-between mt-32 p-24">
-          <Button color="secondary" className="mx-8">
+          <Button color="secondary" component={Link} to="/properties" className="mx-8">
             Cancelar
           </Button>
           <Button

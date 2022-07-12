@@ -106,7 +106,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Name"
+              label="Nombre"
               autoFocus
               type="text"
               error={!!errors.name}
@@ -142,7 +142,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors?.password?.message}
@@ -173,7 +173,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password (Confirm)"
+              label="Confirmar Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.passwordConfirm}
               helperText={errors?.passwordConfirm?.message}
@@ -269,7 +269,7 @@ const FormRealEstate = () => {
           render={({ field }) => (
             <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
               <FormControlLabel
-                label="I agree to the Terms of Service and Privacy Policy"
+                label="Aceptar términos y condiciones"
                 control={<Checkbox size="small" {...field} />}
               />
               <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
@@ -286,7 +286,7 @@ const FormRealEstate = () => {
           type="submit"
           size="large"
         >
-          Create your free account
+          Crear Cuenta
         </Button>
       </form>
     </>

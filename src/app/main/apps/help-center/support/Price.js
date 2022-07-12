@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import { Link } from 'react-router-dom';
 
 const defaultValues = { name: '', email: '', subject: '', message: '' };
 const schema = yup.object().shape({
@@ -116,7 +117,12 @@ function Price() {
             </Button>
           </div>
           <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20   mt-32 ">
-            <Button className="  text-blue-900 " variant="outlined">
+            <Button
+              className="  text-blue-900 "
+              component={Link}
+              to="/properties"
+              variant="outlined"
+            >
               Cancelar
             </Button>
             <Button
