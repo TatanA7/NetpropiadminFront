@@ -17,6 +17,7 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { getProducts, selectProducts, selectProductsSearchText } from '../store/productsSlice';
 import ProductsTableHead from './ProductsTableHead';
+import { useGetBuildsQuery } from '../../api'  
 
 function ProductsTable(props) {
   const dispatch = useDispatch();
@@ -25,28 +26,39 @@ function ProductsTable(props) {
 
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
-  const [data, setData] = useState(products);
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
     direction: 'asc',
     id: null,
   });
+  const buildsResponse = useGetBuildsQuery()
 
   useEffect(() => {
-    dispatch(getProducts()).then(() => setLoading(false));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-      );
-      setPage(0);
-    } else {
-      setData(products);
+    if (buildsResponse.isUninitialized) return;
+    if (buildsResponse.isLoading) return;
+    if (buildsResponse.isSuccess) {
+      setLoading(false)
+      setData(buildsResponse.data.Builds)
     }
-  }, [products, searchText]);
+  }, [buildsResponse]);
+
+  // useEffect(() => {
+    
+  //   dispatch(getProducts()).then(() => setLoading(false));
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (searchText.length !== 0) {
+  //     setData(
+  //       _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
+  //     );
+  //     setPage(0);
+  //   } else {
+  //     setData(products);
+  //   }
+  // }, [products, searchText]);
 
   function handleRequestSort(event, property) {
     const id = property;
@@ -186,7 +198,7 @@ function ProductsTable(props) {
                       scope="row"
                       padding="none"
                     >
-                      {n.images.length > 0 && n.featuredImageId ? (
+                      {n.imgDescription.length > 0 && n.featuredImageId ? (
                         <img
                           className="w-full block rounded"
                           src={_.find(n.images, { id: n.featuredImageId }).url}
@@ -206,27 +218,30 @@ function ProductsTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {n.categories.join(', ')}
+                      {n.address}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      <span>$</span>
-                      {n.priceTaxIncl}
+                      {n.description}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.quantity}
-                      <i
-                        className={clsx(
-                          'inline-block w-8 h-8 rounded mx-8',
-                          n.quantity <= 5 && 'bg-red',
-                          n.quantity > 5 && n.quantity <= 25 && 'bg-orange',
-                          n.quantity > 25 && 'bg-green'
-                        )}
-                      />
+                      {n.lotArea}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {n.numberRooms}
+                    </TableCell>
+
+                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {n.numberBathrooms}
+                    </TableCell>
+                  
+                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {n.price}
+                    </TableCell>
+
+                    {/* <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                       {n.active ? (
                         <FuseSvgIcon className="text-green" size={20}>
                           heroicons-outline:check-circle
@@ -236,7 +251,7 @@ function ProductsTable(props) {
                           heroicons-outline:minus-circle
                         </FuseSvgIcon>
                       )}
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}

@@ -11,6 +11,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type Autentication = {
@@ -130,8 +132,16 @@ export type MutationUpdateBuildsArgs = {
 export type Query = {
   __typename?: 'Query';
   Builds: Array<Builds>;
+  Type_build: Array<Type_Build>;
   ping: Scalars['String'];
   testBuild: Scalars['String'];
+};
+
+export type Type_Build = {
+  __typename?: 'Type_build';
+  date_add: Scalars['DateTime'];
+  id: Scalars['Float'];
+  name: Scalars['String'];
 };
 
 export type User = {
@@ -195,6 +205,11 @@ export type CreateBuildsMutationVariables = Exact<{
 
 export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number } };
 
+export type GetBuildsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string }> };
+
 
 export const LoginDocument = `
     mutation Login($loginVariables: LoginInput!) {
@@ -217,6 +232,28 @@ export const CreateBuildsDocument = `
   }
 }
     `;
+export const GetBuildsDocument = `
+    query GetBuilds {
+  Builds {
+    id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    user_id
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -229,9 +266,12 @@ const injectedRtkApi = api.injectEndpoints({
     CreateBuilds: build.mutation<CreateBuildsMutation, CreateBuildsMutationVariables>({
       query: (variables) => ({ document: CreateBuildsDocument, variables })
     }),
+    GetBuilds: build.query<GetBuildsQuery, GetBuildsQueryVariables | void>({
+      query: (variables) => ({ document: GetBuildsDocument, variables })
+    }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery } = injectedRtkApi;
 

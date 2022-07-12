@@ -125,9 +125,9 @@ function FuseNavVerticalCollapse(props) {
 
         {item.children && (
           <Collapse in={open} className="collapse-children">
-            {item.children.map((_item) => (
+            {item.children.map((_item, i) => (
               <FuseNavItem
-                key={_item.id}
+                key={i}
                 type={`vertical-${_item.type}`}
                 item={_item}
                 nestedLevel={nestedLevel + 1}

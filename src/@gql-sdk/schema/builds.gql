@@ -3,3 +3,24 @@ mutation CreateBuilds($variables: BuildsInput!) {
         id
     }
 }
+
+query GetBuilds {
+    Builds {
+        id,
+        name
+        description
+        propertyType
+        address
+        numberRooms
+        numberBathrooms
+        stratum
+        lotArea
+        user_id
+        parkingLot
+        imgName
+        imgDescription
+        price
+        managementValue
+        othersCost
+    }
+}

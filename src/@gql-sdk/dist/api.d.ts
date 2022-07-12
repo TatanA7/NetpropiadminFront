@@ -18,6 +18,8 @@ export declare type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
+    /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+    DateTime: any;
 };
 export declare type Autentication = {
     __typename?: 'Autentication';
@@ -116,8 +118,15 @@ export declare type MutationUpdateBuildsArgs = {
 export declare type Query = {
     __typename?: 'Query';
     Builds: Array<Builds>;
+    Type_build: Array<Type_Build>;
     ping: Scalars['String'];
     testBuild: Scalars['String'];
+};
+export declare type Type_Build = {
+    __typename?: 'Type_build';
+    date_add: Scalars['DateTime'];
+    id: Scalars['Float'];
+    name: Scalars['String'];
 };
 export declare type User = {
     __typename?: 'User';
@@ -185,9 +194,35 @@ export declare type CreateBuildsMutation = {
         id: number;
     };
 };
+export declare type GetBuildsQueryVariables = Exact<{
+    [key: string]: never;
+}>;
+export declare type GetBuildsQuery = {
+    __typename?: 'Query';
+    Builds: Array<{
+        __typename?: 'Builds';
+        id: number;
+        name: string;
+        description: string;
+        propertyType: string;
+        address: string;
+        numberRooms: number;
+        numberBathrooms: number;
+        stratum: number;
+        lotArea: string;
+        user_id: number;
+        parkingLot: string;
+        imgName: string;
+        imgDescription: string;
+        price: string;
+        managementValue: string;
+        othersCost: string;
+    }>;
+};
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
 export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n  }\n}\n    ";
+export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n  }\n}\n    ";
 declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
@@ -210,6 +245,12 @@ declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("
         document: string | import("graphql").DocumentNode;
         variables?: any;
     }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">;
+    GetBuilds: import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
+        [key: string]: never;
+    }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+        document: string | import("graphql").DocumentNode;
+        variables?: any;
+    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">;
 }, "api", never, typeof import("@reduxjs/toolkit/dist/query/core/module").coreModuleName | typeof import("@reduxjs/toolkit/dist/query/react/module").reactHooksModuleName>;
 export { injectedRtkApi as api };
 export declare const useLoginMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
@@ -227,4 +268,14 @@ export declare const useLoginMutation: import("@reduxjs/toolkit/dist/query/react
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">>;
+}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">>, useGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
+    [key: string]: never;
+}>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+    document: string | import("graphql").DocumentNode;
+    variables?: any;
+}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">>, useLazyGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseLazyQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
+    [key: string]: never;
+}>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+    document: string | import("graphql").DocumentNode;
+    variables?: any;
+}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">>;

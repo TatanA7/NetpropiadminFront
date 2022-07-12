@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { FormControl, InputLabel, Menu, MenuItem, Select, FormHelperText } from '@mui/material';
-import { useCreateBuildsMutation } from 'src/@gql-sdk/dist/api';
+import { useCreateBuildsMutation } from '../../../../api';
 
 function BasicInformation() {
   const [performBuild, buildingResult] = useCreateBuildsMutation();

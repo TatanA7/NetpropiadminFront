@@ -20,6 +20,28 @@ export const CreateBuildsDocument = `
   }
 }
     `;
+export const GetBuildsDocument = `
+    query GetBuilds {
+  Builds {
+    id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    user_id
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+  }
+}
+    `;
 const injectedRtkApi = api.injectEndpoints({
     endpoints: (build) => ({
         Login: build.mutation({
@@ -31,7 +53,10 @@ const injectedRtkApi = api.injectEndpoints({
         CreateBuilds: build.mutation({
             query: (variables) => ({ document: CreateBuildsDocument, variables })
         }),
+        GetBuilds: build.query({
+            query: (variables) => ({ document: GetBuildsDocument, variables })
+        }),
     }),
 });
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery } = injectedRtkApi;
