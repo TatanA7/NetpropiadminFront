@@ -42,6 +42,29 @@ export const GetBuildsDocument = `
   }
 }
     `;
+export const GetBuildByIdDocument = `
+    query GetBuildById($id: Int!) {
+  BuildsById(id: $id) {
+    id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    user_id
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+    status
+  }
+}
+    `;
 const injectedRtkApi = api.injectEndpoints({
     endpoints: (build) => ({
         Login: build.mutation({
@@ -56,7 +79,10 @@ const injectedRtkApi = api.injectEndpoints({
         GetBuilds: build.query({
             query: (variables) => ({ document: GetBuildsDocument, variables })
         }),
+        GetBuildById: build.query({
+            query: (variables) => ({ document: GetBuildByIdDocument, variables })
+        }),
     }),
 });
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;

@@ -1,13 +1,14 @@
 import i18next from 'i18next';
 
 import ProjectDashboardApp from 'src/app/dashboards/project/ProjectDashboardApp';
-import Products from 'src/app/properties/products/Products';
+import Properties from 'src/app/properties/properties/Properties';
+import PropertyForm from 'src/app/properties/properyForm/PropertyForm';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
 // import Example from './Example';
 // import SplitScreenSignUpPage from '../pages/authentication/sign-up/SplitScreenSignUpPage';
-import HelpCenterSupport from '../apps/help-center/support/HelpCenterSupport';
+// import HelpCenterSupport from '../apps/help-center/support/HelpCenterSupport';
 import ModernForgotPasswordPage from '../pages/authentication/forgot-password/ModernForgotPasswordPage';
 
 i18next.addResourceBundle('en', 'examplePage', en);
@@ -27,11 +28,15 @@ const ExampleConfig = {
     },
     {
       path: 'properties',
-      element: <Products />,
+      element: <Properties />,
     },
     {
       path: 'properties/new',
-      element: <HelpCenterSupport />,
+      element: <PropertyForm />,
+    },
+    {
+      path: 'properties/:id',
+      element: <PropertyForm />,
     },
     {
       path: 'forgot-password',

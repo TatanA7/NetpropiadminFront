@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectProductsSearchText, setProductsSearchText } from '../store/productsSlice';
 
-function ProductsHeader(props) {
+function PropertiesHeader(props) {
   const dispatch = useDispatch();
   const searchText = useSelector(selectProductsSearchText);
 
@@ -21,7 +21,7 @@ function ProductsHeader(props) {
         delay={300}
         className="text-24 md:text-32 font-extrabold tracking-tight"
       >
-        Products
+        Propiedades
       </Typography>
 
       <div className="flex flex-col w-full sm:w-auto sm:flex-row space-y-16 sm:space-y-0 flex-1 items-center justify-end space-x-8">
@@ -65,4 +65,4 @@ function ProductsHeader(props) {
   );
 }
 
-export default ProductsHeader;
+export default PropertiesHeader;

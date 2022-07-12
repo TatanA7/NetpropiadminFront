@@ -132,9 +132,15 @@ export type MutationUpdateBuildsArgs = {
 export type Query = {
   __typename?: 'Query';
   Builds: Array<Builds>;
+  BuildsById: Builds;
   Type_build: Array<Type_Build>;
   ping: Scalars['String'];
   testBuild: Scalars['String'];
+};
+
+
+export type QueryBuildsByIdArgs = {
+  id: Scalars['Int'];
 };
 
 export type Type_Build = {
@@ -210,6 +216,13 @@ export type GetBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string }> };
 
+export type GetBuildByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetBuildByIdQuery = { __typename?: 'Query', BuildsById: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
+
 
 export const LoginDocument = `
     mutation Login($loginVariables: LoginInput!) {
@@ -254,6 +267,29 @@ export const GetBuildsDocument = `
   }
 }
     `;
+export const GetBuildByIdDocument = `
+    query GetBuildById($id: Int!) {
+  BuildsById(id: $id) {
+    id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    user_id
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+    status
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -269,9 +305,12 @@ const injectedRtkApi = api.injectEndpoints({
     GetBuilds: build.query<GetBuildsQuery, GetBuildsQueryVariables | void>({
       query: (variables) => ({ document: GetBuildsDocument, variables })
     }),
+    GetBuildById: build.query<GetBuildByIdQuery, GetBuildByIdQueryVariables>({
+      query: (variables) => ({ document: GetBuildByIdDocument, variables })
+    }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
 

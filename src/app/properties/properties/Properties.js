@@ -2,19 +2,19 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import withReducer from 'app/store/withReducer';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import reducer from '../store';
-import ProductsHeader from './ProductsHeader';
-import ProductsTable from './ProductsTable';
+import PropertiesHeader from './PropertiesHeader';
+import PropertiesTable from './PropertiesTable';
 
-function Products() {
+function Properties() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   return (
     <FusePageCarded
-      header={<ProductsHeader />}
-      content={<ProductsTable />}
+      header={<PropertiesHeader />}
+      content={<PropertiesTable />}
       scroll={isMobile ? 'normal' : 'content'}
     />
   );
 }
 
-export default withReducer('eCommerceApp', reducer)(Products);
+export default withReducer('eCommerceApp', reducer)(Properties);

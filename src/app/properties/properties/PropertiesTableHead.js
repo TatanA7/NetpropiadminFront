@@ -76,7 +76,7 @@ const rows = [
   },
 ];
 
-function ProductsTableHead(props) {
+function PropertiesTableHead(props) {
   const { selectedProductIds } = props;
   const numSelected = selectedProductIds.length;
 
@@ -192,4 +192,4 @@ function ProductsTableHead(props) {
   );
 }
 
-export default ProductsTableHead;
+export default PropertiesTableHead;

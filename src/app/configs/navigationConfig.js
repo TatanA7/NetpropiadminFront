@@ -54,6 +54,9 @@ const navigationConfig = [
             url: 'properties/new',
           },
           {
+            url: 'properties/:id',
+          },
+          {
             id: 'panel-inquilinos',
             title: 'Inquilinos',
             type: 'item',

@@ -24,3 +24,25 @@ query GetBuilds {
         othersCost
     }
 }
+
+query GetBuildById($id: Int!) {
+    BuildsById(id: $id) {
+        id
+        name
+        description
+        propertyType
+        address
+        numberRooms
+        numberBathrooms
+        stratum
+        lotArea
+        user_id
+        parkingLot
+        imgName
+        imgDescription
+        price
+        managementValue
+        othersCost
+        status
+    }
+}
