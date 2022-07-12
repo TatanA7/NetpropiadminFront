@@ -66,7 +66,7 @@ function ProjectDashboardAppHeader(props) {
                 heroicons-solid:bell
               </FuseSvgIcon>
               <Typography className="mx-6 leading-6 truncate" color="text.secondary">
-                You have 2 new messages and 15 new tasks
+                No tienes tareas pendientes
               </Typography>
             </div>
           </div>
@@ -78,7 +78,7 @@ function ProjectDashboardAppHeader(props) {
             color="primary"
             startIcon={<FuseSvgIcon size={20}>heroicons-solid:mail</FuseSvgIcon>}
           >
-            Messages
+            Mensajes
           </Button>
           <Button
             className="whitespace-nowrap"
@@ -86,7 +86,7 @@ function ProjectDashboardAppHeader(props) {
             color="secondary"
             startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
           >
-            Settings
+            Configuración
           </Button>
         </div>
       </div>

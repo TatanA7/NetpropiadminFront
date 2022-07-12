@@ -25604,10 +25604,10 @@
             },
             "currentRange": "DT",
             "data": {
-              "name": "Due Tasks",
+              "name": "Reparaciones pendientes",
               "count": {
                 "DY": 21,
-                "DT": 25,
+                "DT": 0,
                 "DTM": 19
               },
               "extra": {
@@ -25622,10 +25622,10 @@
             "detail": "You can show some detailed information about this widget in here."
           },
           "overdue": {
-            "title": "Overdue",
+            "title": "Contratos pendientes",
             "data": {
-              "name": "Tasks",
-              "count": 4,
+              "name": "Contratos pendientes",
+              "count": 0,
               "extra": {
                 "name": "Yesterday's overdue",
                 "count": 2
@@ -25634,10 +25634,10 @@
             "detail": "You can show some detailed information about this widget in here."
           },
           "issues": {
-            "title": "Issues",
+            "title": "Total de propiedades",
             "data": {
               "name": "Open",
-              "count": 32,
+              "count": 0,
               "extra": {
                 "name": "Closed today",
                 "count": 0
@@ -25646,10 +25646,10 @@
             "detail": "You can show some detailed information about this widget in here."
           },
           "features": {
-            "title": "Features",
+            "title": "Tareas pendientes",
             "data": {
               "name": "Proposals",
-              "count": 42,
+              "count": 0,
               "extra": {
                 "name": "Implemented",
                 "count": 8
@@ -25660,12 +25660,12 @@
           "githubIssues": {
             "overview": {
               "this-week": {
-                "new-issues": 214,
-                "closed-issues": 75,
-                "fixed": 3,
-                "wont-fix": 4,
-                "re-opened": 8,
-                "needs-triage": 6
+                "new-issues": 0,
+                "closed-issues": 0,
+                "fixed": 0,
+                "wont-fix": 0,
+                "re-opened": 0,
+                "needs-triage": 0
               },
               "last-week": {
                 "new-issues": 197,
