@@ -34,7 +34,7 @@ function PropertiesHeader(props) {
           <FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
 
           <Input
-            placeholder="Search products"
+            placeholder="Buscar una propiedad"
             className="flex flex-1"
             disableUnderline
             fullWidth
@@ -57,7 +57,7 @@ function PropertiesHeader(props) {
             color="secondary"
             startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}
           >
-            Add
+            Agregar
           </Button>
         </motion.div>
       </div>
