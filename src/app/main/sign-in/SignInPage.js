@@ -151,7 +151,7 @@ function SignInPage() {
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Password"
+                  label="Contraseña"
                   type={showPassword ? 'text' : 'password'}
                   error={!!errors.password}
                   helperText={errors?.password?.message}

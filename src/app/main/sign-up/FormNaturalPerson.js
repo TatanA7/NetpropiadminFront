@@ -12,7 +12,6 @@ import * as yup from 'yup';
 import decode from 'jwt-decode';
 import { IconButton, InputAdornment, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
 import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
 import jwtService from '../../auth/services/jwtService';
 
@@ -23,16 +22,14 @@ const FormNaturalPerson = () => {
   const schema = yup.object().shape({
     name: yup.string().required('You must enter display name'),
     lastName: yup.string().required('You must enter your last name'),
-    cellPhone: yup.string().required('You must enter your phone'),
+    cellPhone: yup.string().matches(/^\d+$/, 'solo numeros').required('You must enter your phone'),
     mail: yup.string().email('You must enter a valid email').required('You must enter a email'),
     password: yup
       .string()
       .required('Please enter your password.')
       .min(8, 'Password is too short - should be 8 chars minimum.'),
     passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-    acceptTermsConditions: yup
-      .boolean()
-      .oneOf([true], 'The terms and conditions must be accepted.'),
+    acceptTermsConditions: yup.boolean().oneOf([true], 'Debes aceptar los términos y condiciones.'),
   });
   const defaultValues = {
     name: '',
@@ -110,7 +107,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Name"
+              label="Nombre"
               autoFocus
               type="text"
               error={!!errors.name}
@@ -129,7 +126,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Last name"
+              label="Apellido"
               autoFocus
               type="text"
               error={!!errors.lastName}
@@ -215,7 +212,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors?.password?.message}
@@ -246,7 +243,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password (Confirm)"
+              label="Confirmar Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.passwordConfirm}
               helperText={errors?.passwordConfirm?.message}
@@ -274,18 +271,22 @@ const FormNaturalPerson = () => {
           name="acceptTermsConditions"
           control={control}
           render={({ field }) => (
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
-              <FormControl error={!!errors.acceptTermsConditions}>
-                <FormControlLabel
-                  label="Aceptar términos y condiciones"
-                  control={<Checkbox size="small" {...field} />}
-                />
-                <Link style={{ textDecoration: 'none' }} className="ml-4" to="/forgot-password">
-                  <Typography className="mx-8 text-red-100">Link Term</Typography>
-                </Link>
-                <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
-              </FormControl>
-            </div>
+            <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
+              <FormControlLabel
+                label="Aceptar términos y condiciones"
+                control={<Checkbox size="small" {...field} />}
+              />
+              <a
+                href="https://pruebas.netpropi.com/col/politicas_privacidad"
+                target="_blank"
+                style={{ textDecoration: 'none' }}
+                className="ml-4"
+                rel="noreferrer"
+              >
+                <Typography className="mx-8 text-red-100">Términos y condicines</Typography>
+              </a>
+              <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
+            </FormControl>
           )}
         />
 
@@ -298,7 +299,7 @@ const FormNaturalPerson = () => {
           type="submit"
           size="large"
         >
-          Create your free account
+          Crear Cuenta
         </Button>
       </form>
     </>

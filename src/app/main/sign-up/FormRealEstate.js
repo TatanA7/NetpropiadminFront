@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import decode from 'jwt-decode';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { IconButton, InputAdornment } from '@mui/material';
+import { IconButton, InputAdornment, Typography } from '@mui/material';
 import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
 import jwtService from '../../auth/services/jwtService';
 
@@ -19,20 +19,20 @@ const FormRealEstate = () => {
   const [performRegister, registerResult] = useCreateUserMutation();
   const [showPassword, setShowPassword] = useState(false);
 
-
   const schema = yup.object().shape({
     name: yup.string().required('You must enter display name'),
-    cellPhone: yup.string().required('You must enter your phone'),
-    NIT: yup.string().required('Dato requerido'),
+    cellPhone: yup.string().matches(/^\d+$/, 'solo numeros').required('You must enter your phone'),
+    NIT: yup
+      .string()
+      .matches(/(^[0-9]+-{1}[0-9]{1})/, 'Debe ser un NIT válido')
+      .required('Dato requerido'),
     mail: yup.string().email('You must enter a valid email').required('You must enter a email'),
     password: yup
       .string()
       .required('Please enter your password.')
       .min(8, 'Password is too short - should be 8 chars minimum.'),
     passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-    acceptTermsConditions: yup
-      .boolean()
-      .oneOf([true], 'The terms and conditions must be accepted.'),
+    acceptTermsConditions: yup.boolean().oneOf([true], 'Debes aceptar los términos y condiciones.'),
   });
   const defaultValues = {
     name: '',
@@ -106,7 +106,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Name"
+              label="Nombre"
               autoFocus
               type="text"
               error={!!errors.name}
@@ -136,13 +136,13 @@ const FormRealEstate = () => {
           )}
         />
         <Controller
-          name="password"
+          name="Contraseña"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
               className="mb-24"
-              label="Password"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors?.password?.message}
@@ -173,7 +173,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Password (Confirm)"
+              label="Confirmar Contraseña"
               type={showPassword ? 'text' : 'password'}
               error={!!errors.passwordConfirm}
               helperText={errors?.passwordConfirm?.message}
@@ -269,9 +269,16 @@ const FormRealEstate = () => {
           render={({ field }) => (
             <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
               <FormControlLabel
-                label="I agree to the Terms of Service and Privacy Policy"
+                label="Aceptar términos y condiciones"
                 control={<Checkbox size="small" {...field} />}
               />
+              <a
+                href="https://pruebas.netpropi.com/col/politicas_privacidad"
+                style={{ textDecoration: 'none' }}
+                className="ml-4"
+              >
+                <Typography className="mx-8 text-red-100">Términos y condicines</Typography>
+              </a>
               <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
             </FormControl>
           )}
@@ -286,7 +293,7 @@ const FormRealEstate = () => {
           type="submit"
           size="large"
         >
-          Create your free account
+          Crear Cuenta
         </Button>
       </form>
     </>
