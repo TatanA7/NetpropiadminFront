@@ -278,8 +278,10 @@ const FormNaturalPerson = () => {
               />
               <a
                 href="https://pruebas.netpropi.com/col/politicas_privacidad"
+                target="_blank"
                 style={{ textDecoration: 'none' }}
                 className="ml-4"
+                rel="noreferrer"
               >
                 <Typography className="mx-8 text-red-100">Términos y condicines</Typography>
               </a>
