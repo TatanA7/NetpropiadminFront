@@ -33,7 +33,11 @@ function PropertiesTable(props) {
     direction: 'asc',
     id: null,
   });
-  const buildsResponse = useGetBuildsQuery()
+  
+  const buildsResponse = useGetBuildsQuery(null, {
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true
+  })
 
   useEffect(() => {
     if (buildsResponse.isUninitialized) return;

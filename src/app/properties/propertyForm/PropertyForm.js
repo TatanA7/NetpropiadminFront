@@ -27,7 +27,9 @@ function PropertyForm() {
   const buildResult = useGetBuildByIdQuery({
     id: Number(id)
   }, {
-    skip: !id
+    skip: !id,
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true
   })
 
   useEffect(() => {
