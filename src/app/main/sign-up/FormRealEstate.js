@@ -136,7 +136,7 @@ const FormRealEstate = () => {
           )}
         />
         <Controller
-          name="Contraseña"
+          name="password"
           control={control}
           render={({ field }) => (
             <TextField
