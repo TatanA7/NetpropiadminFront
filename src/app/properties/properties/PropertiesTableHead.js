@@ -41,37 +41,38 @@ const rows = [
   },
   {
     id: 'description',
-    align: 'right',
     disablePadding: false,
     label: 'Descripción',
     sort: true,
   },
   {
     id: 'lotArea',
-    align: 'right',
     disablePadding: false,
     label: 'Area Lote',
     sort: true,
   },
   {
     id: 'numberRooms',
-    align: 'right',
     disablePadding: false,
     label: 'Cuartos',
     sort: true,
   },
   {
     id: 'numberBathrooms',
-    align: 'right',
     disablePadding: false,
     label: 'Baños',
     sort: true,
   },
   {
     id: 'price',
-    align: 'right',
     disablePadding: false,
     label: 'Precio',
+    sort: true,
+  },
+  {
+    id: 'status',
+    disablePadding: false,
+    label: 'Estado',
     sort: true,
   },
 ];

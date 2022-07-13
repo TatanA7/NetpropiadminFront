@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -9,93 +9,69 @@ import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { FormControl, InputLabel, Menu, MenuItem, Select, FormHelperText } from '@mui/material';
-import { useCreateBuildsMutation } from '../../api';
-import { useLocation } from 'react-router-dom'
 
-function BasicInformation() {
-  const [performBuild, buildingResult] = useCreateBuildsMutation();
-  const location = useLocation();
+const schema = yup.object().shape({
+  address: yup.string().required('Dato requerido'),
+  description: yup.string().required('Dato requerido'),
+  lotArea: yup.string().required('Dato requerido'),
+  lotMeters: yup.string().required('Dato requerido'),
+  name: yup.string().required('Dato requerido'),
+  numberBathrooms: yup.string().required('Dato requerido'),
+  numberRooms: yup.string().required('Dato requerido'),
+  parkingLot: yup.string().required('Dato requerido'),
+  propertyType: yup.string().required('Dato requerido'),
+  stratum: yup.string().required('Dato requerido')
+  // imgDescription: yup.string().required('Dato requerido'),
+  // imgName: yup.string().required('Dato requerido'),
+  // managementValue: yup.string().required('Dato requerido'),
+  // othersCost: yup.string().required('Dato requerido'),
+  // price: yup.string().required('Dato requerido'),
+});
 
+const defaultValues = {
+  name: '',
+  description: '',
+  address: '',
+  lotArea: '',
+  lotMeters: '',
+  numberBathrooms: '',
+  numberRooms: '',
+  parkingLot: '',
+  propertyType: '',
+  stratum: '',
+};
+
+function BasicInformation({ property, onSubmit }) {
   
-  const schema = yup.object().shape({
-    address: yup.string().required('Dato requerido'),
-    description: yup.string().required('Dato requerido'),
-    lotArea: yup.string().required('Dato requerido'),
-    area: yup.string().required('Dato requerido'),
-    name: yup.string().required('Dato requerido'),
-    numberBathrooms: yup.string().required('Dato requerido'),
-    numberRooms: yup.string().required('Dato requerido'),
-    parkingLot: yup.string().required('Dato requerido'),
-    propertyType: yup.string().required('Dato requerido'),
-    stratum: yup.string().required('Dato requerido'),
-    garages: yup.string().required('Dato requerido'),
-    // imgDescription: yup.string().required('Dato requerido'),
-    // imgName: yup.string().required('Dato requerido'),
-    // managementValue: yup.string().required('Dato requerido'),
-    // othersCost: yup.string().required('Dato requerido'),
-    // price: yup.string().required('Dato requerido'),
-  });
-  const defaultValues = {
-    address: '',
-    description: '',
-    lotArea: '',
-    name: '',
-    numberBathrooms: '',
-    numberRooms: '',
-    parkingLot: '',
-    propertyType: '',
-    stratum: '',
-    garages: '',
-    area: '',
-  };
-  const { control, handleSubmit, watch, formState } = useForm({
+  const { control, handleSubmit, formState, reset } = useForm({
     mode: 'onChange',
     defaultValues,
     resolver: yupResolver(schema),
   });
-  
   const { isValid, dirtyFields, errors } = formState;
-  const form = watch();
-
+  
+  
+  
   useEffect(() => {
-    console.log(location)
-  }, [location]);
+    if (!property) return
 
+    const formValues = Object.keys(defaultValues).reduce((acc, key) => {
+      acc[key] = property[key]
+      return acc
+    }, {})
+
+    reset(formValues)
+  }, [property])
+  
   useEffect(() => {
-    console.log(errors);
+    if (Object.keys(errors).length) {
+      console.error(errors);
+    }
   }, [errors]);
 
-  // useEffect(() => {
-  //   if (buildingResult.isUninitialized) return;
-  //   if (buildingResult.status === 'pending') return;
-
-  //   if (buildingResult.isSuccess) {
-  //     const building = buildingResult.data.createBuilds;
-
-  //     building.emit('onLogin', {
-  //       ...buildingResult.data.createBuilds,
-  //       role: 'admin',
-  //       data: {
-  //         displayName: `${building.name}`,
-  //         photoURL: '',
-  //       },
-  //     });
-  //     return;
-  //   }
-
-  //   if (buildingResult.isError) {
-  //     // Reemplazar por un componente de notificacion
-  //     // eslint-disable-next-line no-alert
-  //     alert('Register Build failed');
-  //   }
-  // }, [buildingResult]);
-
   // eslint-disable-next-line camelcase
-  function onSubmit(data) {
-    const { area, garages, ...variables } = data
-    performBuild({
-      variables
-    });
+  function handlerSubmit(data) {
+    if (onSubmit) onSubmit(data)
   }
 
   const propertiesTypesOptions = [
@@ -122,7 +98,7 @@ function BasicInformation() {
     <div className="flex flex-col items-center p-24 sm:p-20 container">
       <div className="flex flex-col w-full max-w-4xl">
         <Paper className="mt-12 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
-          <form onSubmit={handleSubmit(onSubmit)} className="px-0 sm:px-24">
+          <form onSubmit={handleSubmit(handlerSubmit)} className="px-0 sm:px-24">
             <div className="mb-24">
               <Typography color="text.secondary">Nombre de propiedad*</Typography>
             </div>
@@ -277,7 +253,7 @@ function BasicInformation() {
                 <FormControl className="sm:w-full md:max-w-320">
                   <Controller
                     control={control}
-                    name="area"
+                    name="lotArea"
                     render={({ field }) => (
                       <TextField
                         {...field}
@@ -285,8 +261,8 @@ function BasicInformation() {
                         placeholder="Área en mts2"
                         variant="outlined"
                         fullWidth
-                        error={!!errors.area}
-                        helperText={errors?.area?.message}
+                        error={!!errors.lotArea}
+                        helperText={errors?.lotArea?.message}
                       />
                     )}
                   />
@@ -294,7 +270,7 @@ function BasicInformation() {
                 <FormControl className="sm:w-full md:max-w-320">
                   <Controller
                     control={control}
-                    name="lotArea"
+                    name="lotMeters"
                     render={({ field }) => (
                       <TextField
                         {...field}
@@ -302,8 +278,8 @@ function BasicInformation() {
                         placeholder="Lote en mts2"
                         variant="outlined"
                         fullWidth
-                        error={!!errors.lotArea}
-                        helperText={errors?.lotArea?.message}
+                        error={!!errors.lotMeters}
+                        helperText={errors?.lotMeters?.message}
                       />
                     )}
                   />
@@ -330,31 +306,11 @@ function BasicInformation() {
                   />
                   <FormHelperText>{errors?.parkingLot?.message}</FormHelperText>
                 </FormControl>
-                <FormControl fullWidth className="md:max-w-320" error={!!errors.garages}>
-                  <InputLabel id="number-Garages-label">Garages*</InputLabel>
-                  <Controller
-                    control={control}
-                    name="garages"
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label="Garages"
-                        labelId="number-Garages-label"
-                        id="stratum"
-                        variant="outlined"
-                        fullWidth
-                      >
-                        {[0, 1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
-                      </Select>
-                    )}
-                  />
-                  <FormHelperText>{errors?.garages?.message}</FormHelperText>
-                </FormControl>
               </div>
             </div>
             <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20   mt-32">
               <Button
-                className="text-blue-900 "
+                className="text-blue-900"
                 component={Link}
                 to="/properties"
                 variant="outlined"

@@ -17,6 +17,45 @@ export const CreateBuildsDocument = `
     mutation CreateBuilds($variables: BuildsInput!) {
   createBuilds(variables: $variables) {
     id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    lotMeters
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+    status
+  }
+}
+    `;
+export const UpdateBuildsDocument = `
+    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
+  updateBuilds(fields: $fields, id: $updateBuildsId) {
+    id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    lotMeters
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+    status
   }
 }
     `;
@@ -32,6 +71,7 @@ export const GetBuildsDocument = `
     numberBathrooms
     stratum
     lotArea
+    lotMeters
     user_id
     parkingLot
     imgName
@@ -39,6 +79,7 @@ export const GetBuildsDocument = `
     price
     managementValue
     othersCost
+    status
   }
 }
     `;
@@ -54,6 +95,7 @@ export const GetBuildByIdDocument = `
     numberBathrooms
     stratum
     lotArea
+    lotMeters
     user_id
     parkingLot
     imgName
@@ -76,6 +118,9 @@ const injectedRtkApi = api.injectEndpoints({
         CreateBuilds: build.mutation({
             query: (variables) => ({ document: CreateBuildsDocument, variables })
         }),
+        UpdateBuilds: build.mutation({
+            query: (variables) => ({ document: UpdateBuildsDocument, variables })
+        }),
         GetBuilds: build.query({
             query: (variables) => ({ document: GetBuildsDocument, variables })
         }),
@@ -85,4 +130,4 @@ const injectedRtkApi = api.injectEndpoints({
     }),
 });
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;

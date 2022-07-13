@@ -29,6 +29,7 @@ export type Builds = {
   imgDescription: Scalars['String'];
   imgName: Scalars['String'];
   lotArea: Scalars['String'];
+  lotMeters: Scalars['String'];
   managementValue: Scalars['String'];
   name: Scalars['String'];
   numberBathrooms: Scalars['Float'];
@@ -43,11 +44,14 @@ export type Builds = {
 };
 
 export type BuildsInput = {
+  acquired_in?: InputMaybe<Scalars['String']>;
   address?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   imgDescription?: InputMaybe<Scalars['String']>;
   imgName?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['String']>;
   lotArea?: InputMaybe<Scalars['String']>;
+  lotMeters?: InputMaybe<Scalars['String']>;
   managementValue?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   numberBathrooms?: InputMaybe<Scalars['String']>;
@@ -57,6 +61,7 @@ export type BuildsInput = {
   price?: InputMaybe<Scalars['String']>;
   propertyType?: InputMaybe<Scalars['String']>;
   stratum?: InputMaybe<Scalars['String']>;
+  year_built?: InputMaybe<Scalars['String']>;
 };
 
 export type BuildsUpdateInput = {
@@ -66,6 +71,7 @@ export type BuildsUpdateInput = {
   imgName?: InputMaybe<Scalars['String']>;
   imgs?: InputMaybe<Array<Scalars['String']>>;
   lotArea?: InputMaybe<Scalars['String']>;
+  lotMeters?: InputMaybe<Scalars['String']>;
   managementValue?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   numberBathrooms?: InputMaybe<Scalars['String']>;
@@ -209,19 +215,27 @@ export type CreateBuildsMutationVariables = Exact<{
 }>;
 
 
-export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number } };
+export type CreateBuildsMutation = { __typename?: 'Mutation', createBuilds: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
+
+export type UpdateBuildsMutationVariables = Exact<{
+  fields: BuildsUpdateInput;
+  updateBuildsId: Scalars['Int'];
+}>;
+
+
+export type UpdateBuildsMutation = { __typename?: 'Mutation', updateBuilds: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
 
 export type GetBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string }> };
+export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string }> };
 
 export type GetBuildByIdQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetBuildByIdQuery = { __typename?: 'Query', BuildsById: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
+export type GetBuildByIdQuery = { __typename?: 'Query', BuildsById: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
 
 
 export const LoginDocument = `
@@ -242,6 +256,45 @@ export const CreateBuildsDocument = `
     mutation CreateBuilds($variables: BuildsInput!) {
   createBuilds(variables: $variables) {
     id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    lotMeters
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+    status
+  }
+}
+    `;
+export const UpdateBuildsDocument = `
+    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
+  updateBuilds(fields: $fields, id: $updateBuildsId) {
+    id
+    name
+    description
+    propertyType
+    address
+    numberRooms
+    numberBathrooms
+    stratum
+    lotArea
+    lotMeters
+    parkingLot
+    imgName
+    imgDescription
+    price
+    managementValue
+    othersCost
+    status
   }
 }
     `;
@@ -257,6 +310,7 @@ export const GetBuildsDocument = `
     numberBathrooms
     stratum
     lotArea
+    lotMeters
     user_id
     parkingLot
     imgName
@@ -264,6 +318,7 @@ export const GetBuildsDocument = `
     price
     managementValue
     othersCost
+    status
   }
 }
     `;
@@ -279,6 +334,7 @@ export const GetBuildByIdDocument = `
     numberBathrooms
     stratum
     lotArea
+    lotMeters
     user_id
     parkingLot
     imgName
@@ -302,6 +358,9 @@ const injectedRtkApi = api.injectEndpoints({
     CreateBuilds: build.mutation<CreateBuildsMutation, CreateBuildsMutationVariables>({
       query: (variables) => ({ document: CreateBuildsDocument, variables })
     }),
+    UpdateBuilds: build.mutation<UpdateBuildsMutation, UpdateBuildsMutationVariables>({
+      query: (variables) => ({ document: UpdateBuildsDocument, variables })
+    }),
     GetBuilds: build.query<GetBuildsQuery, GetBuildsQueryVariables | void>({
       query: (variables) => ({ document: GetBuildsDocument, variables })
     }),
@@ -312,5 +371,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
 

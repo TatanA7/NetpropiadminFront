@@ -34,6 +34,7 @@ export declare type Builds = {
     imgDescription: Scalars['String'];
     imgName: Scalars['String'];
     lotArea: Scalars['String'];
+    lotMeters: Scalars['String'];
     managementValue: Scalars['String'];
     name: Scalars['String'];
     numberBathrooms: Scalars['Float'];
@@ -47,11 +48,14 @@ export declare type Builds = {
     user_id: Scalars['Float'];
 };
 export declare type BuildsInput = {
+    acquired_in?: InputMaybe<Scalars['String']>;
     address?: InputMaybe<Scalars['String']>;
     description?: InputMaybe<Scalars['String']>;
     imgDescription?: InputMaybe<Scalars['String']>;
     imgName?: InputMaybe<Scalars['String']>;
+    longitude?: InputMaybe<Scalars['String']>;
     lotArea?: InputMaybe<Scalars['String']>;
+    lotMeters?: InputMaybe<Scalars['String']>;
     managementValue?: InputMaybe<Scalars['String']>;
     name?: InputMaybe<Scalars['String']>;
     numberBathrooms?: InputMaybe<Scalars['String']>;
@@ -61,6 +65,7 @@ export declare type BuildsInput = {
     price?: InputMaybe<Scalars['String']>;
     propertyType?: InputMaybe<Scalars['String']>;
     stratum?: InputMaybe<Scalars['String']>;
+    year_built?: InputMaybe<Scalars['String']>;
 };
 export declare type BuildsUpdateInput = {
     address?: InputMaybe<Scalars['String']>;
@@ -69,6 +74,7 @@ export declare type BuildsUpdateInput = {
     imgName?: InputMaybe<Scalars['String']>;
     imgs?: InputMaybe<Array<Scalars['String']>>;
     lotArea?: InputMaybe<Scalars['String']>;
+    lotMeters?: InputMaybe<Scalars['String']>;
     managementValue?: InputMaybe<Scalars['String']>;
     name?: InputMaybe<Scalars['String']>;
     numberBathrooms?: InputMaybe<Scalars['String']>;
@@ -196,6 +202,49 @@ export declare type CreateBuildsMutation = {
     createBuilds: {
         __typename?: 'Builds';
         id: number;
+        name: string;
+        description: string;
+        propertyType: string;
+        address: string;
+        numberRooms: number;
+        numberBathrooms: number;
+        stratum: number;
+        lotArea: string;
+        lotMeters: string;
+        parkingLot: string;
+        imgName: string;
+        imgDescription: string;
+        price: string;
+        managementValue: string;
+        othersCost: string;
+        status: string;
+    };
+};
+export declare type UpdateBuildsMutationVariables = Exact<{
+    fields: BuildsUpdateInput;
+    updateBuildsId: Scalars['Int'];
+}>;
+export declare type UpdateBuildsMutation = {
+    __typename?: 'Mutation';
+    updateBuilds: {
+        __typename?: 'Builds';
+        id: number;
+        name: string;
+        description: string;
+        propertyType: string;
+        address: string;
+        numberRooms: number;
+        numberBathrooms: number;
+        stratum: number;
+        lotArea: string;
+        lotMeters: string;
+        parkingLot: string;
+        imgName: string;
+        imgDescription: string;
+        price: string;
+        managementValue: string;
+        othersCost: string;
+        status: string;
     };
 };
 export declare type GetBuildsQueryVariables = Exact<{
@@ -214,6 +263,7 @@ export declare type GetBuildsQuery = {
         numberBathrooms: number;
         stratum: number;
         lotArea: string;
+        lotMeters: string;
         user_id: number;
         parkingLot: string;
         imgName: string;
@@ -221,6 +271,7 @@ export declare type GetBuildsQuery = {
         price: string;
         managementValue: string;
         othersCost: string;
+        status: string;
     }>;
 };
 export declare type GetBuildByIdQueryVariables = Exact<{
@@ -239,6 +290,7 @@ export declare type GetBuildByIdQuery = {
         numberBathrooms: number;
         stratum: number;
         lotArea: string;
+        lotMeters: string;
         user_id: number;
         parkingLot: string;
         imgName: string;
@@ -251,9 +303,10 @@ export declare type GetBuildByIdQuery = {
 };
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
-export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n  }\n}\n    ";
-export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n  }\n}\n    ";
-export declare const GetBuildByIdDocument = "\n    query GetBuildById($id: Int!) {\n  BuildsById(id: $id) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const GetBuildByIdDocument = "\n    query GetBuildById($id: Int!) {\n  BuildsById(id: $id) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
@@ -276,6 +329,13 @@ declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("
         document: string | import("graphql").DocumentNode;
         variables?: any;
     }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">;
+    UpdateBuilds: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+        fields: BuildsUpdateInput;
+        updateBuildsId: Scalars['Int'];
+    }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+        document: string | import("graphql").DocumentNode;
+        variables?: any;
+    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, UpdateBuildsMutation, "api">;
     GetBuilds: import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
         [key: string]: never;
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
@@ -305,7 +365,13 @@ export declare const useLoginMutation: import("@reduxjs/toolkit/dist/query/react
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">>, useGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
+}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">>, useUpdateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+    fields: BuildsUpdateInput;
+    updateBuildsId: Scalars['Int'];
+}>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+    document: string | import("graphql").DocumentNode;
+    variables?: any;
+}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, UpdateBuildsMutation, "api">>, useGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
     [key: string]: never;
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;

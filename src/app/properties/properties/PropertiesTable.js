@@ -140,6 +140,32 @@ function PropertiesTable(props) {
     );
   }
 
+  const renderStatus = (status) => {
+    let textColor = ''
+    let statusLabel = ''
+
+    switch (status) {
+      case 'draft':
+        textColor = 'text-black-500'
+        statusLabel = 'Creado'
+        break;
+      case 'completed':
+        textColor = 'text-green-500'
+        statusLabel = 'Completado'
+        break;
+      case 'deleted':
+        textColor = 'text-red-500'
+        statusLabel = 'Eliminado'
+        break;
+      default:
+        break;
+    }
+
+    return <div className={textColor}>
+      {statusLabel}
+    </div>
+  }
+
   return (
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
@@ -221,37 +247,29 @@ function PropertiesTable(props) {
                       {n.address}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.description}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.lotArea}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.numberRooms}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.numberBathrooms}
                     </TableCell>
                   
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.price}
                     </TableCell>
 
-                    {/* <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.active ? (
-                        <FuseSvgIcon className="text-green" size={20}>
-                          heroicons-outline:check-circle
-                        </FuseSvgIcon>
-                      ) : (
-                        <FuseSvgIcon className="text-red" size={20}>
-                          heroicons-outline:minus-circle
-                        </FuseSvgIcon>
-                      )}
-                    </TableCell> */}
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                      {renderStatus(n.status)}
+                    </TableCell>
                   </TableRow>
                 );
               })}

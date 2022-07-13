@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import ProjectDashboardApp from 'src/app/dashboards/project/ProjectDashboardApp';
 import Properties from 'src/app/properties/properties/Properties';
-import PropertyForm from 'src/app/properties/properyForm/PropertyForm';
+import PropertyForm from 'src/app/properties/propertyForm/PropertyForm';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';

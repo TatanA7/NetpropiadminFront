@@ -1,6 +1,44 @@
 mutation CreateBuilds($variables: BuildsInput!) {
     createBuilds(variables: $variables) {
         id
+        name
+        description
+        propertyType
+        address
+        numberRooms
+        numberBathrooms
+        stratum
+        lotArea
+        lotMeters
+        parkingLot
+        imgName
+        imgDescription
+        price
+        managementValue
+        othersCost
+        status
+    }
+}
+
+mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
+    updateBuilds(fields: $fields, id: $updateBuildsId) {
+        id
+        name
+        description
+        propertyType
+        address
+        numberRooms
+        numberBathrooms
+        stratum
+        lotArea
+        lotMeters
+        parkingLot
+        imgName
+        imgDescription
+        price
+        managementValue
+        othersCost
+        status
     }
 }
 
@@ -15,6 +53,7 @@ query GetBuilds {
         numberBathrooms
         stratum
         lotArea
+        lotMeters
         user_id
         parkingLot
         imgName
@@ -22,6 +61,7 @@ query GetBuilds {
         price
         managementValue
         othersCost
+        status
     }
 }
 
@@ -36,6 +76,7 @@ query GetBuildById($id: Int!) {
         numberBathrooms
         stratum
         lotArea
+        lotMeters
         user_id
         parkingLot
         imgName
