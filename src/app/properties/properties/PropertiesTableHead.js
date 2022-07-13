@@ -139,8 +139,9 @@ function PropertiesTableHead(props) {
                 <MenuList>
                   <MenuItem
                     onClick={() => {
-                      dispatch(removeProducts(selectedProductIds));
+                      // dispatch(removeProducts(selectedProductIds));
                       props.onMenuItemClick();
+                      props.onRemoveItems(selectedProductIds);
                       closeSelectedProductsMenu();
                     }}
                   >

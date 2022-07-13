@@ -13,9 +13,9 @@ import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 
 const defaultValues = { price: '', othersCost: '', managementValue: '' };
 const schema = yup.object().shape({
-  price: yup.string().required('Dato requerido'),
-  othersCost: yup.string().required('Dato requerido'),
-  managementValue: yup.string().required('Dato requerido')
+  price: yup.string().matches(/^\d+$/, 'solo numeros').required('Dato requerido'),
+  othersCost: yup.string().matches(/^\d+$/, 'solo numeros').required('Dato requerido'),
+  managementValue: yup.string().matches(/^\d+$/, 'solo numeros').required('Dato requerido'),
 });
 
 function Step3PropertyPrices({ property, onSubmit }) {

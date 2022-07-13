@@ -42,6 +42,10 @@ mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
     }
 }
 
+mutation DeleteBuilds($deleteBuildsId: Int!) {
+  deleteBuilds(id: $deleteBuildsId)
+}
+
 query GetBuilds {
     Builds {
         id,

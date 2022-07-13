@@ -59,6 +59,11 @@ export const UpdateBuildsDocument = `
   }
 }
     `;
+export const DeleteBuildsDocument = `
+    mutation DeleteBuilds($deleteBuildsId: Int!) {
+  deleteBuilds(id: $deleteBuildsId)
+}
+    `;
 export const GetBuildsDocument = `
     query GetBuilds {
   Builds {
@@ -121,6 +126,9 @@ const injectedRtkApi = api.injectEndpoints({
         UpdateBuilds: build.mutation({
             query: (variables) => ({ document: UpdateBuildsDocument, variables })
         }),
+        DeleteBuilds: build.mutation({
+            query: (variables) => ({ document: DeleteBuildsDocument, variables })
+        }),
         GetBuilds: build.query({
             query: (variables) => ({ document: GetBuildsDocument, variables })
         }),
@@ -130,4 +138,4 @@ const injectedRtkApi = api.injectEndpoints({
     }),
 });
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useDeleteBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;

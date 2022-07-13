@@ -7,22 +7,21 @@ import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import withRouter from '@fuse/core/withRouter';
 import FuseLoading from '@fuse/core/FuseLoading';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { getProducts, selectProducts, selectProductsSearchText } from '../store/productsSlice';
+import { selectProducts, selectProductsSearchText } from '../store/productsSlice';
 import PropertiesTableHead from './PropertiesTableHead';
-import { useGetBuildsQuery } from '../../api'  
+import { useDeleteBuildsMutation, useGetBuildsQuery } from '../../api';
 
 function PropertiesTable(props) {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const searchText = useSelector(selectProductsSearchText);
+  const [performBuildDelete, buildDelete] = useDeleteBuildsMutation();
 
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
@@ -33,23 +32,23 @@ function PropertiesTable(props) {
     direction: 'asc',
     id: null,
   });
-  
+
   const buildsResponse = useGetBuildsQuery(null, {
     refetchOnMountOrArgChange: true,
-    refetchOnReconnect: true
-  })
+    refetchOnReconnect: true,
+  });
 
   useEffect(() => {
     if (buildsResponse.isUninitialized) return;
     if (buildsResponse.isLoading) return;
     if (buildsResponse.isSuccess) {
-      setLoading(false)
-      setData(buildsResponse.data.Builds)
+      setLoading(false);
+      setData(buildsResponse.data.Builds);
     }
   }, [buildsResponse]);
 
   // useEffect(() => {
-    
+
   //   dispatch(getProducts()).then(() => setLoading(false));
   // }, [dispatch]);
 
@@ -63,6 +62,22 @@ function PropertiesTable(props) {
   //     setData(products);
   //   }
   // }, [products, searchText]);
+
+  const handleRemoveItems = async (ids) => {
+    // console.log(ids);
+    try {
+      await Promise.all(
+        ids.map((id) =>
+          performBuildDelete({
+            deleteBuildsId: id,
+          })
+        )
+      );
+      buildsResponse.refetch()
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   function handleRequestSort(event, property) {
     const id = property;
@@ -145,30 +160,28 @@ function PropertiesTable(props) {
   }
 
   const renderStatus = (status) => {
-    let textColor = ''
-    let statusLabel = ''
+    let textColor = '';
+    let statusLabel = '';
 
     switch (status) {
       case 'draft':
-        textColor = 'text-black-500'
-        statusLabel = 'Creado'
+        textColor = 'text-black-500';
+        statusLabel = 'Creado';
         break;
       case 'completed':
-        textColor = 'text-green-500'
-        statusLabel = 'Completado'
+        textColor = 'text-green-500';
+        statusLabel = 'Completado';
         break;
       case 'deleted':
-        textColor = 'text-red-500'
-        statusLabel = 'Eliminado'
+        textColor = 'text-red-500';
+        statusLabel = 'Eliminado';
         break;
       default:
         break;
     }
 
-    return <div className={textColor}>
-      {statusLabel}
-    </div>
-  }
+    return <div className={textColor}>{statusLabel}</div>;
+  };
 
   return (
     <div className="w-full flex flex-col min-h-full">
@@ -176,6 +189,7 @@ function PropertiesTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <PropertiesTableHead
             selectedProductIds={selected}
+            onRemoveItems={handleRemoveItems}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
@@ -266,7 +280,7 @@ function PropertiesTable(props) {
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.numberBathrooms}
                     </TableCell>
-                  
+
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.price}
                     </TableCell>

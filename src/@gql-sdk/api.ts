@@ -180,7 +180,7 @@ export type UserInput = {
   NIT?: InputMaybe<Scalars['String']>;
   businessName?: InputMaybe<Scalars['String']>;
   cell_phone: Scalars['String'];
-  last_name: Scalars['String'];
+  last_name?: InputMaybe<Scalars['String']>;
   mail: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
@@ -224,6 +224,13 @@ export type UpdateBuildsMutationVariables = Exact<{
 
 
 export type UpdateBuildsMutation = { __typename?: 'Mutation', updateBuilds: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
+
+export type DeleteBuildsMutationVariables = Exact<{
+  deleteBuildsId: Scalars['Int'];
+}>;
+
+
+export type DeleteBuildsMutation = { __typename?: 'Mutation', deleteBuilds: boolean };
 
 export type GetBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -298,6 +305,11 @@ export const UpdateBuildsDocument = `
   }
 }
     `;
+export const DeleteBuildsDocument = `
+    mutation DeleteBuilds($deleteBuildsId: Int!) {
+  deleteBuilds(id: $deleteBuildsId)
+}
+    `;
 export const GetBuildsDocument = `
     query GetBuilds {
   Builds {
@@ -361,6 +373,9 @@ const injectedRtkApi = api.injectEndpoints({
     UpdateBuilds: build.mutation<UpdateBuildsMutation, UpdateBuildsMutationVariables>({
       query: (variables) => ({ document: UpdateBuildsDocument, variables })
     }),
+    DeleteBuilds: build.mutation<DeleteBuildsMutation, DeleteBuildsMutationVariables>({
+      query: (variables) => ({ document: DeleteBuildsDocument, variables })
+    }),
     GetBuilds: build.query<GetBuildsQuery, GetBuildsQueryVariables | void>({
       query: (variables) => ({ document: GetBuildsDocument, variables })
     }),
@@ -371,5 +386,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useDeleteBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
 
