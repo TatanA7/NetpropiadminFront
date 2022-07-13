@@ -19,8 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 import jwtService from '../../auth/services/jwtService';
-import { useLoginMutation } from '../../../@gql-sdk/dist/api';
-
+import { useLoginMutation } from '../../api'; 
 /**
  * Form Validation Schema
  */

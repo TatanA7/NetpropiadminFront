@@ -12,7 +12,7 @@ import * as yup from 'yup';
 import decode from 'jwt-decode';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, Typography } from '@mui/material';
-import { useCreateUserMutation } from '../../../@gql-sdk/dist/api';
+import { useCreateUserMutation } from '../../api';
 import jwtService from '../../auth/services/jwtService';
 
 const FormRealEstate = () => {
