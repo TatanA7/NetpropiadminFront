@@ -153,7 +153,7 @@ function PropertiesTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no products!
+          No hay propiedades!
         </Typography>
       </motion.div>
     );

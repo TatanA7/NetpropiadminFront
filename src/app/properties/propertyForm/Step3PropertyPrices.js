@@ -5,11 +5,11 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Controller, useForm } from 'react-hook-form';
-import _ from '@lodash';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import { InputAdornment } from '@mui/material';
 
 const defaultValues = { price: '', othersCost: '', managementValue: '' };
 const schema = yup.object().shape({
@@ -27,15 +27,15 @@ function Step3PropertyPrices({ property, onSubmit }) {
   const { errors } = formState;
 
   useEffect(() => {
-    if (!property) return
+    if (!property) return;
 
     const formValues = Object.keys(defaultValues).reduce((acc, key) => {
-      acc[key] = property[key]
-      return acc
-    }, {})
+      acc[key] = property[key];
+      return acc;
+    }, {});
 
-    reset(formValues)
-  }, [property])
+    reset(formValues);
+  }, [property]);
 
   useEffect(() => {
     if (Object.keys(errors).length) {
@@ -47,7 +47,7 @@ function Step3PropertyPrices({ property, onSubmit }) {
     if (onSubmit) {
       onSubmit(data);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col items-center p-24 sm:p-40 container">
@@ -63,14 +63,18 @@ function Step3PropertyPrices({ property, onSubmit }) {
                 name="price"
                 render={({ field }) => (
                   <TextField
-                    className="w-full"
                     {...field}
+                    className="w-full"
                     label="Ingrese valor del canon de arriendo"
                     placeholder="Ingrese valor del canon de arriendo"
                     error={!!errors.price}
                     helperText={errors?.price?.message}
                     variant="outlined"
                     fullWidth
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                    type="number"
                   />
                 )}
               />
@@ -91,6 +95,10 @@ function Step3PropertyPrices({ property, onSubmit }) {
                     fullWidth
                     error={!!errors.managementValue}
                     helperText={errors?.managementValue?.message}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                    type="number"
                   />
                 )}
               />
@@ -110,6 +118,10 @@ function Step3PropertyPrices({ property, onSubmit }) {
                     fullWidth
                     error={!!errors.othersCost}
                     helperText={errors?.othersCost?.message}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                    type="number"
                   />
                 )}
               />
