@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom'
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -31,6 +31,19 @@ function PropertyForm() {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true
   })
+
+  const isNextBtnDisabled = useMemo(() => {
+    switch (activeStep) {
+      case 0:
+        return !property?.status === 'draft'
+      case 1:
+        return !property?.imgs
+      case 2:
+        return !property?.price
+      default:
+        return true
+    }
+  }, [activeStep, property])
 
   useEffect(() => {
     if (buildResult.data) {
@@ -126,7 +139,7 @@ function PropertyForm() {
         }
         break;
       case 1:
-        if (property && property.imgName && property.imgDescription) {
+        if (property && property.imgName && property.imgDescription && property.imgs ) {
           newCompleted[activeStep] = true;
         }
         break;
@@ -230,7 +243,7 @@ function PropertyForm() {
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
                     <Button
-                      disabled={!property?.status}
+                      disabled={isNextBtnDisabled}
                       onClick={handleNext}
                       sx={{ mr: 1 }}
                     >

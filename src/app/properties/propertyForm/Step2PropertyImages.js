@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { orange } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import FuseUtils from '@fuse/utils';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,13 +8,15 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { uploadFile } from '../../api'
+import { red } from 'tailwindcss/colors';
 
 const Root = styled('div')(({ theme }) => ({
   '& .productImageFeaturedStar': {
     position: 'absolute',
     top: 0,
     right: 0,
-    color: orange[400],
+    color: red[400],
     opacity: 0,
   },
 
@@ -45,44 +47,35 @@ const Root = styled('div')(({ theme }) => ({
     },
   },
 }));
-const images = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-];
 
 const defaultValues = {
   imgDescription: '',
-  imgName: ''
+  imgName: '',
+  imgs: []
 };
 
 const schema = yup.object().shape({
   imgName: yup.string().required('Dato Requerido'),
-  imgDescription: yup.string().required('Dato Requerido')
+  imgDescription: yup.string().required('Dato Requerido'),
+  imgs: yup.array().of(yup.string()).min(1, 'Al menos una imagen').required('Dato Requerido'),
 });
 
 function Step2PropertyImages({ property, onSubmit }) {
   
-  const { control, handleSubmit, formState, reset } = useForm({
+  const { control, handleSubmit, formState, reset, setValue, watch } = useForm({
     mode: 'onChange',
     defaultValues,
     resolver: yupResolver(schema),
   });
-
   const { errors } = formState;
+
+  const images = watch('imgs')
+
 
   useEffect(() => {
     if (!property) return
 
+    console.log(property)
     const formValues = Object.keys(defaultValues).reduce((acc, key) => {
       acc[key] = property[key]
       return acc
@@ -128,7 +121,9 @@ function Step2PropertyImages({ property, onSubmit }) {
               )}
             />
             <div className="mb-24">
-              <Typography color="text.secondary">Descripción de imagen*</Typography>
+              <Typography color="text.secondary">
+                Descripción de imagen*
+              </Typography>
             </div>
 
             <Controller
@@ -148,10 +143,10 @@ function Step2PropertyImages({ property, onSubmit }) {
               )}
             />
           </div>
-          
+
           <div className="mb-12  mt-12 md:mt-96 md:text-6xl   sm:leading-10 text-center">
             <Controller
-              name="images"
+              name="imgs"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <Button
@@ -160,44 +155,47 @@ function Step2PropertyImages({ property, onSubmit }) {
                   color="secondary"
                   component="label"
                   htmlFor="button-file"
-                  // sx={{
-                  //   backgroundColor: (theme) =>
-                  //     theme.palette.mode === 'light'
-                  //       ? lighten(theme.palette.background.default, 0.4)
-                  //       : lighten(theme.palette.background.default, 0.02),
-                  // }}
                 >
                   <input
                     accept="image/*"
                     className="hidden"
                     id="button-file"
                     type="file"
+                    multiple
                     onChange={async (e) => {
-                      function readFileAsync() {
-                        return new Promise((resolve, reject) => {
-                          const file = e.target.files[0];
-                          if (!file) {
-                            return;
-                          }
-                          const reader = new FileReader();
+                      // function readFileAsync() {
+                      //   return new Promise((resolve, reject) => {
+                      //     const file = e.target.files[0];
+                      //     if (!file) {
+                      //       return;
+                      //     }
+                      //     const reader = new FileReader();
 
-                          reader.onload = () => {
-                            resolve({
-                              id: FuseUtils.generateGUID(),
-                              url: `data:${file.type};base64,${btoa(reader.result)}`,
-                              type: 'image',
-                            });
-                          };
+                      //     reader.onload = () => {
+                      //       resolve({
+                      //         id: FuseUtils.generateGUID(),
+                      //         url: `data:${file.type};base64,${btoa(
+                      //           reader.result
+                      //         )}`,
+                      //         type: "image",
+                      //       });
+                      //     };
 
-                          reader.onerror = reject;
+                      //     reader.onerror = reject;
 
-                          reader.readAsBinaryString(file);
-                        });
-                      }
+                      //     reader.readAsBinaryString(file);
+                      //   });
+                      // }
 
-                      const newImage = await readFileAsync();
+                      // const newImage = await readFileAsync();
 
-                      onChange([newImage, ...value]);
+                      const promises = Array.from(e.target.files).map(async file => {
+                        return uploadFile(file)
+                      })
+
+                      const newImageUrls = await Promise.all(promises)
+
+                      onChange([ ...newImageUrls.map(i => i.url), ...value]);
                     }}
                   />
                   <FuseSvgIcon size={32} color="action">
@@ -208,37 +206,37 @@ function Step2PropertyImages({ property, onSubmit }) {
               )}
             />
           </div>
-          
-          {/* <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
+
+          <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
             Imágenes de propiedad
-          </div> */}
-          {/* <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
-            <Controller
-              name="featuredImageId"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value } }) =>
-                images.map((media, i) => (
-                  <div
-                    key={i}
-                    onClick={() => onChange(media.id)}
-                    onKeyDown={() => onChange(media.id)}
-                    role="button"
-                    tabIndex={0}
-                    className={clsx(
-                      'productImageItem flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer outline-none shadow hover:shadow-lg',
-                      media.id === value && 'featured'
-                    )}
-                  >
-                    <FuseSvgIcon className="productImageFeaturedStar">
-                      heroicons-solid:star
-                    </FuseSvgIcon>
-                    <img className="max-w-none w-auto h-full" src={media.url} alt="product" />
-                  </div>
-                ))
-              }
-            />
-          </div> */}
+          </div>
+          { errors?.imgs?.message && <span className='text-red-500'>{errors?.imgs?.message}</span> }
+          <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
+            {images?.map((urlImage, i) => (
+              <div
+                key={i}
+                onClick={() => {
+                  setValue('imgs', images.filter((_, index) => index !== i))
+                }}
+                // onKeyDown={() => onChange(i)}
+                role="button"
+                tabIndex={0}
+                className={clsx(
+                  "productImageItem flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer outline-none shadow hover:shadow-lg",
+                  // media.id === value && "featured"
+                )}
+              >
+                <FuseSvgIcon className="productImageFeaturedStar">
+                  heroicons-solid:trash
+                </FuseSvgIcon>
+                <img
+                  className="max-w-none w-auto h-full"
+                  src={urlImage}
+                  alt="product"
+                />
+              </div>
+            ))}
+          </div>
           <div className="flex items-center justify-between mt-32 p-24">
             <Button
               className="text-blue-900"
