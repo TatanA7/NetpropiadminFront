@@ -20,16 +20,20 @@ const FormNaturalPerson = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const schema = yup.object().shape({
-    name: yup.string().required('You must enter display name'),
-    lastName: yup.string().required('You must enter your last name'),
-    cellPhone: yup.string().matches(/^\d+$/, 'solo numeros').required('You must enter your phone'),
-    mail: yup.string().email('You must enter a valid email').required('You must enter a email'),
+    name: yup.string().required('Ingrese un nombre'),
+    lastName: yup.string().required('Ingrese un apelledo'),
+    cellPhone: yup
+      .string()
+      .max(10, 'Máximo 10 caracteres')
+      .required('Debe ingresar un télefono móvil')
+      .matches(/^\d+$/, 'Debe ingresar números'),
+    mail: yup.string().email('Debe ser un correo válido').required('Debe ingresar un correo'),
     password: yup
       .string()
-      .required('Please enter your password.')
-      .min(8, 'Password is too short - should be 8 chars minimum.'),
-    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-    acceptTermsConditions: yup.boolean().oneOf([true], 'Debes aceptar los términos y condiciones.'),
+      .required('Por favor ingrese su contraseña')
+      .min(8, 'Contraseña es demasiado corta - debe ser de maximo 8 caracteres'),
+    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Contraseña debe ser igual'),
+    acceptTermsConditions: yup.boolean().oneOf([true], 'Debes aceptar los términos y condiciones'),
   });
   const defaultValues = {
     name: '',
@@ -143,9 +147,9 @@ const FormNaturalPerson = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Numero de celular"
+              label="Teléfono móvil"
               className="mb-24"
-              placeholder="Numero de celular"
+              placeholder="Teléfono móvil"
               variant="outlined"
               fullWidth
               error={!!errors.cellPhone}
@@ -194,7 +198,7 @@ const FormNaturalPerson = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Email"
+              label="Correo electrónico"
               type="email"
               error={!!errors.mail}
               helperText={errors?.mail?.message}

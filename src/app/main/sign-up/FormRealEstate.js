@@ -20,19 +20,23 @@ const FormRealEstate = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const schema = yup.object().shape({
-    name: yup.string().required('You must enter display name'),
-    cellPhone: yup.string().matches(/^\d+$/, 'solo numeros').required('You must enter your phone'),
+    name: yup.string().required('Ingrese un nombre'),
+    cellPhone: yup
+      .string()
+      .required('Debe ingresar un télefono móvil')
+      .max(10, 'Máximo 10 caracteres')
+      .matches(/^\d+$/, 'Debe ingresar números'),
     NIT: yup
       .string()
       .matches(/(^[0-9]+-{1}[0-9]{1})/, 'Debe ser un NIT válido')
       .required('Dato requerido'),
-    mail: yup.string().email('You must enter a valid email').required('You must enter a email'),
+    mail: yup.string().email('Debe ser un correo válido').required('Debe ingresar un correo'),
     password: yup
       .string()
-      .required('Please enter your password.')
-      .min(8, 'Password is too short - should be 8 chars minimum.'),
-    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-    acceptTermsConditions: yup.boolean().oneOf([true], 'Debes aceptar los términos y condiciones.'),
+      .required('Por favor ingrese su contraseña')
+      .min(8, 'Contraseña es demasiado corta - debe ser de maximo 8 caracteres'),
+    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Contraseña debe ser igual'),
+    acceptTermsConditions: yup.boolean().oneOf([true], 'Debes aceptar los términos y condiciones'),
   });
   const defaultValues = {
     name: '',
@@ -125,7 +129,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Email"
+              label="Correo electrónico"
               type="email"
               error={!!errors.mail}
               helperText={errors?.mail?.message}
@@ -203,7 +207,7 @@ const FormRealEstate = () => {
             <TextField
               {...field}
               className="mb-24"
-              label="Nit"
+              label="NIT"
               type="text"
               error={!!errors.NIT}
               helperText={errors?.NIT?.message}
@@ -219,9 +223,9 @@ const FormRealEstate = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Numero de celular"
+              label="Teléfono móvil"
               className="mb-24"
-              placeholder="Numero de celular"
+              placeholder="Teléfono móvil"
               variant="outlined"
               fullWidth
               error={!!errors.cellPhone}
@@ -243,26 +247,6 @@ const FormRealEstate = () => {
             />
           )}
         />
-
-        {/* <Controller
-          name="cellPhone"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              className="mb-24"
-              label="Cell phone"
-              autoFocus
-              type="text"
-              error={!!errors.cellPhone}
-              helperText={errors?.cellPhone?.message}
-              variant="outlined"
-              required
-              fullWidth
-            />
-          )}
-        /> */}
-
         <Controller
           name="acceptTermsConditions"
           control={control}
@@ -274,8 +258,10 @@ const FormRealEstate = () => {
               />
               <a
                 href="https://pruebas.netpropi.com/col/politicas_privacidad"
+                target="_blank"
                 style={{ textDecoration: 'none' }}
                 className="ml-4"
+                rel="noreferrer"
               >
                 <Typography className="mx-8 text-red-100">Términos y condicines</Typography>
               </a>

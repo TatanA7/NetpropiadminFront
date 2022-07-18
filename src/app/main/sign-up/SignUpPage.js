@@ -86,9 +86,6 @@ function SignUpPage() {
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight text-center">
             Regístrate
           </Typography>
-          <Typography className="mx-8 text-center" color="text.secondary">
-            Llena la información
-          </Typography>
           <Tabs
             selectionFollowsFocus
             value={currentTab}
