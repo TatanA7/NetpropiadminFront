@@ -75,7 +75,6 @@ function Step2PropertyImages({ property, onSubmit }) {
   useEffect(() => {
     if (!property) return
 
-    console.log(property)
     const formValues = Object.keys(defaultValues).reduce((acc, key) => {
       acc[key] = property[key]
       return acc
