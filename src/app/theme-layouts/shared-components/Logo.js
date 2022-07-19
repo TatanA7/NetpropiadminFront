@@ -19,7 +19,7 @@ const Root = styled('div')(({ theme }) => ({
 function Logo() {
   return (
     <Root className="flex items-center">
-      <Link to="/">
+      <Link to="/dashboards">
         <img
           className="logo-icon    w-112   h-112"
           src="assets/images/logo/netpropi-sidebar.svg"

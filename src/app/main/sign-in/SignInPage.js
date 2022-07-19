@@ -19,16 +19,16 @@ import { useTranslation } from 'react-i18next';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 import jwtService from '../../auth/services/jwtService';
-import { useLoginMutation } from '../../api'; 
+import { useLoginMutation } from '../../api';
 /**
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  email: yup.string().email('You must enter a valid email').required('You must enter a email'),
+  email: yup.string().email('Debe ser un correo válido').required('Debe ingresar un correo'),
   password: yup
     .string()
-    .required('Please enter your password.')
-    .min(4, 'Password is too short - must be at least 4 chars.'),
+    .required('Por favor ingrese su contraseña')
+    .min(8, 'Contraseña es demasiado corta - debe ser de maximo 8 caracteres'),
 });
 
 const defaultValues = {
@@ -48,10 +48,6 @@ function SignInPage() {
   });
 
   const { isValid, dirtyFields, errors } = formState;
-  useEffect(() => {
-    setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
-    setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
-  }, [setValue]);
 
   useEffect(() => {
     if (loginResult.isUninitialized) return;
@@ -115,7 +111,7 @@ function SignInPage() {
             Bienvenido
           </Typography>
           <Typography className="mx-8 text-center" color="text.secondary">
-            Ingrese su email y contraseña
+            Ingrese su correo y contraseña
           </Typography>
 
           <form
@@ -131,7 +127,8 @@ function SignInPage() {
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Email"
+                  label="Correo electrónico"
+                  placeholder="Correo electrónico"
                   autoFocus
                   type="email"
                   error={!!errors.email}
@@ -151,6 +148,7 @@ function SignInPage() {
                   {...field}
                   className="mb-24"
                   label="Contraseña"
+                  placeholder="Contraseña"
                   type={showPassword ? 'text' : 'password'}
                   error={!!errors.password}
                   helperText={errors?.password?.message}
