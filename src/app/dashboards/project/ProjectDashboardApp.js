@@ -24,8 +24,6 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 function ProjectDashboardApp(props) {
   const dispatch = useDispatch();
   const widgets = useSelector(selectWidgets);
-  
-  console.log(widgets)
 
   const [tabValue, setTabValue] = useState(0);
 
