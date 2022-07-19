@@ -48,14 +48,10 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const defaultValues = {
-  imgDescription: '',
-  imgName: '',
-  imgs: [],
+  imgs: []
 };
 
 const schema = yup.object().shape({
-  imgName: yup.string().required('Dato Requerido'),
-  imgDescription: yup.string().required('Dato Requerido'),
   imgs: yup.array().of(yup.string()).min(1, 'Al menos una imagen').required('Dato Requerido'),
 });
 
@@ -102,48 +98,6 @@ function Step2PropertyImages({ property, onSubmit }) {
     <Root>
       <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
         <form onSubmit={handleSubmit(submitHandler)} className="px-0 sm:px-24">
-          <div className="mb-24">
-            <Typography color="text.secondary">Nombre de imágen</Typography>
-          </div>
-          <div className="space-y-20">
-            <Controller
-              control={control}
-              name="imgName"
-              render={({ field }) => (
-                <TextField
-                  className="w-full"
-                  {...field}
-                  label="Ingrese nombre asociado a la propiedad"
-                  placeholder="Ingrese nombre asociado a la propiedad"
-                  error={!!errors.imgName}
-                  helperText={errors?.imgName?.message}
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-            <div className="mb-24">
-              <Typography color="text.secondary">Descripción de imagen*</Typography>
-            </div>
-
-            <Controller
-              control={control}
-              name="imgDescription"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mt-16 w-full"
-                  label="Descripción de imagen"
-                  placeholder="Descripción de imagen"
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors.imgDescription}
-                  helperText={errors?.imgDescription?.message}
-                />
-              )}
-            />
-          </div>
-
           <div className="mb-12  mt-12 md:mt-96 md:text-6xl   sm:leading-10 text-center">
             <Controller
               name="imgs"
@@ -215,8 +169,12 @@ function Step2PropertyImages({ property, onSubmit }) {
             {images?.map((urlImage, i) => (
               <div
                 key={i}
-                onKeyDown={cleanImageHandler(i)}
-                onClick={cleanImageHandler(i)}
+                onKeyDown={() => {
+                  cleanImageHandler(i)
+                }}
+                onClick={() => {
+                  cleanImageHandler(i)
+                }}
                 role="button"
                 tabIndex={0}
                 className={clsx(

@@ -131,7 +131,6 @@ const FormNaturalPerson = () => {
               {...field}
               className="mb-24"
               label="Apellido"
-              autoFocus
               type="text"
               error={!!errors.lastName}
               helperText={errors?.lastName?.message}
