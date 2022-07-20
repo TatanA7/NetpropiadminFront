@@ -25596,7 +25596,7 @@
       },
       "project_dashboard_widgets": {
         "value": {
-          "summary": {
+          "summary1": {
             "ranges": {
               "DY": "Yesterday",
               "DT": "Today",
@@ -25621,10 +25621,22 @@
             },
             "detail": "You can show some detailed information about this widget in here."
           },
-          "overdue": {
-            "title": "Contratos pendientes",
+          "summary": {
+            "title": "Reparaciones",
             "data": {
-              "name": "Contratos pendientes",
+              "name": "pendientes",
+              "count": 0,
+              "extra": {
+                "name": "Yesterday's overdue",
+                "count": 2
+              }
+            },
+            "detail": "You can show some detailed information about this widget in here."
+          },
+          "overdue": {
+            "title": "Contratos",
+            "data": {
+              "name": "pendientes",
               "count": 0,
               "extra": {
                 "name": "Yesterday's overdue",
@@ -25634,10 +25646,10 @@
             "detail": "You can show some detailed information about this widget in here."
           },
           "issues": {
-            "title": "Total de propiedades",
+            "title": "Total",
             "data": {
-              "name": "Open",
-              "count": 0,
+              "name": "propiedades",
+              "count": 1,
               "extra": {
                 "name": "Closed today",
                 "count": 0
@@ -25646,9 +25658,9 @@
             "detail": "You can show some detailed information about this widget in here."
           },
           "features": {
-            "title": "Tareas pendientes",
+            "title": "Tareas",
             "data": {
-              "name": "Proposals",
+              "name": "pendientes",
               "count": 0,
               "extra": {
                 "name": "Implemented",
