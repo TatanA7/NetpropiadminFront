@@ -11,7 +11,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
 };
 
@@ -21,11 +20,35 @@ export type Autentication = {
   user: User;
 };
 
+export type BuildImage = {
+  __typename?: 'BuildImage';
+  address: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['Float'];
+  imgDescription: Scalars['String'];
+  imgName: Scalars['String'];
+  imgs: Array<Img>;
+  lotArea: Scalars['String'];
+  lotMeters: Scalars['String'];
+  managementValue: Scalars['String'];
+  name: Scalars['String'];
+  numberBathrooms: Scalars['Float'];
+  numberRooms: Scalars['Float'];
+  othersCost: Scalars['String'];
+  parkingLot: Scalars['String'];
+  price: Scalars['String'];
+  propertyType: Scalars['String'];
+  status: Scalars['String'];
+  stratum: Scalars['Float'];
+  user_id: Scalars['Float'];
+};
+
 export type Builds = {
   __typename?: 'Builds';
   address: Scalars['String'];
   description: Scalars['String'];
   id: Scalars['Float'];
+  images: Array<Img>;
   imgDescription: Scalars['String'];
   imgName: Scalars['String'];
   lotArea: Scalars['String'];
@@ -69,7 +92,7 @@ export type BuildsUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
   imgDescription?: InputMaybe<Scalars['String']>;
   imgName?: InputMaybe<Scalars['String']>;
-  imgs?: InputMaybe<Array<Scalars['String']>>;
+  imgsUrl?: InputMaybe<Array<Scalars['String']>>;
   lotArea?: InputMaybe<Scalars['String']>;
   lotMeters?: InputMaybe<Scalars['String']>;
   managementValue?: InputMaybe<Scalars['String']>;
@@ -81,6 +104,12 @@ export type BuildsUpdateInput = {
   price?: InputMaybe<Scalars['String']>;
   propertyType?: InputMaybe<Scalars['String']>;
   stratum?: InputMaybe<Scalars['String']>;
+};
+
+export type Img = {
+  __typename?: 'Img';
+  id: Scalars['Float'];
+  url: Scalars['String'];
 };
 
 export type LoginInput = {
@@ -138,7 +167,7 @@ export type MutationUpdateBuildsArgs = {
 export type Query = {
   __typename?: 'Query';
   Builds: Array<Builds>;
-  BuildsById: Builds;
+  BuildsById: BuildImage;
   Type_build: Array<Type_Build>;
   ping: Scalars['String'];
   testBuild: Scalars['String'];
@@ -223,7 +252,7 @@ export type UpdateBuildsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBuildsMutation = { __typename?: 'Mutation', updateBuilds: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
+export type UpdateBuildsMutation = { __typename?: 'Mutation', updateBuilds: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string } };
 
 export type DeleteBuildsMutationVariables = Exact<{
   deleteBuildsId: Scalars['Int'];
@@ -235,14 +264,14 @@ export type DeleteBuildsMutation = { __typename?: 'Mutation', deleteBuilds: bool
 export type GetBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string }> };
+export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string }> };
 
 export type GetBuildByIdQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetBuildByIdQuery = { __typename?: 'Query', BuildsById: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, imgName: string, imgDescription: string, price: string, managementValue: string, othersCost: string, status: string } };
+export type GetBuildByIdQuery = { __typename?: 'Query', BuildsById: { __typename?: 'BuildImage', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string, imgs: Array<{ __typename?: 'Img', id: number, url: string }> } };
 
 
 export const LoginDocument = `
@@ -296,8 +325,6 @@ export const UpdateBuildsDocument = `
     lotArea
     lotMeters
     parkingLot
-    imgName
-    imgDescription
     price
     managementValue
     othersCost
@@ -325,8 +352,6 @@ export const GetBuildsDocument = `
     lotMeters
     user_id
     parkingLot
-    imgName
-    imgDescription
     price
     managementValue
     othersCost
@@ -349,8 +374,10 @@ export const GetBuildByIdDocument = `
     lotMeters
     user_id
     parkingLot
-    imgName
-    imgDescription
+    imgs {
+      id
+      url
+    }
     price
     managementValue
     othersCost

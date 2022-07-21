@@ -1,5 +1,5 @@
 schema:
-  - ${REACT_APP_GRAPHQL_ENDPOINT}
+  - ${REACT_APP_ENDPOINT}/graphql
 documents: './**/*.gql'
 generates:
   ./src/@gql-sdk/api.ts:

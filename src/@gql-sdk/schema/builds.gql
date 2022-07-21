@@ -33,8 +33,6 @@ mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
         lotArea
         lotMeters
         parkingLot
-        imgName
-        imgDescription
         price
         managementValue
         othersCost
@@ -43,7 +41,7 @@ mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
 }
 
 mutation DeleteBuilds($deleteBuildsId: Int!) {
-  deleteBuilds(id: $deleteBuildsId)
+    deleteBuilds(id: $deleteBuildsId)
 }
 
 query GetBuilds {
@@ -60,8 +58,6 @@ query GetBuilds {
         lotMeters
         user_id
         parkingLot
-        imgName
-        imgDescription
         price
         managementValue
         othersCost
@@ -83,8 +79,10 @@ query GetBuildById($id: Int!) {
         lotMeters
         user_id
         parkingLot
-        imgName
-        imgDescription
+        imgs {
+            id
+            url
+        }
         price
         managementValue
         othersCost

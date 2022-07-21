@@ -18,7 +18,6 @@ export declare type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
     DateTime: any;
 };
 export declare type Autentication = {
@@ -26,11 +25,34 @@ export declare type Autentication = {
     token: Scalars['String'];
     user: User;
 };
+export declare type BuildImage = {
+    __typename?: 'BuildImage';
+    address: Scalars['String'];
+    description: Scalars['String'];
+    id: Scalars['Float'];
+    imgDescription: Scalars['String'];
+    imgName: Scalars['String'];
+    imgs: Array<Img>;
+    lotArea: Scalars['String'];
+    lotMeters: Scalars['String'];
+    managementValue: Scalars['String'];
+    name: Scalars['String'];
+    numberBathrooms: Scalars['Float'];
+    numberRooms: Scalars['Float'];
+    othersCost: Scalars['String'];
+    parkingLot: Scalars['String'];
+    price: Scalars['String'];
+    propertyType: Scalars['String'];
+    status: Scalars['String'];
+    stratum: Scalars['Float'];
+    user_id: Scalars['Float'];
+};
 export declare type Builds = {
     __typename?: 'Builds';
     address: Scalars['String'];
     description: Scalars['String'];
     id: Scalars['Float'];
+    images: Array<Img>;
     imgDescription: Scalars['String'];
     imgName: Scalars['String'];
     lotArea: Scalars['String'];
@@ -72,7 +94,7 @@ export declare type BuildsUpdateInput = {
     description?: InputMaybe<Scalars['String']>;
     imgDescription?: InputMaybe<Scalars['String']>;
     imgName?: InputMaybe<Scalars['String']>;
-    imgs?: InputMaybe<Array<Scalars['String']>>;
+    imgsUrl?: InputMaybe<Array<Scalars['String']>>;
     lotArea?: InputMaybe<Scalars['String']>;
     lotMeters?: InputMaybe<Scalars['String']>;
     managementValue?: InputMaybe<Scalars['String']>;
@@ -84,6 +106,11 @@ export declare type BuildsUpdateInput = {
     price?: InputMaybe<Scalars['String']>;
     propertyType?: InputMaybe<Scalars['String']>;
     stratum?: InputMaybe<Scalars['String']>;
+};
+export declare type Img = {
+    __typename?: 'Img';
+    id: Scalars['Float'];
+    url: Scalars['String'];
 };
 export declare type LoginInput = {
     mail: Scalars['String'];
@@ -124,7 +151,7 @@ export declare type MutationUpdateBuildsArgs = {
 export declare type Query = {
     __typename?: 'Query';
     Builds: Array<Builds>;
-    BuildsById: Builds;
+    BuildsById: BuildImage;
     Type_build: Array<Type_Build>;
     ping: Scalars['String'];
     testBuild: Scalars['String'];
@@ -239,8 +266,6 @@ export declare type UpdateBuildsMutation = {
         lotArea: string;
         lotMeters: string;
         parkingLot: string;
-        imgName: string;
-        imgDescription: string;
         price: string;
         managementValue: string;
         othersCost: string;
@@ -273,8 +298,6 @@ export declare type GetBuildsQuery = {
         lotMeters: string;
         user_id: number;
         parkingLot: string;
-        imgName: string;
-        imgDescription: string;
         price: string;
         managementValue: string;
         othersCost: string;
@@ -287,7 +310,7 @@ export declare type GetBuildByIdQueryVariables = Exact<{
 export declare type GetBuildByIdQuery = {
     __typename?: 'Query';
     BuildsById: {
-        __typename?: 'Builds';
+        __typename?: 'BuildImage';
         id: number;
         name: string;
         description: string;
@@ -300,68 +323,71 @@ export declare type GetBuildByIdQuery = {
         lotMeters: string;
         user_id: number;
         parkingLot: string;
-        imgName: string;
-        imgDescription: string;
         price: string;
         managementValue: string;
         othersCost: string;
         status: string;
+        imgs: Array<{
+            __typename?: 'Img';
+            id: number;
+            url: string;
+        }>;
     };
 };
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
 export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
-export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const DeleteBuildsDocument = "\n    mutation DeleteBuilds($deleteBuildsId: Int!) {\n  deleteBuilds(id: $deleteBuildsId)\n}\n    ";
-export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
-export declare const GetBuildByIdDocument = "\n    query GetBuildById($id: Int!) {\n  BuildsById(id: $id) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const GetBuildByIdDocument = "\n    query GetBuildById($id: Int!) {\n  BuildsById(id: $id) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgs {\n      id\n      url\n    }\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, {
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, {
     Login: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
         loginVariables: LoginInput;
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, LoginMutation, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, LoginMutation, "api">;
     CreateUser: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
         variable: UserInput;
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">;
     CreateBuilds: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
         variables: BuildsInput;
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">;
     UpdateBuilds: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
         fields: BuildsUpdateInput;
         updateBuildsId: Scalars['Int'];
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, UpdateBuildsMutation, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, UpdateBuildsMutation, "api">;
     DeleteBuilds: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
         deleteBuildsId: Scalars['Int'];
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, DeleteBuildsMutation, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, DeleteBuildsMutation, "api">;
     GetBuilds: import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
         [key: string]: never;
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">;
     GetBuildById: import("@reduxjs/toolkit/dist/query").QueryDefinition<Exact<{
         id: Scalars['Int'];
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
         document: string | import("graphql").DocumentNode;
         variables?: any;
-    }, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildByIdQuery, "api">;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildByIdQuery, "api">;
 }, "api", never, typeof import("@reduxjs/toolkit/dist/query/core/module").coreModuleName | typeof import("@reduxjs/toolkit/dist/query/react/module").reactHooksModuleName>;
 export { injectedRtkApi as api };
 export declare const useLoginMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
@@ -369,45 +395,45 @@ export declare const useLoginMutation: import("@reduxjs/toolkit/dist/query/react
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, LoginMutation, "api">>, useCreateUserMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, LoginMutation, "api">>, useCreateUserMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
     variable: UserInput;
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">>, useCreateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">>, useCreateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
     variables: BuildsInput;
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">>, useUpdateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateBuildsMutation, "api">>, useUpdateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
     fields: BuildsUpdateInput;
     updateBuildsId: Scalars['Int'];
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, UpdateBuildsMutation, "api">>, useDeleteBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, UpdateBuildsMutation, "api">>, useDeleteBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
     deleteBuildsId: Scalars['Int'];
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, DeleteBuildsMutation, "api">>, useGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, DeleteBuildsMutation, "api">>, useGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
     [key: string]: never;
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">>, useLazyGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseLazyQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">>, useLazyGetBuildsQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseLazyQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<void | Exact<{
     [key: string]: never;
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">>, useGetBuildByIdQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildsQuery, "api">>, useGetBuildByIdQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<Exact<{
     id: Scalars['Int'];
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildByIdQuery, "api">>, useLazyGetBuildByIdQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseLazyQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildByIdQuery, "api">>, useLazyGetBuildByIdQuery: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseLazyQuery<import("@reduxjs/toolkit/dist/query").QueryDefinition<Exact<{
     id: Scalars['Int'];
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, Pick<import("graphql-request").ClientError, "name" | "message" | "stack">, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildByIdQuery, "api">>;
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, GetBuildByIdQuery, "api">>;

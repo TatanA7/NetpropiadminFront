@@ -236,7 +236,7 @@ function PropertiesTable(props) {
                       />
                     </TableCell>
 
-                    <TableCell
+                    {/* <TableCell
                       className="w-52 px-4 md:px-0"
                       component="th"
                       scope="row"
@@ -255,7 +255,7 @@ function PropertiesTable(props) {
                           alt={n.name}
                         />
                       )}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.name}

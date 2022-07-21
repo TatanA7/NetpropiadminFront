@@ -50,8 +50,6 @@ export const UpdateBuildsDocument = `
     lotArea
     lotMeters
     parkingLot
-    imgName
-    imgDescription
     price
     managementValue
     othersCost
@@ -79,8 +77,6 @@ export const GetBuildsDocument = `
     lotMeters
     user_id
     parkingLot
-    imgName
-    imgDescription
     price
     managementValue
     othersCost
@@ -103,8 +99,10 @@ export const GetBuildByIdDocument = `
     lotMeters
     user_id
     parkingLot
-    imgName
-    imgDescription
+    imgs {
+      id
+      url
+    }
     price
     managementValue
     othersCost
