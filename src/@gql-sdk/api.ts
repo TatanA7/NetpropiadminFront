@@ -125,7 +125,7 @@ export type Mutation = {
   login: Autentication;
   loginFacebook: Autentication;
   loginGoogle: Autentication;
-  updateBuilds: Builds;
+  updateBuilds: BuildImage;
 };
 
 
@@ -252,7 +252,7 @@ export type UpdateBuildsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBuildsMutation = { __typename?: 'Mutation', updateBuilds: { __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string } };
+export type UpdateBuildsMutation = { __typename?: 'Mutation', updateBuilds: { __typename?: 'BuildImage', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string, imgs: Array<{ __typename?: 'Img', id: number, url: string }> } };
 
 export type DeleteBuildsMutationVariables = Exact<{
   deleteBuildsId: Scalars['Int'];
@@ -326,6 +326,10 @@ export const UpdateBuildsDocument = `
     lotMeters
     parkingLot
     price
+    imgs {
+      id
+      url
+    }
     managementValue
     othersCost
     status

@@ -115,7 +115,7 @@ function Step2PropertyImages({ property, onSubmit }) {
                     multiple
                     onChange={async (e) => {
 
-                      const newImageUrls = await uploadFiles(Array.from(e.target.files))
+                      const newImageUrls = await uploadFiles(Array.from(e.target.files), property.id)
 
                       onChange([...newImageUrls, ...images]);
                     }}

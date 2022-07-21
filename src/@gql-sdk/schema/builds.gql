@@ -34,6 +34,10 @@ mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {
         lotMeters
         parkingLot
         price
+        imgs {
+            id
+            url
+        }
         managementValue
         othersCost
         status

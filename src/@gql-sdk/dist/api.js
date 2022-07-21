@@ -51,6 +51,10 @@ export const UpdateBuildsDocument = `
     lotMeters
     parkingLot
     price
+    imgs {
+      id
+      url
+    }
     managementValue
     othersCost
     status

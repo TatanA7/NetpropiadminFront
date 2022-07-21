@@ -124,7 +124,7 @@ export declare type Mutation = {
     login: Autentication;
     loginFacebook: Autentication;
     loginGoogle: Autentication;
-    updateBuilds: Builds;
+    updateBuilds: BuildImage;
 };
 export declare type MutationCreateBuildsArgs = {
     variables: BuildsInput;
@@ -254,7 +254,7 @@ export declare type UpdateBuildsMutationVariables = Exact<{
 export declare type UpdateBuildsMutation = {
     __typename?: 'Mutation';
     updateBuilds: {
-        __typename?: 'Builds';
+        __typename?: 'BuildImage';
         id: number;
         name: string;
         description: string;
@@ -270,6 +270,11 @@ export declare type UpdateBuildsMutation = {
         managementValue: string;
         othersCost: string;
         status: string;
+        imgs: Array<{
+            __typename?: 'Img';
+            id: number;
+            url: string;
+        }>;
     };
 };
 export declare type DeleteBuildsMutationVariables = Exact<{
@@ -337,7 +342,7 @@ export declare type GetBuildByIdQuery = {
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
 export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
-export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    price\n    imgs {\n      id\n      url\n    }\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const DeleteBuildsDocument = "\n    mutation DeleteBuilds($deleteBuildsId: Int!) {\n  deleteBuilds(id: $deleteBuildsId)\n}\n    ";
 export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const GetBuildByIdDocument = "\n    query GetBuildById($id: Int!) {\n  BuildsById(id: $id) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgs {\n      id\n      url\n    }\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";

@@ -21,11 +21,13 @@ export const uploadFile = async (file) => {
 /**
  * 
  * @param {File[]} files
+ * @param {Number} buildId
  * @returns String[]
  */
-export const uploadFiles = async (files) => {
+export const uploadFiles = async (files, buildId) => {
 
     const formData = new FormData();
+    formData.append('buildId', buildId);
     files.forEach(f => formData.append(`files`, f));
 
     const result = await fetch(`${process.env.REACT_APP_ENDPOINT}${PATH_UPLOADER}`, {
