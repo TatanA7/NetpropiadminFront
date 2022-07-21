@@ -37,7 +37,7 @@ function PropertyForm() {
       case 0:
         return !property || !property.status === 'draft'
       case 1:
-        return !property?.imgs
+        return !property?.imgs?.length
       case 2:
         return !property?.price
       default:

@@ -86,8 +86,11 @@ function Step2PropertyImages({ property, onSubmit }) {
     }
   };
   const cleanImageHandler = (i) => {
-    setValue('imgsUrl');
-  };
+    setValue(
+      'imgsUrl',
+      images.filter((_, index) => index !== i)
+    );
+  }
 
   return (
     <Root>
@@ -121,7 +124,8 @@ function Step2PropertyImages({ property, onSubmit }) {
 
                       const newImageUrls = await uploadFiles(Array.from(e.target.files), property.id)
 
-                      onChange([...newImageUrls, ...images]);
+                      const newValue = [...newImageUrls, ...images]
+                      onChange([...newImageUrls, ... images ]);
                     }}
                   />
                   <FuseSvgIcon size={32} color="action">
@@ -131,12 +135,15 @@ function Step2PropertyImages({ property, onSubmit }) {
               )}
             />
           </div>
-          <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
-            Imágenes de propiedad
+          <div className="mb-32 mt-12 md:mt-32 text-center">
+            <span className='font-extrabold tracking-tight leading-tight text-4xl sm:text-xl'>Imágenes de propiedad</span>
+            {errors?.imgsUrl?.message && (
+              <>
+                <br/>
+                <span className="font- text-red-500">{errors?.imgsUrl?.message}</span>
+              </>
+            )}
           </div>
-          {errors?.imgsUrl?.message && (
-            <span className="text-red-500">{errors?.imgs?.message}</span>
-          )}
           <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
             {images?.map((urlImage, i) => (
               <div
