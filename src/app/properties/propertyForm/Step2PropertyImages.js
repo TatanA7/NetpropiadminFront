@@ -86,27 +86,30 @@ function Step2PropertyImages({ property, onSubmit }) {
     }
   };
   const cleanImageHandler = (i) => {
-    setValue(
-      'imgsUrl',
-      images.filter((_, index) => index !== i)
-    );
+    setValue('imgsUrl');
   };
 
   return (
     <Root>
       <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
         <form onSubmit={handleSubmit(submitHandler)} className="px-0 sm:px-24">
-          <div className="mb-12  mt-12 md:mt-96 md:text-6xl   sm:leading-10 text-center">
+          <div className="mb-12  mt-12 md:mt-8 md:text-6xl  flex items-center justify-center sm:leading-10 text-center">
             <Controller
               name="imgsUrl"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <Button
-                  className="mx-8"
+                <Box
+                  className="productImageUpload flex items-center justify-center relative w-128 h-128 rounded-16 mx-8 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg"
                   variant="contained"
                   color="secondary"
                   component="label"
                   htmlFor="button-file"
+                  sx={{
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? lighten(theme.palette.background.default, 0.4)
+                        : lighten(theme.palette.background.default, 0.02),
+                  }}
                 >
                   <input
                     accept="image/*"
@@ -123,93 +126,10 @@ function Step2PropertyImages({ property, onSubmit }) {
                   <FuseSvgIcon size={32} color="action">
                     heroicons-outline:upload
                   </FuseSvgIcon>
-                  <span className="mx-8">Cargar</span>
-                </Button>
-              )}
-            />
-          </div>
-          <div className="flex justify-center sm:justify-start flex-wrap -mx-16">
-            <Controller
-              name="images"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Box
-                  sx={{
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === 'light'
-                        ? lighten(theme.palette.background.default, 0.4)
-                        : lighten(theme.palette.background.default, 0.02),
-                  }}
-                  component="label"
-                  htmlFor="button-file"
-                  className="productImageUpload flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg"
-                >
-                  <input
-                    accept="image/*"
-                    className="hidden"
-                    id="button-file"
-                    type="file"
-                    onChange={async (e) => {
-                      function readFileAsync() {
-                        return new Promise((resolve, reject) => {
-                          const file = e.target.files[0];
-                          if (!file) {
-                            return;
-                          }
-                          const reader = new FileReader();
-
-                          reader.onload = () => {
-                            resolve({
-                              id: FuseUtils.generateGUID(),
-                              url: `data:${file.type};base64,${btoa(reader.result)}`,
-                              type: 'image',
-                            });
-                          };
-
-                          reader.onerror = reject;
-
-                          reader.readAsBinaryString(file);
-                        });
-                      }
-
-                      const newImage = await readFileAsync();
-
-                      onChange([newImage, ...value]);
-                    }}
-                  />
-                  <FuseSvgIcon size={32} color="action">
-                    heroicons-outline:upload
-                  </FuseSvgIcon>
                 </Box>
               )}
             />
-            <Controller
-              name="featuredImageId"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value } }) =>
-                images.map((media) => (
-                  <div
-                    onClick={() => onChange(media.id)}
-                    onKeyDown={() => onChange(media.id)}
-                    role="button"
-                    tabIndex={0}
-                    className={clsx(
-                      'productImageItem flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer outline-none shadow hover:shadow-lg',
-                      media.id === value && 'featured'
-                    )}
-                    key={media.id}
-                  >
-                    <FuseSvgIcon className="productImageFeaturedStar">
-                      heroicons-solid:star
-                    </FuseSvgIcon>
-                    <img className="max-w-none w-auto h-full" src={media.url} alt="product" />
-                  </div>
-                ))
-              }
-            />
           </div>
-
           <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
             Imágenes de propiedad
           </div>

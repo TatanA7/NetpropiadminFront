@@ -216,7 +216,7 @@ function BasicInformation({ property, onSubmit }) {
                         {...field}
                         label="Número de cuartos"
                         labelId="number-rooms-label"
-                        id="stratum"
+                        id="numberRooms"
                         fullWidth
                         variant="outlined"
                       >
@@ -236,7 +236,7 @@ function BasicInformation({ property, onSubmit }) {
                         {...field}
                         label="Número de baños"
                         labelId="number-bathrooms-label"
-                        id="stratum"
+                        id="numberBathrooms"
                         fullWidth
                         variant="outlined"
                       >
@@ -280,6 +280,27 @@ function BasicInformation({ property, onSubmit }) {
                     )}
                   />
                 </FormControl>
+                <FormControl fullWidth className="md:max-w-96" error={!!errors.parkingLot}>
+                  <InputLabel id="number-parkingLot-label">Parqueaderos</InputLabel>
+                  <Controller
+                    control={control}
+                    name="parkingLot"
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label="Número de parqueaderos"
+                        labelId="number-parkingLot-label"
+                        id="parkingLot"
+                        fullWidth
+                        variant="outlined"
+                      >
+                        {[1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                      </Select>
+                    )}
+                  />
+                  <FormHelperText>{errors?.parkingLot?.message}</FormHelperText>
+                </FormControl>
+
               </div>
               {/* <div className=" flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20 ">
                
