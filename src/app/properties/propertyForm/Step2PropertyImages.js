@@ -9,7 +9,12 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { red } from 'tailwindcss/colors';
+<<<<<<< HEAD
 import { uploadFile } from '../../api';
+=======
+import { Button, Paper } from '@mui/material';
+import { uploadFiles } from '../../api';
+>>>>>>> 17a4d9b62efad88310c4303a44e8ad26321fc97b
 
 const Root = styled('div')(({ theme }) => ({
   '& .productImageFeaturedStar': {
@@ -49,15 +54,11 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const defaultValues = {
-  imgDescription: '',
-  imgName: '',
-  imgs: [],
+  imgsUrl: []
 };
 
 const schema = yup.object().shape({
-  imgName: yup.string().required('Dato Requerido'),
-  imgDescription: yup.string().required('Dato Requerido'),
-  imgs: yup.array().of(yup.string()).min(1, 'Al menos una imagen').required('Dato Requerido'),
+  imgsUrl: yup.array().of(yup.string()).min(1, 'Al menos una imagen').required('Dato Requerido'),
 });
 
 function Step2PropertyImages({ property, onSubmit }) {
@@ -68,17 +69,14 @@ function Step2PropertyImages({ property, onSubmit }) {
   });
   const { errors } = formState;
 
-  const images = watch('imgs');
+  const images = watch('imgsUrl');
 
   useEffect(() => {
     if (!property) return;
 
-    const formValues = Object.keys(defaultValues).reduce((acc, key) => {
-      acc[key] = property[key];
-      return acc;
-    }, {});
-
-    reset(formValues);
+    reset({
+      imgsUrl: property.imgs?.map(img => img.url) || [],
+    });
   }, [property]);
 
   useEffect(() => {
@@ -94,7 +92,7 @@ function Step2PropertyImages({ property, onSubmit }) {
   };
   const cleanImageHandler = (i) => {
     setValue(
-      'imgs',
+      'imgsUrl',
       images.filter((_, index) => index !== i)
     );
   };
@@ -103,51 +101,9 @@ function Step2PropertyImages({ property, onSubmit }) {
     <Root>
       <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
         <form onSubmit={handleSubmit(submitHandler)} className="px-0 sm:px-24">
-          <div className="mb-24">
-            <Typography color="text.secondary">Nombre de imágen</Typography>
-          </div>
-          <div className="space-y-20">
-            <Controller
-              control={control}
-              name="imgName"
-              render={({ field }) => (
-                <TextField
-                  className="w-full"
-                  {...field}
-                  label="Ingrese nombre asociado a la propiedad"
-                  placeholder="Ingrese nombre asociado a la propiedad"
-                  error={!!errors.imgName}
-                  helperText={errors?.imgName?.message}
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-            <div className="mb-24">
-              <Typography color="text.secondary">Descripción de imagen*</Typography>
-            </div>
-
-            <Controller
-              control={control}
-              name="imgDescription"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mt-16 w-full"
-                  label="Descripción de imagen"
-                  placeholder="Descripción de imagen"
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors.imgDescription}
-                  helperText={errors?.imgDescription?.message}
-                />
-              )}
-            />
-          </div>
-
           <div className="mb-12  mt-12 md:mt-96 md:text-6xl   sm:leading-10 text-center">
             <Controller
-              name="imgs"
+              name="imgsUrl"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <Button
@@ -164,39 +120,10 @@ function Step2PropertyImages({ property, onSubmit }) {
                     type="file"
                     multiple
                     onChange={async (e) => {
-                      // function readFileAsync() {
-                      //   return new Promise((resolve, reject) => {
-                      //     const file = e.target.files[0];
-                      //     if (!file) {
-                      //       return;
-                      //     }
-                      //     const reader = new FileReader();
 
-                      //     reader.onload = () => {
-                      //       resolve({
-                      //         id: FuseUtils.generateGUID(),
-                      //         url: `data:${file.type};base64,${btoa(
-                      //           reader.result
-                      //         )}`,
-                      //         type: "image",
-                      //       });
-                      //     };
+                      const newImageUrls = await uploadFiles(Array.from(e.target.files))
 
-                      //     reader.onerror = reject;
-
-                      //     reader.readAsBinaryString(file);
-                      //   });
-                      // }
-
-                      // const newImage = await readFileAsync();
-
-                      const promises = Array.from(e.target.files).map(async (file) => {
-                        return uploadFile(file);
-                      });
-
-                      const newImageUrls = await Promise.all(promises);
-
-                      onChange([...newImageUrls.map((i) => i.url), ...value]);
+                      onChange([...newImageUrls, ...images]);
                     }}
                   />
                   <FuseSvgIcon size={32} color="action">
@@ -292,13 +219,17 @@ function Step2PropertyImages({ property, onSubmit }) {
           <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
             Imágenes de propiedad
           </div>
-          {errors?.imgs?.message && <span className="text-red-500">{errors?.imgs?.message}</span>}
+          {errors?.imgsUrl?.message && <span className="text-red-500">{errors?.imgs?.message}</span>}
           <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
             {images?.map((urlImage, i) => (
               <div
                 key={i}
-                onKeyDown={cleanImageHandler(i)}
-                onClick={cleanImageHandler(i)}
+                onKeyDown={() => {
+                  cleanImageHandler(i)
+                }}
+                onClick={() => {
+                  cleanImageHandler(i)
+                }}
                 role="button"
                 tabIndex={0}
                 className={clsx(

@@ -48,7 +48,7 @@ function BasicInformation({ property, onSubmit }) {
     defaultValues,
     resolver: yupResolver(schema),
   });
-  const { isValid, dirtyFields, errors } = formState;
+  const { errors } = formState;
   
   
   

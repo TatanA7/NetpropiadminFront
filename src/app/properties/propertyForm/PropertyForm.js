@@ -35,9 +35,10 @@ function PropertyForm() {
   const isNextBtnDisabled = useMemo(() => {
     switch (activeStep) {
       case 0:
-        return !property?.status === 'draft'
+        return !property || !property.status === 'draft'
       case 1:
-        return !property?.imgs
+        // return !property?.imgs
+        return false
       case 2:
         return !property?.price
       default:
@@ -139,7 +140,7 @@ function PropertyForm() {
         }
         break;
       case 1:
-        if (property && property.imgName && property.imgDescription && property.imgs ) {
+        if (property && property.imgs ) {
           newCompleted[activeStep] = true;
         }
         break;
