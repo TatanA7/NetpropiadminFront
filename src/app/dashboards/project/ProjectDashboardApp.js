@@ -67,7 +67,7 @@ function ProjectDashboardApp(props) {
               disableRipple
               label="Home"
             />
-            <Tab
+            {/* <Tab
               className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
               disableRipple
               label="Budget"
@@ -76,11 +76,11 @@ function ProjectDashboardApp(props) {
               className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
               disableRipple
               label="Team"
-            />
+            /> */}
           </Tabs>
           {tabValue === 0 && <HomeTab />}
-          {tabValue === 1 && <BudgetTab />}
-          {tabValue === 2 && <TeamTab />}
+          {/* {tabValue === 1 && <BudgetTab />}
+          {tabValue === 2 && <TeamTab />} */}
         </div>
       }
     />

@@ -90,7 +90,7 @@ function ProjectDashboardAppHeader(props) {
           </Button>
         </div>
       </div>
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <Button
           onClick={handleOpenProjectMenu}
           className="flex items-center border border-solid border-b-0 rounded-t-xl rounded-b-0 h-40 px-16 text-13 sm:text-16"
@@ -125,7 +125,7 @@ function ProjectDashboardAppHeader(props) {
               </MenuItem>
             ))}
         </Menu>
-      </div>
+      </div> */}
     </div>
   );
 }

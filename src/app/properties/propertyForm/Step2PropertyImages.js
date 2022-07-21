@@ -1,13 +1,14 @@
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, lighten } from '@mui/material/styles';
+import FuseUtils from '@fuse/utils';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { Box, Button, Paper } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { red } from 'tailwindcss/colors';
-import { Button, Paper } from '@mui/material';
 import { uploadFiles } from '../../api';
 
 const Root = styled('div')(({ theme }) => ({
@@ -48,7 +49,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const defaultValues = {
-  imgsUrl: []
+  imgsUrl: [],
 };
 
 const schema = yup.object().shape({
@@ -69,7 +70,7 @@ function Step2PropertyImages({ property, onSubmit }) {
     if (!property) return;
 
     reset({
-      imgsUrl: property.imgs?.map(img => img.url) || [],
+      imgsUrl: property.imgs?.map((img) => img.url) || [],
     });
   }, [property]);
 
@@ -85,27 +86,30 @@ function Step2PropertyImages({ property, onSubmit }) {
     }
   };
   const cleanImageHandler = (i) => {
-    setValue(
-      'imgsUrl',
-      images.filter((_, index) => index !== i)
-    );
-  }
+    setValue('imgsUrl');
+  };
 
   return (
     <Root>
       <Paper className="mt-32 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
         <form onSubmit={handleSubmit(submitHandler)} className="px-0 sm:px-24">
-          <div className="mb-12  mt-12 md:mt-96 md:text-6xl   sm:leading-10 text-center">
+          <div className="mb-12  mt-12 md:mt-8 md:text-6xl  flex items-center justify-center sm:leading-10 text-center">
             <Controller
               name="imgsUrl"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <Button
-                  className="mx-8"
+                <Box
+                  className="productImageUpload flex items-center justify-center relative w-128 h-128 rounded-16 mx-8 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg"
                   variant="contained"
                   color="secondary"
                   component="label"
                   htmlFor="button-file"
+                  sx={{
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? lighten(theme.palette.background.default, 0.4)
+                        : lighten(theme.palette.background.default, 0.02),
+                  }}
                 >
                   <input
                     accept="image/*"
@@ -123,25 +127,25 @@ function Step2PropertyImages({ property, onSubmit }) {
                   <FuseSvgIcon size={32} color="action">
                     heroicons-outline:upload
                   </FuseSvgIcon>
-                  <span className="mx-8">Cargar</span>
-                </Button>
+                </Box>
               )}
             />
           </div>
-
           <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
             Imágenes de propiedad
           </div>
-          {errors?.imgsUrl?.message && <span className="text-red-500">{errors?.imgs?.message}</span>}
+          {errors?.imgsUrl?.message && (
+            <span className="text-red-500">{errors?.imgs?.message}</span>
+          )}
           <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
             {images?.map((urlImage, i) => (
               <div
                 key={i}
                 onKeyDown={() => {
-                  cleanImageHandler(i)
+                  cleanImageHandler(i);
                 }}
                 onClick={() => {
-                  cleanImageHandler(i)
+                  cleanImageHandler(i);
                 }}
                 role="button"
                 tabIndex={0}

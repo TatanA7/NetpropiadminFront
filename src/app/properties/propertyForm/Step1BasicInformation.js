@@ -182,11 +182,11 @@ function BasicInformation({ property, onSubmit }) {
                   />
                 )}
               />
-              <div className="mb-8">
+              {/* <div className="mb-8">
                 <Typography color="text.secondary">Estrato*</Typography>
-              </div>
+              </div> */}
               <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20">
-                <FormControl fullWidth className="md:max-w-320" error={!!errors.stratum}>
+                <FormControl fullWidth className="md:max-w-96 " error={!!errors.stratum}>
                   <InputLabel id="stratum-label">Estrato</InputLabel>
                   <Controller
                     control={control}
@@ -206,10 +206,8 @@ function BasicInformation({ property, onSubmit }) {
                   />
                   <FormHelperText>{errors?.stratum?.message}</FormHelperText>
                 </FormControl>
-              </div>
-              <div className=" flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20 ">
-                <FormControl fullWidth className="md:max-w-320" error={!!errors.numberRooms}>
-                  <InputLabel id="number-rooms-label">Número de cuartos</InputLabel>
+                <FormControl fullWidth className="md:max-w-96" error={!!errors.numberRooms}>
+                  <InputLabel id="number-rooms-label">Cuartos</InputLabel>
                   <Controller
                     control={control}
                     name="numberRooms"
@@ -218,7 +216,7 @@ function BasicInformation({ property, onSubmit }) {
                         {...field}
                         label="Número de cuartos"
                         labelId="number-rooms-label"
-                        id="stratum"
+                        id="numberRooms"
                         fullWidth
                         variant="outlined"
                       >
@@ -228,8 +226,8 @@ function BasicInformation({ property, onSubmit }) {
                   />
                   <FormHelperText>{errors?.numberRooms?.message}</FormHelperText>
                 </FormControl>
-                <FormControl fullWidth className="md:max-w-320" error={!!errors.numberBathrooms}>
-                  <InputLabel id="number-bathrooms-label">Número de baños</InputLabel>
+                <FormControl fullWidth className="md:max-w-96" error={!!errors.numberBathrooms}>
+                  <InputLabel id="number-bathrooms-label">Baños</InputLabel>
                   <Controller
                     control={control}
                     name="numberBathrooms"
@@ -238,7 +236,7 @@ function BasicInformation({ property, onSubmit }) {
                         {...field}
                         label="Número de baños"
                         labelId="number-bathrooms-label"
-                        id="stratum"
+                        id="numberBathrooms"
                         fullWidth
                         variant="outlined"
                       >
@@ -248,16 +246,14 @@ function BasicInformation({ property, onSubmit }) {
                   />
                   <FormHelperText>{errors?.numberBathrooms?.message}</FormHelperText>
                 </FormControl>
-              </div>
-              <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20">
-                <FormControl className="sm:w-full md:max-w-320">
+                <FormControl className="sm:w-full md:max-w-96">
                   <Controller
                     control={control}
                     name="lotArea"
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        label="Área en mts2"
+                        label="Área mts2"
                         placeholder="Área en mts2"
                         variant="outlined"
                         fullWidth
@@ -267,14 +263,14 @@ function BasicInformation({ property, onSubmit }) {
                     )}
                   />
                 </FormControl>
-                <FormControl className="sm:w-full md:max-w-320">
+                <FormControl className="sm:w-full md:max-w-96">
                   <Controller
                     control={control}
                     name="lotMeters"
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        label="Lote en mts2"
+                        label="Lote mts2"
                         placeholder="Lote en mts2"
                         variant="outlined"
                         fullWidth
@@ -284,29 +280,34 @@ function BasicInformation({ property, onSubmit }) {
                     )}
                   />
                 </FormControl>
-              </div>
-              <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20">
-                <FormControl fullWidth className="md:max-w-320" error={!!errors.parkingLot}>
-                  <InputLabel id="number-parkingLot-label">Parqueaderos*</InputLabel>
+                <FormControl fullWidth className="md:max-w-96" error={!!errors.parkingLot}>
+                  <InputLabel id="number-parkingLot-label">Parqueaderos</InputLabel>
                   <Controller
                     control={control}
                     name="parkingLot"
                     render={({ field }) => (
                       <Select
                         {...field}
-                        label="Parqueaderos"
+                        label="Número de parqueaderos"
                         labelId="number-parkingLot-label"
-                        id="stratum"
+                        id="parkingLot"
                         fullWidth
                         variant="outlined"
                       >
-                        {[0, 1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
                       </Select>
                     )}
                   />
                   <FormHelperText>{errors?.parkingLot?.message}</FormHelperText>
                 </FormControl>
+
               </div>
+              {/* <div className=" flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20 ">
+               
+              </div>
+              <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20">
+              
+              </div> */}  
             </div>
             <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20   mt-32">
               <Button
