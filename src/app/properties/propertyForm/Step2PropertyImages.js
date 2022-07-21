@@ -5,16 +5,11 @@ import { styled, lighten } from '@mui/material/styles';
 import FuseUtils from '@fuse/utils';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { red } from 'tailwindcss/colors';
-<<<<<<< HEAD
-import { uploadFile } from '../../api';
-=======
-import { Button, Paper } from '@mui/material';
 import { uploadFiles } from '../../api';
->>>>>>> 17a4d9b62efad88310c4303a44e8ad26321fc97b
 
 const Root = styled('div')(({ theme }) => ({
   '& .productImageFeaturedStar': {
@@ -54,7 +49,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const defaultValues = {
-  imgsUrl: []
+  imgsUrl: [],
 };
 
 const schema = yup.object().shape({
@@ -75,7 +70,7 @@ function Step2PropertyImages({ property, onSubmit }) {
     if (!property) return;
 
     reset({
-      imgsUrl: property.imgs?.map(img => img.url) || [],
+      imgsUrl: property.imgs?.map((img) => img.url) || [],
     });
   }, [property]);
 
@@ -120,8 +115,7 @@ function Step2PropertyImages({ property, onSubmit }) {
                     type="file"
                     multiple
                     onChange={async (e) => {
-
-                      const newImageUrls = await uploadFiles(Array.from(e.target.files))
+                      const newImageUrls = await uploadFiles(Array.from(e.target.files));
 
                       onChange([...newImageUrls, ...images]);
                     }}
@@ -219,16 +213,18 @@ function Step2PropertyImages({ property, onSubmit }) {
           <div className="mb-32  mt-12 md:mt-32 text-4xl sm:text-xl font-extrabold tracking-tight leading-tight text-center">
             Imágenes de propiedad
           </div>
-          {errors?.imgsUrl?.message && <span className="text-red-500">{errors?.imgs?.message}</span>}
+          {errors?.imgsUrl?.message && (
+            <span className="text-red-500">{errors?.imgs?.message}</span>
+          )}
           <div className="flex justify-center sm:justify-center flex-wrap -mx-16">
             {images?.map((urlImage, i) => (
               <div
                 key={i}
                 onKeyDown={() => {
-                  cleanImageHandler(i)
+                  cleanImageHandler(i);
                 }}
                 onClick={() => {
-                  cleanImageHandler(i)
+                  cleanImageHandler(i);
                 }}
                 role="button"
                 tabIndex={0}

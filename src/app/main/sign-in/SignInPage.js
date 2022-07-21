@@ -48,14 +48,12 @@ function SignInPage() {
   });
 
   const { isValid, dirtyFields, errors } = formState;
-<<<<<<< HEAD
+
 
    useEffect(() => {
     setValue('email', 'admin@netpropi.com', { shouldDirty: true, shouldValidate: true });
     setValue('password', '12345678', { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
-=======
->>>>>>> 17a4d9b62efad88310c4303a44e8ad26321fc97b
 
   useEffect(() => {
     if (loginResult.isUninitialized) return;
