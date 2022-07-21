@@ -142,7 +142,7 @@ function Step3PropertyPrices({ property, onSubmit }) {
                 )}
               />
             </div>
-            <div className="mb-12  mt-12 md:mt-24 md:text-lg   sm:leading-10 text-center">
+            {/* <div className="mb-12  mt-12 md:mt-24 md:text-lg   sm:leading-10 text-center">
               <Button className="mx-8 " variant="text" component={NavLinkAdapter} to="new/edit">
                 <FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
                 <span className="mx-8   font-extrabold tracking-tight leading-tight text-center">
@@ -150,7 +150,7 @@ function Step3PropertyPrices({ property, onSubmit }) {
                   Agregar otro costo relacionado
                 </span>
               </Button>
-            </div>
+            </div> */}
             <div className="flex md:flex-row md:space-y-0 items-center justify-between sm:flex flex-col space-y-20 mt-32 ">
               <Button
                 className="text-blue-900"

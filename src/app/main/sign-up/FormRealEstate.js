@@ -23,9 +23,10 @@ const FormRealEstate = () => {
     name: yup.string().required('Ingrese un nombre'),
     cellPhone: yup
       .string()
-      .required('Debe ingresar un télefono móvil')
       .max(10, 'Máximo 10 caracteres')
-      .matches(/^\d+$/, 'Debe ingresar números'),
+      .required('Debe ingresar un télefono móvil')
+      .matches(/^\d+$/, 'Debe ingresar números')
+      .min(10, 'Mínimo 10 caracteres'),
     NIT: yup
       .string()
       .matches(/(^[0-9]+-{1}[0-9]{1})/, 'Debe ser un NIT válido')

@@ -28,7 +28,6 @@ const navigationConfig = [
   // },
   {
     id: 'panel',
-    title: 'Panel de Administración',
     type: 'group',
     icon: 'heroicons-outline:home',
     translate: 'PANEL',

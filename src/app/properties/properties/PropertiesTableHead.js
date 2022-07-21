@@ -2,7 +2,6 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
@@ -15,7 +14,6 @@ import { Box } from '@mui/system';
 import TableHead from '@mui/material/TableHead';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { lighten } from '@mui/material/styles';
-import { removeProducts } from '../store/productsSlice';
 
 const rows = [
   {
@@ -33,34 +31,10 @@ const rows = [
     sort: true,
   },
   {
-    id: 'address',
+    id: 'propertyType',
     align: 'left',
     disablePadding: false,
-    label: 'Dirección',
-    sort: true,
-  },
-  {
-    id: 'description',
-    disablePadding: false,
-    label: 'Descripción',
-    sort: true,
-  },
-  {
-    id: 'lotArea',
-    disablePadding: false,
-    label: 'Area Lote',
-    sort: true,
-  },
-  {
-    id: 'numberRooms',
-    disablePadding: false,
-    label: 'Cuartos',
-    sort: true,
-  },
-  {
-    id: 'numberBathrooms',
-    disablePadding: false,
-    label: 'Baños',
+    label: 'Categoría',
     sort: true,
   },
   {
@@ -128,30 +102,30 @@ function PropertiesTableHead(props) {
                 onClick={openSelectedProductsMenu}
                 size="large"
               >
-                <FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon>
+                {/* <FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon> */}
               </IconButton>
-              <Menu
+              {/* <Menu
                 id="selectedProductsMenu"
                 anchorEl={selectedProductsMenu}
                 open={Boolean(selectedProductsMenu)}
                 onClose={closeSelectedProductsMenu}
-              >
-                <MenuList>
-                  <MenuItem
-                    onClick={() => {
-                      // dispatch(removeProducts(selectedProductIds));
-                      props.onMenuItemClick();
-                      props.onRemoveItems(selectedProductIds);
-                      closeSelectedProductsMenu();
-                    }}
-                  >
-                    <ListItemIcon className="min-w-40">
-                      <FuseSvgIcon>heroicons-outline:trash</FuseSvgIcon>
-                    </ListItemIcon>
-                    <ListItemText primary="Remove" />
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              > */}
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    // dispatch(removeProducts(selectedProductIds));
+                    props.onMenuItemClick();
+                    props.onRemoveItems(selectedProductIds);
+                    closeSelectedProductsMenu();
+                  }}
+                >
+                  <ListItemIcon className="min-w-40">
+                    <FuseSvgIcon>heroicons-outline:trash</FuseSvgIcon>
+                  </ListItemIcon>
+                  <ListItemText primary="Eliminar" />
+                </MenuItem>
+              </MenuList>
+              {/* </Menu> */}
             </Box>
           )}
         </TableCell>

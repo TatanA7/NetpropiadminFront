@@ -27,7 +27,7 @@ function PropertiesTable(props) {
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
   const [order, setOrder] = useState({
     direction: 'asc',
     id: null,
@@ -262,14 +262,14 @@ function PropertiesTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {n.address}
+                      {n.propertyType}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    {/* <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.description}
-                    </TableCell>
+                    </TableCell> */}
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    {/* <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.lotArea}
                     </TableCell>
 
@@ -279,7 +279,7 @@ function PropertiesTable(props) {
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.numberBathrooms}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.price}
@@ -300,6 +300,8 @@ function PropertiesTable(props) {
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[7, 10, 25, 50]}
+        labelRowsPerPage="Filas por página"
         page={page}
         backIconButtonProps={{
           'aria-label': 'Previous Page',

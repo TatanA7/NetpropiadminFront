@@ -26,7 +26,8 @@ const FormNaturalPerson = () => {
       .string()
       .max(10, 'Máximo 10 caracteres')
       .required('Debe ingresar un télefono móvil')
-      .matches(/^\d+$/, 'Debe ingresar números'),
+      .matches(/^\d+$/, 'Debe ingresar números')
+      .min(10, 'Mínimo 10 caracteres'),
     mail: yup.string().email('Debe ser un correo válido').required('Debe ingresar un correo'),
     password: yup
       .string()

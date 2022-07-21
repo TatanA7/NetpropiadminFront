@@ -294,7 +294,7 @@ function BasicInformation({ property, onSubmit }) {
                         fullWidth
                         variant="outlined"
                       >
-                        {[1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {[0,1, 2, 3, 4, 5, 6].map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
                       </Select>
                     )}
                   />
