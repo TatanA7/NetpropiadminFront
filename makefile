@@ -3,6 +3,7 @@
 export
 
 deploy:
+	@npm run build
 	@docker run -it --rm -e SAM_CLI_TELEMETRY=0 \
 			-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 			-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
