@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { styled, lighten } from '@mui/material/styles';
 import { Controller, useForm } from 'react-hook-form';
-// import Zoom from 'react-medium-image-zoom';
+import Zoom from 'react-medium-image-zoom';
 import * as yup from 'yup';
 import { Box, Button, Paper } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
@@ -18,6 +18,7 @@ const Root = styled('div')(({ theme }) => ({
     right: 0,
     color: red[400],
     opacity: 0,
+    zIndex: 10,
   },
 
   '& .productImageUpload': {
@@ -152,35 +153,29 @@ function Step2PropertyImages({ property, onSubmit }) {
             {images?.map((urlImage, i) => (
               <div
                 key={i}
-                onKeyDown={() => {
-                  cleanImageHandler(i);
-                }}
-                onClick={() => {
-                  cleanImageHandler(i);
-                }}
                 role="button"
                 tabIndex={0}
                 className={clsx(
                   'productImageItem flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer outline-none shadow hover:shadow-lg'
                 )}
               >
-                <FuseSvgIcon className="productImageFeaturedStar">
+                <FuseSvgIcon
+                    onKeyDown={() => {
+                      cleanImageHandler(i);
+                    }}
+                    onClick={() => {
+                      cleanImageHandler(i);
+                    }}
+                    className="productImageFeaturedStar"
+                  >
                   heroicons-solid:trash
                 </FuseSvgIcon>
-                <img className="max-w-none w-auto h-full" src={urlImage} alt="product" />
+                <Zoom>
+                  <img className="max-w-none w-auto h-full" src={urlImage} alt="product" />
+                </Zoom>
               </div>
             ))}
           </div>
-                  {/* this line is implemented Zoom librery but not working yet
-          <div>
-            <Zoom>
-              <img
-                className="max-w-none w-auto h-full"
-                src="https://image.shutterstock.com/image-illustration/colorful-aura-meditation-concept-illustration-260nw-1926486164.jpg"
-                alt="product"
-              />
-            </Zoom>
-          </div> */}
 
           <div className="flex items-center justify-between mt-32 p-24">
             <Button className="text-blue-900" component={Link} to="/properties" variant="outlined">
