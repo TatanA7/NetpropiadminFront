@@ -81,6 +81,10 @@ export const GetBuildsDocument = `
     lotMeters
     user_id
     parkingLot
+    imgs {
+      id
+      url
+    }
     price
     managementValue
     othersCost

@@ -69,6 +69,7 @@ export type Builds = {
 export type BuildsInput = {
   acquired_in?: InputMaybe<Scalars['String']>;
   address?: InputMaybe<Scalars['String']>;
+  deletedAt?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   imgDescription?: InputMaybe<Scalars['String']>;
   imgName?: InputMaybe<Scalars['String']>;
@@ -89,6 +90,7 @@ export type BuildsInput = {
 
 export type BuildsUpdateInput = {
   address?: InputMaybe<Scalars['String']>;
+  deletedAt?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   imgDescription?: InputMaybe<Scalars['String']>;
   imgName?: InputMaybe<Scalars['String']>;
@@ -166,7 +168,7 @@ export type MutationUpdateBuildsArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  Builds: Array<Builds>;
+  Builds: Array<BuildImage>;
   BuildsById: BuildImage;
   Type_build: Array<Type_Build>;
   ping: Scalars['String'];
@@ -264,7 +266,7 @@ export type DeleteBuildsMutation = { __typename?: 'Mutation', deleteBuilds: bool
 export type GetBuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'Builds', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string }> };
+export type GetBuildsQuery = { __typename?: 'Query', Builds: Array<{ __typename?: 'BuildImage', id: number, name: string, description: string, propertyType: string, address: string, numberRooms: number, numberBathrooms: number, stratum: number, lotArea: string, lotMeters: string, user_id: number, parkingLot: string, price: string, managementValue: string, othersCost: string, status: string, imgs: Array<{ __typename?: 'Img', id: number, url: string }> }> };
 
 export type GetBuildByIdQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -356,6 +358,10 @@ export const GetBuildsDocument = `
     lotMeters
     user_id
     parkingLot
+    imgs {
+      id
+      url
+    }
     price
     managementValue
     othersCost

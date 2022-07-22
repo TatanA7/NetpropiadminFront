@@ -72,6 +72,7 @@ export declare type Builds = {
 export declare type BuildsInput = {
     acquired_in?: InputMaybe<Scalars['String']>;
     address?: InputMaybe<Scalars['String']>;
+    deletedAt?: InputMaybe<Array<Scalars['String']>>;
     description?: InputMaybe<Scalars['String']>;
     imgDescription?: InputMaybe<Scalars['String']>;
     imgName?: InputMaybe<Scalars['String']>;
@@ -91,6 +92,7 @@ export declare type BuildsInput = {
 };
 export declare type BuildsUpdateInput = {
     address?: InputMaybe<Scalars['String']>;
+    deletedAt?: InputMaybe<Array<Scalars['String']>>;
     description?: InputMaybe<Scalars['String']>;
     imgDescription?: InputMaybe<Scalars['String']>;
     imgName?: InputMaybe<Scalars['String']>;
@@ -150,7 +152,7 @@ export declare type MutationUpdateBuildsArgs = {
 };
 export declare type Query = {
     __typename?: 'Query';
-    Builds: Array<Builds>;
+    Builds: Array<BuildImage>;
     BuildsById: BuildImage;
     Type_build: Array<Type_Build>;
     ping: Scalars['String'];
@@ -290,7 +292,7 @@ export declare type GetBuildsQueryVariables = Exact<{
 export declare type GetBuildsQuery = {
     __typename?: 'Query';
     Builds: Array<{
-        __typename?: 'Builds';
+        __typename?: 'BuildImage';
         id: number;
         name: string;
         description: string;
@@ -307,6 +309,11 @@ export declare type GetBuildsQuery = {
         managementValue: string;
         othersCost: string;
         status: string;
+        imgs: Array<{
+            __typename?: 'Img';
+            id: number;
+            url: string;
+        }>;
     }>;
 };
 export declare type GetBuildByIdQueryVariables = Exact<{
@@ -344,7 +351,7 @@ export declare const CreateUserDocument = "\n    mutation CreateUser($variable: 
 export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    price\n    imgs {\n      id\n      url\n    }\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const DeleteBuildsDocument = "\n    mutation DeleteBuilds($deleteBuildsId: Int!) {\n  deleteBuilds(id: $deleteBuildsId)\n}\n    ";
-export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
+export declare const GetBuildsDocument = "\n    query GetBuilds {\n  Builds {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgs {\n      id\n      url\n    }\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const GetBuildByIdDocument = "\n    query GetBuildById($id: Int!) {\n  BuildsById(id: $id) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    user_id\n    parkingLot\n    imgs {\n      id\n      url\n    }\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
