@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { styled, lighten } from '@mui/material/styles';
-import FuseUtils from '@fuse/utils';
 import { Controller, useForm } from 'react-hook-form';
+// import Zoom from 'react-medium-image-zoom';
 import * as yup from 'yup';
 import { Box, Button, Paper } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
@@ -90,7 +90,7 @@ function Step2PropertyImages({ property, onSubmit }) {
       'imgsUrl',
       images.filter((_, index) => index !== i)
     );
-  }
+  };
 
   return (
     <Root>
@@ -121,11 +121,13 @@ function Step2PropertyImages({ property, onSubmit }) {
                     type="file"
                     multiple
                     onChange={async (e) => {
+                      const newImageUrls = await uploadFiles(
+                        Array.from(e.target.files),
+                        property.id
+                      );
 
-                      const newImageUrls = await uploadFiles(Array.from(e.target.files), property.id)
-
-                      const newValue = [...newImageUrls, ...images]
-                      onChange([...newImageUrls, ... images ]);
+                      const newValue = [...newImageUrls, ...images];
+                      onChange([...newImageUrls, ...images]);
                     }}
                   />
                   <FuseSvgIcon size={32} color="action">
@@ -136,10 +138,12 @@ function Step2PropertyImages({ property, onSubmit }) {
             />
           </div>
           <div className="mb-32 mt-12 md:mt-32 text-center">
-            <span className='font-extrabold tracking-tight leading-tight text-4xl sm:text-xl'>Imágenes de propiedad</span>
+            <span className="font-extrabold tracking-tight leading-tight text-4xl sm:text-xl">
+              Imágenes de propiedad
+            </span>
             {errors?.imgsUrl?.message && (
               <>
-                <br/>
+                <br />
                 <span className="font- text-red-500">{errors?.imgsUrl?.message}</span>
               </>
             )}
@@ -167,6 +171,17 @@ function Step2PropertyImages({ property, onSubmit }) {
               </div>
             ))}
           </div>
+                  {/* this line is implemented Zoom librery but not working yet
+          <div>
+            <Zoom>
+              <img
+                className="max-w-none w-auto h-full"
+                src="https://image.shutterstock.com/image-illustration/colorful-aura-meditation-concept-illustration-260nw-1926486164.jpg"
+                alt="product"
+              />
+            </Zoom>
+          </div> */}
+
           <div className="flex items-center justify-between mt-32 p-24">
             <Button className="text-blue-900" component={Link} to="/properties" variant="outlined">
               Cancelar

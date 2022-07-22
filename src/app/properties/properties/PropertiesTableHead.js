@@ -17,7 +17,7 @@ import { lighten } from '@mui/material/styles';
 
 const rows = [
   {
-    id: 'imgDescription',
+    id: 'imgs',
     align: 'left',
     disablePadding: true,
     label: '',
@@ -113,7 +113,6 @@ function PropertiesTableHead(props) {
               <MenuList>
                 <MenuItem
                   onClick={() => {
-                    // dispatch(removeProducts(selectedProductIds));
                     props.onMenuItemClick();
                     props.onRemoveItems(selectedProductIds);
                     closeSelectedProductsMenu();
@@ -122,7 +121,7 @@ function PropertiesTableHead(props) {
                   <ListItemIcon className="min-w-40">
                     <FuseSvgIcon>heroicons-outline:trash</FuseSvgIcon>
                   </ListItemIcon>
-                  <ListItemText primary="Eliminar" />
+                  {/* <ListItemText primary="Eliminar" /> */}
                 </MenuItem>
               </MenuList>
               {/* </Menu> */}

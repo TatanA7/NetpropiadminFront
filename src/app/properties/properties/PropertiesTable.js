@@ -21,7 +21,7 @@ function PropertiesTable(props) {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const searchText = useSelector(selectProductsSearchText);
-  const [performBuildDelete, buildDelete] = useDeleteBuildsMutation();
+  const [performBuildDelete, buildDeleteEvents] = useDeleteBuildsMutation();
 
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
@@ -37,7 +37,15 @@ function PropertiesTable(props) {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
   });
+  
+  useEffect(() => {
 
+    if (buildDeleteEvents.isUninitialized) return;
+    if (buildDeleteEvents.isLoading) return;
+    if (buildDeleteEvents.isError) {
+      alert('Error al eliminar algunos registros');
+    }
+  }, [buildDeleteEvents]);
   useEffect(() => {
     if (buildsResponse.isUninitialized) return;
     if (buildsResponse.isLoading) return;
@@ -73,7 +81,7 @@ function PropertiesTable(props) {
           })
         )
       );
-      buildsResponse.refetch()
+      buildsResponse.refetch();
     } catch (error) {
       console.error(error);
     }
@@ -236,18 +244,14 @@ function PropertiesTable(props) {
                       />
                     </TableCell>
 
-                    {/* <TableCell
+                    <TableCell
                       className="w-52 px-4 md:px-0"
                       component="th"
                       scope="row"
                       padding="none"
                     >
-                      {n.imgDescription.length > 0 && n.featuredImageId ? (
-                        <img
-                          className="w-full block rounded"
-                          src={_.find(n.images, { id: n.featuredImageId }).url}
-                          alt={n.name}
-                        />
+                      {n.imgs?.length ? (
+                        <img className="w-full block rounded" src={n.imgs[0].url} alt={n.name} />
                       ) : (
                         <img
                           className="w-full block rounded"
@@ -255,7 +259,7 @@ function PropertiesTable(props) {
                           alt={n.name}
                         />
                       )}
-                    </TableCell> */}
+                    </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.name}
