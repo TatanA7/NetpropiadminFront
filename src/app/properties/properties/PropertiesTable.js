@@ -16,6 +16,7 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { selectProducts, selectProductsSearchText } from '../store/productsSlice';
 import PropertiesTableHead from './PropertiesTableHead';
 import { useDeleteBuildsMutation, useGetBuildsQuery } from '../../api';
+import { propertiesTypesOptions } from '../../mock'
 
 function PropertiesTable(props) {
   const dispatch = useDispatch();
@@ -266,7 +267,7 @@ function PropertiesTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {n.propertyType}
+                      {propertiesTypesOptions.find(i => i.value == n.propertyType)?.label}
                     </TableCell>
 
                     {/* <TableCell className="p-4 md:p-16" component="th" scope="row">

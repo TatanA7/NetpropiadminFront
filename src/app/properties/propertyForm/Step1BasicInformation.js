@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { FormControl, InputLabel, Menu, MenuItem, Select, FormHelperText } from '@mui/material';
+import { propertiesTypesOptions } from '../../mock'
 
 const schema = yup.object().shape({
   address: yup.string().required('Dato requerido'),
@@ -74,26 +75,6 @@ function BasicInformation({ property, onSubmit }) {
     if (onSubmit) onSubmit(data)
   }
 
-  const propertiesTypesOptions = [
-    { value: 1, label: 'Casa Nueva' },
-    { value: 2, label: 'Casa Usada' },
-    { value: 3, label: 'Casa Lote' },
-    { value: 4, label: 'Casa Campestre' },
-    { value: 5, label: 'Apartamento Nuevo' },
-    { value: 6, label: 'Apartamento Usado' },
-    { value: 20, label: 'Apartaestudio Nuevo' },
-    { value: 21, label: 'Apartaestudio Usado' },
-    { value: 30, label: 'Oficina' },
-    { value: 70, label: 'Consultorio' },
-    { value: 80, label: 'Local' },
-    { value: 90, label: 'Bodega' },
-    { value: 100, label: 'Lote' },
-    { value: 110, label: 'Finca' },
-    { value: 120, label: 'Cabaña' },
-    { value: 130, label: 'Habitación' },
-    { value: 140, label: 'Parqueadero' },
-    { value: 150, label: 'Edificio' },
-  ]
   return (
     <div className="flex flex-col items-center p-24 sm:p-20 container">
       <div className="flex flex-col w-full max-w-4xl">
