@@ -80,9 +80,6 @@ function BasicInformation({ property, onSubmit }) {
       <div className="flex flex-col w-full max-w-4xl">
         <Paper className="mt-12 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(handlerSubmit)} className="px-0 sm:px-24">
-            <div className="mb-24">
-              <Typography color="text.secondary">Nombre de propiedad*</Typography>
-            </div>
             <div className="space-y-20">
               <Controller
                 control={control}
@@ -101,9 +98,10 @@ function BasicInformation({ property, onSubmit }) {
                   />
                 )}
               />
-              <div className="mb-8">
+              {/* this line is for the label input */}
+              {/* <div className="mb-8">
                 <Typography color="text.secondary">Descripción de propiedad*</Typography>
-              </div>
+              </div> */}
               <Controller
                 control={control}
                 name="description"
@@ -121,9 +119,6 @@ function BasicInformation({ property, onSubmit }) {
                   />
                 )}
               />
-              <div className="mb-8">
-                <Typography color="text.secondary">Tipo de propiedad*</Typography>
-              </div>
               <Controller
                 control={control}
                 name="propertyType"
@@ -144,9 +139,6 @@ function BasicInformation({ property, onSubmit }) {
                   </FormControl>
                 )}
               />
-              <div className="mb-8">
-                <Typography color="text.secondary">Dirección de propiedad*</Typography>
-              </div>
               <Controller
                 control={control}
                 name="address"
@@ -227,7 +219,7 @@ function BasicInformation({ property, onSubmit }) {
                   />
                   <FormHelperText>{errors?.numberBathrooms?.message}</FormHelperText>
                 </FormControl>
-                <FormControl className="sm:w-full md:max-w-96">
+                <FormControl fullWidth className="sm:w-full md:max-w-96">
                   <Controller
                     control={control}
                     name="lotArea"
@@ -244,7 +236,7 @@ function BasicInformation({ property, onSubmit }) {
                     )}
                   />
                 </FormControl>
-                <FormControl className="sm:w-full md:max-w-96">
+                <FormControl fullWidth className="sm:w-full md:max-w-96">
                   <Controller
                     control={control}
                     name="lotMeters"

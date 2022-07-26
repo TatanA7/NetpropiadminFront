@@ -47,7 +47,7 @@ function UserNavbarHeader(props) {
       <Typography className="username text-14 whitespace-nowrap font-medium   text-red-100">
         {user.data.displayName}
       </Typography>
-      <Typography className="email text-13 whitespace-nowrap font-medium text-red-100">
+      <Typography className="email text-13 whitespace-nowrap font-medium text-red-100 mb-64   ">
         {user.data.mail}
       </Typography>
     </Root>

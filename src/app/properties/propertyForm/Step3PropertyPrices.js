@@ -64,9 +64,6 @@ function Step3PropertyPrices({ property, onSubmit }) {
       <div className="flex flex-col w-full max-w-4xl">
         <Paper className="mt-12 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(submitHandler)} className="px-0 sm:px-24">
-            <div className="mb-24">
-              <Typography color="text.secondary">Precio total</Typography>
-            </div>
             <div className="space-y-20">
               <Controller
                 control={control}
@@ -90,10 +87,6 @@ function Step3PropertyPrices({ property, onSubmit }) {
                   />
                 )}
               />
-              <div className="mb-24">
-                <Typography color="text.secondary">Valor de administración</Typography>
-              </div>
-
               <Controller
                 control={control}
                 name="managementValue"
@@ -116,9 +109,6 @@ function Step3PropertyPrices({ property, onSubmit }) {
                   />
                 )}
               />
-              <div className="mb-24">
-                <Typography color="text.secondary">Otros costos relacionados</Typography>
-              </div>
               <Controller
                 control={control}
                 name="othersCost"

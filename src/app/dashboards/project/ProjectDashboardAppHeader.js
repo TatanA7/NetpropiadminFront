@@ -71,7 +71,8 @@ function ProjectDashboardAppHeader(props) {
             </div>
           </div>
         </div>
-        <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+        {/* this line is comented because hava a good code to config mode */}
+        {/* <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
           <Button
             className="whitespace-nowrap"
             variant="contained"
@@ -88,7 +89,7 @@ function ProjectDashboardAppHeader(props) {
           >
             Configuración
           </Button>
-        </div>
+        </div> */}
       </div>
       {/* <div className="flex items-center">
         <Button
