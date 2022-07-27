@@ -15,7 +15,7 @@ const schema = yup.object().shape({
   address: yup.string().required('Dato requerido'),
   description: yup.string().required('Dato requerido'),
   lotArea: yup.string().required('Dato requerido'),
-  lotMeters: yup.string().required('Dato requerido'),
+  lotMeters: yup.string(),
   name: yup.string().required('Dato requerido'),
   numberBathrooms: yup.string().required('Dato requerido'),
   numberRooms: yup.string().required('Dato requerido'),

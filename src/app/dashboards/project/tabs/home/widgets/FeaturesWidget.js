@@ -1,9 +1,7 @@
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectWidgets } from '../../../store/widgetsSlice';
 
 function FeaturesWidget() {
@@ -13,10 +11,7 @@ function FeaturesWidget() {
   return (
     <Paper className="flex flex-col w-full h-full shadow rounded-2xl overflow-hidden">
       <div className="text-center px-8 pt-16">
-        <Typography
-          className="px-16 text-lg font-medium tracking-tight leading-6 truncate"
-          color="text.secondary"
-        >
+        <Typography className="px-16 text-lg font-medium tracking-tight leading-6 truncate text-red-100">
           {title}
         </Typography>
         {/* <IconButton aria-label="more" size="large">
@@ -24,10 +19,11 @@ function FeaturesWidget() {
         </IconButton> */}
       </div>
       <div className="text-center mt-16 mb-24">
-        <Typography className="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-green-500">
+        <Typography className="text-7xl sm:text-8xl font-bold tracking-tight leading-none  text-red-100">
           {data.count}
         </Typography>
-        <Typography className="text-lg font-medium text-green-600 mt-16">{data.name}</Typography>
+
+        <Typography className="text-lg font-medium  text-red-100 mt-16">{data.name}</Typography>
       </div>
       {/* <Typography
         className="flex items-baseline justify-center w-full mt-20 mb-24"

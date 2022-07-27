@@ -1,9 +1,7 @@
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectWidgets } from '../../../store/widgetsSlice';
 
 function IssuesWidget() {
@@ -24,10 +22,15 @@ function IssuesWidget() {
         </IconButton> */}
       </div>
       <div className="text-center mt-16 mb-24">
-        <Typography className="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-amber-500">
+        <Typography
+          color="text.secondary"
+          className="text-7xl sm:text-8xl font-bold tracking-tight leading-none "
+        >
           {data.count}
         </Typography>
-        <Typography className="text-lg font-medium text-amber-600 mt-16">{data.name}</Typography>
+        <Typography color="text.secondary" className="text-lg font-medium  mt-16">
+          {data.name}
+        </Typography>
       </div>
       {/* <Typography
         className="flex items-baseline justify-center w-full mt-20 mb-24"

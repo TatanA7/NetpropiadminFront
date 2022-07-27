@@ -99,7 +99,7 @@ function SignUpPage() {
           </Tabs>
           {currentTab === '0' ? <FormNatutalPerson /> : <FormRealEstate />}
           <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
-            <Typography className="mx-8">Ya tienes cuenta?</Typography>
+            <Typography className="mx-8">¿Ya tiene cuenta?</Typography>
             <Link style={{ textDecoration: 'none' }} className="ml-4" to="/sign-in">
               <Typography className="mx-8 text-red-100">Loguéate</Typography>
             </Link>

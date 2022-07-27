@@ -275,19 +275,21 @@ const FormNaturalPerson = () => {
           name="acceptTermsConditions"
           control={control}
           render={({ field }) => (
-            <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
+            <FormControl className="items-center flex-row" error={!!errors.acceptTermsConditions}>
               <FormControlLabel
-                label="Aceptar términos y condiciones"
+                className="mx-8 bg-white text-red-100"
+                // label="Términos y condicines"
                 control={<Checkbox size="small" {...field} />}
               />
               <a
+                rel="noreferrer noopener"
                 href="https://pruebas.netpropi.com/col/politicas_privacidad"
                 target="_blank"
-                style={{ textDecoration: 'none' }}
-                className="ml-4"
-                rel="noreferrer"
+                style={{ textDecoration: 'none', backgroundColor: 'white' }}
               >
-                <Typography className="mx-8 text-red-100">Términos y condicines</Typography>
+                <Typography className="mx-8 bg-white text-red-100">
+                  Aceptar Términos y condicines
+                </Typography>
               </a>
               <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
             </FormControl>

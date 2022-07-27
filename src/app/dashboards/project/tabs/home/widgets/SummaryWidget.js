@@ -1,11 +1,7 @@
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
-import { memo, useState } from 'react';
-import MenuItem from '@mui/material/MenuItem';
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectWidgets } from '../../../store/widgetsSlice';
 
 function SummaryWidget() {
@@ -58,10 +54,13 @@ function SummaryWidget() {
         </IconButton>
       </div> */}
       <div className="text-center mt-16 mb-24">
-        <Typography className="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500  mx-16">
+        <Typography
+          color="text.secondary"
+          className="text-7xl sm:text-8xl font-bold tracking-tight leading-none mx-16"
+        >
           {data.count}
         </Typography>
-        <Typography className="text-lg font-medium text-blue-600 dark:text-blue-500  mt-16">
+        <Typography color="text.secondary" className="text-lg font-medium  mt-16">
           {data.name}
         </Typography>
       </div>

@@ -189,9 +189,11 @@ function SignInPage() {
               <Link
                 style={{ textDecoration: 'none' }}
                 className="text-md font-medium text-red-100"
-                to="/forgot-password"
+                // to="/forgot-password"
+                to="/sign-in"
+
               >
-                <Typography className="mx-8 text-red-100">Olvidaste tu contraseña?</Typography>
+                <Typography className="mx-8 text-red-100">Olvidé mi contraseña</Typography>
               </Link>
             </div>
 
@@ -207,7 +209,7 @@ function SignInPage() {
               Entrar
             </Button>
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between  mt-16">
-              <Typography className="mx-8">No tienes cuenta?</Typography>
+              <Typography className="mx-8">¿Áun no tiene cuenta?</Typography>
               <Link style={{ textDecoration: 'none' }} className="ml-4" to="/sign-up">
                 <Typography className="mx-8 text-red-100">Regístrate</Typography>
               </Link>

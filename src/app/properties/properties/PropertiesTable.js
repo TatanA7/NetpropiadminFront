@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import withRouter from '@fuse/core/withRouter';
 import FuseLoading from '@fuse/core/FuseLoading';
+import { normalizeCOPCurrencyValue } from 'src/app/utils';
 import { selectProductsSearchText } from '../store/productsSlice';
 import PropertiesTableHead from './PropertiesTableHead';
 import { useDeleteBuildsMutation, useGetBuildsQuery } from '../../api';
@@ -305,7 +306,8 @@ function PropertiesTable(props) {
                     </TableCell> */}
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.price}
+                      $ {normalizeCOPCurrencyValue(n.price)}
+                      {/* {n.price} */}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
