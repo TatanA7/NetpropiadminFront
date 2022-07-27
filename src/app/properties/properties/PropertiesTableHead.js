@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -44,9 +45,15 @@ const rows = [
     sort: true,
   },
   {
+    id: 'statusProperty',
+    disablePadding: false,
+    label: 'Estado Propiedad',
+    sort: true,
+  },
+  {
     id: 'status',
     disablePadding: false,
-    label: 'Estado',
+    label: 'Estado Registro',
     sort: true,
   },
 ];
@@ -97,19 +104,44 @@ function PropertiesTableHead(props) {
               }}
             >
               <IconButton
+                className="text-red-500 font-xs"
+                onClick={() => {
+                  props.onMenuItemClick();
+                  props.onRemoveItems(selectedProductIds);
+                  closeSelectedProductsMenu();
+                }}
+                size="small"
+              >
+                <FuseSvgIcon size={20}>heroicons-outline:trash</FuseSvgIcon>
+              </IconButton>
+              {
+                numSelected === 1 && <IconButton
+                  className="text-orange-500 font-xs"
+                  onClick={() => {
+                    props.onMenuItemClick();
+                    props.onEditItem(...selectedProductIds);
+                    closeSelectedProductsMenu();
+                  }}
+                  size="small"
+                >
+                  <FuseSvgIcon size={20}>heroicons-outline:pencil</FuseSvgIcon>
+                </IconButton>
+
+              }
+              {/* <IconButton
                 aria-owns={selectedProductsMenu ? 'selectedProductsMenu' : null}
                 aria-haspopup="true"
                 onClick={openSelectedProductsMenu}
                 size="large"
               >
-                {/* <FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon> */}
-              </IconButton>
+                <FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon>
+              </IconButton> */}
               {/* <Menu
                 id="selectedProductsMenu"
                 anchorEl={selectedProductsMenu}
                 open={Boolean(selectedProductsMenu)}
                 onClose={closeSelectedProductsMenu}
-              > */}
+              >
               <MenuList>
                 <MenuItem
                   onClick={() => {
@@ -121,10 +153,10 @@ function PropertiesTableHead(props) {
                   <ListItemIcon className="min-w-40">
                     <FuseSvgIcon>heroicons-outline:trash</FuseSvgIcon>
                   </ListItemIcon>
-                  {/* <ListItemText primary="Eliminar" /> */}
+                  <ListItemText primary="Eliminar" />
                 </MenuItem>
               </MenuList>
-              {/* </Menu> */}
+              </Menu> */}
             </Box>
           )}
         </TableCell>

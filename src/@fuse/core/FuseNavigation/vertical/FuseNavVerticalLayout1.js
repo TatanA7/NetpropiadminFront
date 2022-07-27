@@ -53,9 +53,9 @@ function FuseNavVerticalLayout1(props) {
         className
       )}
     >
-      {navigation.map((_item) => (
+      {navigation.map((_item, i) => (
         <FuseNavItem
-          key={_item.id}
+          key={i}
           type={`vertical-${_item.type}`}
           item={_item}
           nestedLevel={0}

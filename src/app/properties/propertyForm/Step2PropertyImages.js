@@ -54,7 +54,7 @@ const defaultValues = {
 };
 
 const schema = yup.object().shape({
-  imgsUrl: yup.array().of(yup.string()).min(1, 'Al menos una imagen').required('Dato Requerido'),
+  imgsUrl: yup.array().of(yup.string()).min(1, 'Al menos una imagen').max(6, 'Máximo 6 imágenes').required('Dato Requerido'),
 });
 
 function Step2PropertyImages({ property, onSubmit }) {
@@ -122,12 +122,17 @@ function Step2PropertyImages({ property, onSubmit }) {
                     type="file"
                     multiple
                     onChange={async (e) => {
+
+                      if ((images.length + e.target.files.length)  > 6) {
+                        alert('Máximo 6 imágenes');
+                        return
+                      }
+
                       const newImageUrls = await uploadFiles(
                         Array.from(e.target.files),
                         property.id
                       );
 
-                      const newValue = [...newImageUrls, ...images];
                       onChange([...newImageUrls, ...images]);
                     }}
                   />

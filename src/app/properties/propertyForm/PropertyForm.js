@@ -11,6 +11,7 @@ import Step1BasicInformation from './Step1BasicInformation';
 import Step2PropertyImages from './Step2PropertyImages';
 import Step3PropertyPrices from './Step3PropertyPrices';
 import { useCreateBuildsMutation, useUpdateBuildsMutation, useGetBuildByIdQuery } from '../../api';
+import history from '@history';
 
 const steps = ['Información básica', 'Imágenes de la propiedad', 'Precio'];
 
@@ -86,6 +87,14 @@ function PropertyForm() {
       alert('Update Build failed');
     }
   }, [buildingUpdateResult]);
+  
+  const allStepsCompletedMemo = useMemo(() => {
+    return Object.keys(completed).length === steps.length;
+  }, [completed])
+
+  useEffect(() => {
+    if (allStepsCompletedMemo) setTimeout(() => history.push('/properties'), 1500);
+  }, [allStepsCompletedMemo])
 
   const handleSubmitStep1 = async (data) => {
     if (!property?.id) {
@@ -107,24 +116,12 @@ function PropertyForm() {
     });
   }
 
-  const totalSteps = () => {
-    return steps.length;
-  };
-
-  const completedSteps = () => {
-    return Object.keys(completed).length;
-  };
-
   const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps();
+    return activeStep === steps.length - 1;
   };
 
   const validateStepsCompleted = () => {
-    let newCompleted = completed;
+    let newCompleted = {...completed};
 
     if (property?.status === 'completed') {
       newCompleted[activeStep] = true;
@@ -153,7 +150,7 @@ function PropertyForm() {
   const handleNext = () => {
     validateStepsCompleted()
     const newActiveStep =
-      isLastStep() && !allStepsCompleted()
+      isLastStep() && !allStepsCompletedMemo
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
           steps.findIndex((step, i) => !(i in completed))
@@ -204,7 +201,7 @@ function PropertyForm() {
             <Stepper nonLinear alternativeLabel activeStep={activeStep}>
               {steps.map((label, index) => (
                 <Step key={label} completed={completed[index]}>
-                  <StepButton color="inherit" /* onClick={handleStep(index)} */>
+                  <StepButton color="inherit">
                     {label}
                   </StepButton>
                 </Step>
@@ -212,12 +209,12 @@ function PropertyForm() {
             </Stepper>
 
             <div>
-              {allStepsCompleted() ? (
+              {allStepsCompletedMemo ? (
                 <>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
+                  <Typography textAlign="center" sx={{ mt: 8 }} width="100%">
                     Todos los pasos han sido completados
                   </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                  {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     <Button
                       className="text-blue-900"
                       component={Link}
@@ -227,7 +224,7 @@ function PropertyForm() {
                       Volver a propiedades
                     </Button>
                     <Button onClick={handleReset}>Reiniciar</Button>
-                  </Box>
+                  </Box> */}
                 </>
               ) : (
                 <>
@@ -249,16 +246,6 @@ function PropertyForm() {
                     >
                       Siguiente
                     </Button>
-                    {/* {activeStep !== steps.length &&
-                      (completed[activeStep] ? (
-                        <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                          Step {activeStep + 1} already completed
-                        </Typography>
-                      ) : (
-                        <Button onClick={handleComplete}>
-                          {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                        </Button>
-                      ))} */}
                   </Box>
                 </>
               )}

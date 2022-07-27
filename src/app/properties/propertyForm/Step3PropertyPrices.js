@@ -12,14 +12,14 @@ import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
 import { InputAdornment } from '@mui/material';
 import { normalizeCOPCurrencyValue, convertCurrencyToNumber, convertNumberToCOPCurrency } from 'src/app/utils';
 
-const copCurrencyRegex = /^([1-9][0-9]{0,2})(\.\d{3})*(,\d{1,2})?$/
+const copCurrencyRegex = /(^$|^([1-9][0-9]{0,2})(\.\d{3})*(,\d{1,2})?$)/
 const currencyFields = ['price', 'managementValue', 'othersCost']
 
 const defaultValues = { price: '', othersCost: '', managementValue: '' };
 const schema = yup.object().shape({
-  price: yup.string().matches(copCurrencyRegex, 'Debe ser un valor válido').required('Dato requerido'),
-  othersCost: yup.string().matches(copCurrencyRegex, 'Debe ser un valor válido').required('Dato requerido'),
-  managementValue: yup.string().matches(copCurrencyRegex, 'Debe ser un valor válido').required('Dato requerido'),
+  price: yup.string().matches(copCurrencyRegex, 'Debe ser un valor válido'),
+  othersCost: yup.string().matches(copCurrencyRegex, 'Debe ser un valor válido'),
+  managementValue: yup.string().matches(copCurrencyRegex, 'Debe ser un valor válido'),
 });
 
 function Step3PropertyPrices({ property, onSubmit }) {

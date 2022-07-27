@@ -18,3 +18,30 @@ export const propertiesTypesOptions = [
     { value: 140, label: 'Parqueadero' },
     { value: 150, label: 'Edificio' },
 ]
+
+export const propertyStatusOptions = [
+    { value: 1, label: 'Rentada' },
+    { value: 2, label: 'Activa' },
+    { value: 3, label: 'Vendida' },
+    { value: 4, label: 'Cancelada' }
+]
+
+export const departments = [
+    '',
+    'Bogotá',
+    'Atlántico',
+    'Valle del cauca',
+    'Magdalena',
+    'Antioquía',
+    'Tolima',
+]
+
+export const cities = [
+    '',
+    'Bogotá D.C',
+    'Barranquilla',
+    'Cali',
+    'Santa Marta',
+    'Medellín',
+    'Ibagué',
+]

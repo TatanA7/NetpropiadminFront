@@ -8,8 +8,8 @@ import _ from '@lodash';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { FormControl, InputLabel, Menu, MenuItem, Select, FormHelperText } from '@mui/material';
-import { propertiesTypesOptions } from '../../mock'
+import { FormControl, InputLabel, Menu, MenuItem, Select, FormHelperText, Autocomplete } from '@mui/material';
+import { propertiesTypesOptions, propertyStatusOptions, cities, departments } from '../../mock'
 
 const schema = yup.object().shape({
   address: yup.string().required('Dato requerido'),
@@ -21,12 +21,10 @@ const schema = yup.object().shape({
   numberRooms: yup.string().required('Dato requerido'),
   parkingLot: yup.string().required('Dato requerido'),
   propertyType: yup.string().required('Dato requerido'),
-  stratum: yup.string().required('Dato requerido')
-  // imgDescription: yup.string().required('Dato requerido'),
-  // imgName: yup.string().required('Dato requerido'),
-  // managementValue: yup.string().required('Dato requerido'),
-  // othersCost: yup.string().required('Dato requerido'),
-  // price: yup.string().required('Dato requerido'),
+  stratum: yup.string().required('Dato requerido'),
+  propertyStatus: yup.string().required('Dato requerido'),
+  city: yup.string().required('Dato requerido'),
+  department: yup.string().required('Dato requerido')
 });
 
 const defaultValues = {
@@ -40,6 +38,9 @@ const defaultValues = {
   parkingLot: '',
   propertyType: '',
   stratum: '',
+  propertyStatus: '',
+  city: '',
+  department: ''
 };
 
 function BasicInformation({ property, onSubmit }) {
@@ -72,7 +73,12 @@ function BasicInformation({ property, onSubmit }) {
 
   // eslint-disable-next-line camelcase
   function handlerSubmit(data) {
-    if (onSubmit) onSubmit(data)
+    const {
+      propertyStatus,
+      city,
+      department,
+      ...restData } = data
+    if (onSubmit) onSubmit(restData)
   }
 
   return (
@@ -81,6 +87,26 @@ function BasicInformation({ property, onSubmit }) {
         <Paper className="mt-12 sm:mt-48 p-24 pb-28 sm:p-40 sm:pb-28 rounded-2xl">
           <form onSubmit={handleSubmit(handlerSubmit)} className="px-0 sm:px-24">
             <div className="space-y-20">
+              <Controller
+                control={control}
+                name="propertyStatus"
+                render={({ field }) => (
+                  <FormControl fullWidth error={!!errors.propertyStatus}>
+                    <InputLabel id="propertytype-label">Disponibilidad</InputLabel>
+                    <Select
+                      {...field}
+                      labelId="property-status-label"
+                      label="Disponibilidad"
+                      id="property-status"
+                      error={!!errors.propertyStatus}
+                      fullWidth
+                    >
+                      {propertyStatusOptions.map(item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>)}
+                    </Select>
+                    <FormHelperText>{errors?.propertyStatus?.message}</FormHelperText>
+                  </FormControl>
+                )}
+              />
               <Controller
                 control={control}
                 name="name"
@@ -139,6 +165,47 @@ function BasicInformation({ property, onSubmit }) {
                   </FormControl>
                 )}
               />
+              <div className="flex gap-x-16 justify-between">
+                <Controller
+                  control={control}
+                  name="department"
+                  render={({ field: { onChange, value} }) => (
+                    <FormControl fullWidth error={!!errors.department}>
+                      <Autocomplete
+                        value={value}
+                        onChange={(event, newValue) => {
+                          onChange(newValue)
+                        }}
+                        disablePortal
+                        id="autocomplete-city"
+                        options={departments}
+                        renderInput={(params) => <TextField {...params} label="Departamento" />}
+                      />
+                      <FormHelperText>{errors?.department?.message}</FormHelperText>
+                    </FormControl>
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="city"
+                  render={({ field: { onChange, value } }) => (
+                    <FormControl fullWidth error={!!errors.city}>
+                      <Autocomplete
+                        value={value}
+                        onChange={(event, newValue) => {
+                          onChange(newValue)
+                        }}
+                        disablePortal
+                        id="autocomplete-city"
+                        options={cities}
+                        renderInput={(params) => <TextField {...params} label="Ciudad" />}
+                      />
+                      <FormHelperText>{errors?.city?.message}</FormHelperText>
+                    </FormControl>
+                  )}
+                />
+              </div>
+              
               <Controller
                 control={control}
                 name="address"

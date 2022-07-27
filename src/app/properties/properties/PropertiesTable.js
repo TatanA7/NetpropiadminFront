@@ -10,18 +10,15 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import withRouter from '@fuse/core/withRouter';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { selectProducts, selectProductsSearchText } from '../store/productsSlice';
+import { selectProductsSearchText } from '../store/productsSlice';
 import PropertiesTableHead from './PropertiesTableHead';
 import { useDeleteBuildsMutation, useGetBuildsQuery } from '../../api';
 import { propertiesTypesOptions } from '../../mock'
 
 function PropertiesTable(props) {
-  const dispatch = useDispatch();
-  const products = useSelector(selectProducts);
-  const searchText = useSelector(selectProductsSearchText);
   const [performBuildDelete, buildDeleteEvents] = useDeleteBuildsMutation();
 
   const [loading, setLoading] = useState(true);
@@ -114,8 +111,8 @@ function PropertiesTable(props) {
     setSelected([]);
   }
 
-  function handleClick(item) {
-    props.navigate(`/properties/${item.id}`);
+  function navigateToDetail(id) {
+    props.navigate(`/properties/${id}`);
   }
 
   function handleCheck(event, id) {
@@ -192,6 +189,26 @@ function PropertiesTable(props) {
     return <div className={textColor}>{statusLabel}</div>;
   };
 
+  const renderPropertyStatus = () => {
+    const propertiesStatus = {
+      0: 'Rentada',
+      1: 'Vendida',
+      2: 'Activa',
+      3: 'Cancelada',
+    }
+    const colors = {
+      0: 'text-orange-500',
+      1: 'text-gray-500',
+      2: 'text-green-500',
+      3: 'text-red-500',
+    }
+    // return ramdon value from 0 to 3
+    const randomPropertyStatus = Math.floor(Math.random() * 4);
+    
+    return <div className={colors[randomPropertyStatus]}>{propertiesStatus[randomPropertyStatus]}</div>;
+  }
+
+
   return (
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
@@ -199,6 +216,7 @@ function PropertiesTable(props) {
           <PropertiesTableHead
             selectedProductIds={selected}
             onRemoveItems={handleRemoveItems}
+            onEditItem={navigateToDetail}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
@@ -235,7 +253,7 @@ function PropertiesTable(props) {
                     tabIndex={-1}
                     key={n.id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(n)}
+                    onClick={(event) => navigateToDetail(n.id)}
                   >
                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                       <Checkbox
@@ -290,6 +308,9 @@ function PropertiesTable(props) {
                       {n.price}
                     </TableCell>
 
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                      {renderPropertyStatus()}
+                    </TableCell>
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {renderStatus(n.status)}
                     </TableCell>
