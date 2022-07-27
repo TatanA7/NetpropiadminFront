@@ -287,9 +287,7 @@ const FormNaturalPerson = () => {
                 target="_blank"
                 style={{ textDecoration: 'none', backgroundColor: 'white' }}
               >
-                <Typography className="mx-8 bg-white text-red-100">
-                  Aceptar Términos y condicines
-                </Typography>
+                <Typography className="mx-8 bg-white">Aceptar Términos y condicines</Typography>
               </a>
               <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
             </FormControl>

@@ -179,7 +179,7 @@ function SignInPage() {
                 render={({ field }) => (
                   <FormControl>
                     <FormControlLabel
-                      label="Recuerdame"
+                      label="Recuérdame"
                       control={<Checkbox size="small" {...field} />}
                     />
                   </FormControl>
@@ -191,7 +191,6 @@ function SignInPage() {
                 className="text-md font-medium text-red-100"
                 // to="/forgot-password"
                 to="/sign-in"
-
               >
                 <Typography className="mx-8 text-red-100">Olvidé mi contraseña</Typography>
               </Link>

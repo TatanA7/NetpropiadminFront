@@ -58,13 +58,13 @@ function ProjectDashboardAppHeader(props) {
           </Avatar>
           <div className="flex flex-col min-w-0 mx-16">
             <Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-              {`Bienvenido!, ${user.data.displayName}!`}
+              {`¡Bienvenido!, ${user.data.displayName}`}
             </Typography>
 
             <div className="flex items-center">
-              <FuseSvgIcon size={20} color="action">
+              {/* <FuseSvgIcon size={20} color="action">
                 heroicons-solid:bell
-              </FuseSvgIcon>
+              </FuseSvgIcon> */}
               <Typography className="mx-6 leading-6 truncate" color="text.secondary">
                 No tienes tareas pendientes
               </Typography>
