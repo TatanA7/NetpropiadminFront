@@ -14,9 +14,9 @@ import { Link } from 'react-router-dom';
 const schema = yup.object().shape({
   password: yup
     .string()
-    .required('Please enter your password.')
-    .min(8, 'Password is too short - should be 8 chars minimum.'),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+    .required('Porfavor poner contraseña.')
+    .min(8, 'Contraseña es demasiado corta - debe ser de maximo 8 caracteres.'),
+  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Contraseña debe ser igual'),
 });
 
 const defaultValues = {
@@ -41,12 +41,12 @@ function ClassicResetPasswordPage() {
     <div className="flex flex-col flex-auto items-center sm:justify-center min-w-0">
       <Paper className="w-full sm:w-auto min-h-full sm:min-h-auto rounded-0 py-32 px-16 sm:p-48 sm:rounded-2xl sm:shadow">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-          <img className="w-48" src="assets/images/logo/logo.svg" alt="logo" />
+          <img className="w-48" src="assets/images/logo/logo_netpropi.svg" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Reset your password
+            Restablecer contraseña
           </Typography>
-          <Typography className="font-medium">Create a new password for your account</Typography>
+          <Typography className="font-medium">Crear una nueva contraseña</Typography>
 
           <form
             name="registerForm"
@@ -61,7 +61,7 @@ function ClassicResetPasswordPage() {
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Password"
+                  label="Contraseña"
                   type="password"
                   error={!!errors.password}
                   helperText={errors?.password?.message}
@@ -79,7 +79,7 @@ function ClassicResetPasswordPage() {
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Password (Confirm)"
+                  label="Confirmar Contraseña"
                   type="password"
                   error={!!errors.passwordConfirm}
                   helperText={errors?.passwordConfirm?.message}
@@ -99,13 +99,13 @@ function ClassicResetPasswordPage() {
               type="submit"
               size="large"
             >
-              Reset your password
+              Restablecer contraseña
             </Button>
 
             <Typography className="mt-32 text-md font-medium" color="text.secondary">
-              <span>Return to</span>
+              <span>Regresar a</span>
               <Link className="ml-4" to="/sign-in">
-                sign in
+                Ingresar
               </Link>
             </Typography>
           </form>

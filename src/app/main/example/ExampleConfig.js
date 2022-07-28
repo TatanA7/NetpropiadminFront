@@ -6,6 +6,7 @@ import PropertyForm from 'src/app/properties/propertyForm/PropertyForm';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
+import ClassicResetPasswordPage from '../pages/authentication/reset-password/ClassicResetPasswordPage';
 // import Example from './Example';
 // import SplitScreenSignUpPage from '../pages/authentication/sign-up/SplitScreenSignUpPage';
 // import HelpCenterSupport from '../apps/help-center/support/HelpCenterSupport';
@@ -36,6 +37,11 @@ const ExampleConfig = {
       path: 'properties/:id',
       element: <PropertyForm />,
     },
+    {
+      path: 'reportes',
+      element: <ClassicResetPasswordPage />,
+    },
+    
   ],
 };
 
