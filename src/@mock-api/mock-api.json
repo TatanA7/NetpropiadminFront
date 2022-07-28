@@ -157,7 +157,7 @@
       },
       "parameters": []
     },
-    "/auth/forgot-password": {
+    "/auth/forgot": {
       "get": {
         "summary": "Forgot",
         "responses": {
@@ -194,7 +194,7 @@
             }
           }
         },
-        "operationId": "auth_forgotPassword",
+        "operationId": "auth_forgot",
         "description": "Retrieve user.",
         "tags": [
           "auth"

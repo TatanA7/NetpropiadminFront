@@ -189,8 +189,7 @@ function SignInPage() {
               <Link
                 style={{ textDecoration: 'none' }}
                 className="text-md font-medium text-red-100"
-                // to="/forgot-password"
-                to="/sign-in"
+                to="/forgot-password"
               >
                 <Typography className="mx-8 text-red-100">Olvidé mi contraseña</Typography>
               </Link>

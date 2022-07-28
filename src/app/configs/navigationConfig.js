@@ -94,7 +94,7 @@ const navigationConfig = [
     title: 'Reportes',
     type: 'item',
     icon: 'netpropi-default:reportes',
-    url: 'forgot-password',
+    url: 'reportes',
   },
 ];
 
