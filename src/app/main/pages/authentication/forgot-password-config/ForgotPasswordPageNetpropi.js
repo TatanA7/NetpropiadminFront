@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
@@ -8,6 +9,7 @@ import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import { useForgotPasswordMutation } from '../../../../api'
 
 /**
  * Form Validation Schema
@@ -21,15 +23,30 @@ const defaultValues = {
 };
 
 function ForgotPasswordPageNetpropi() {
+  const [performForgotPassword, resultRequest] = useForgotPasswordMutation()
+
   const { control, formState, handleSubmit, reset } = useForm({
     mode: 'onChange',
     defaultValues,
     resolver: yupResolver(schema),
   });
-
+  
   const { isValid, dirtyFields, errors } = formState;
 
-  function onSubmit() {
+  useEffect(() => {
+    if (resultRequest.isUninitialized) return;
+    if (resultRequest.status === 'pending') return;
+
+    if (resultRequest.isSuccess) alert('Se ha enviado un correo con instrucciones para restablecer su contraseña')
+
+    if (resultRequest.isError) {
+      // eslint-disable-next-line no-alert
+      alert(resultRequest.error.name);
+    }
+  }, [resultRequest]);
+
+  async function onSubmit({ email }) {
+    await performForgotPassword({ email })
     reset(defaultValues);
   }
 
@@ -86,7 +103,7 @@ function ForgotPasswordPageNetpropi() {
               <Typography className="mt-32 text-md font-medium" color="text.secondary">
                 <span>Devolverse a</span>
                 <Link className="ml-4" to="/sign-in">
-                  Ingresar
+                  Iniciar sesión
                 </Link>
               </Typography>
             </form>

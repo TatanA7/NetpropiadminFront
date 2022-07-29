@@ -13,6 +13,20 @@ export const CreateUserDocument = `
   }
 }
     `;
+export const ForgotPasswordDocument = `
+    mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email) {
+    mail
+  }
+}
+    `;
+export const RecoverPasswordDocument = `
+    mutation RecoverPassword($recoverVariables: RecoverPasswordInput!) {
+  recoverPassword(recoverVariables: $recoverVariables) {
+    mail
+  }
+}
+    `;
 export const CreateBuildsDocument = `
     mutation CreateBuilds($variables: BuildsInput!) {
   createBuilds(variables: $variables) {
@@ -126,6 +140,12 @@ const injectedRtkApi = api.injectEndpoints({
         CreateUser: build.mutation({
             query: (variables) => ({ document: CreateUserDocument, variables })
         }),
+        ForgotPassword: build.mutation({
+            query: (variables) => ({ document: ForgotPasswordDocument, variables })
+        }),
+        RecoverPassword: build.mutation({
+            query: (variables) => ({ document: RecoverPasswordDocument, variables })
+        }),
         CreateBuilds: build.mutation({
             query: (variables) => ({ document: CreateBuildsDocument, variables })
         }),
@@ -144,4 +164,4 @@ const injectedRtkApi = api.injectEndpoints({
     }),
 });
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useDeleteBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useForgotPasswordMutation, useRecoverPasswordMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useDeleteBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;

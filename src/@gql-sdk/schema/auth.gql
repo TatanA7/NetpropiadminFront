@@ -9,3 +9,16 @@ mutation CreateUser($variable: UserInput!) {
         token
     }
 }
+
+mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email) {
+        mail
+    }
+}
+
+
+mutation RecoverPassword($recoverVariables: RecoverPasswordInput!) {
+    recoverPassword(recoverVariables: $recoverVariables) {
+        mail
+    }
+}

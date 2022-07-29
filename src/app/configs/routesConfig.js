@@ -9,8 +9,9 @@ import Error404Page from '../main/404/Error404Page';
 import ExampleConfig from '../main/example/ExampleConfig';
 import MaintenancePageConfig from '../main/pages/maintenance/maintenancePageConfig';
 import ForgotPasswordConfig from '../main/pages/authentication/forgot-password-config/ForgotPasswordConfig';
+import RecoverForgotPasswordConfig from '../main/pages/authentication/recover-forgot-password/RecoverForgotPasswordConfig';
 
-const routeConfigs = [MaintenancePageConfig, ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, ForgotPasswordConfig];
+const routeConfigs = [MaintenancePageConfig, ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, ForgotPasswordConfig, RecoverForgotPasswordConfig];
 
 const routes = [
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),

@@ -50,6 +50,8 @@ export declare type BuildImage = {
 export declare type Builds = {
     __typename?: 'Builds';
     address: Scalars['String'];
+    city: Scalars['String'];
+    department: Scalars['String'];
     description: Scalars['String'];
     id: Scalars['Float'];
     images: Array<Img>;
@@ -72,7 +74,9 @@ export declare type Builds = {
 export declare type BuildsInput = {
     acquired_in?: InputMaybe<Scalars['String']>;
     address?: InputMaybe<Scalars['String']>;
+    city?: InputMaybe<Scalars['String']>;
     deletedAt?: InputMaybe<Array<Scalars['String']>>;
+    department?: InputMaybe<Scalars['String']>;
     description?: InputMaybe<Scalars['String']>;
     imgDescription?: InputMaybe<Scalars['String']>;
     imgName?: InputMaybe<Scalars['String']>;
@@ -92,7 +96,9 @@ export declare type BuildsInput = {
 };
 export declare type BuildsUpdateInput = {
     address?: InputMaybe<Scalars['String']>;
+    city?: InputMaybe<Scalars['String']>;
     deletedAt?: InputMaybe<Array<Scalars['String']>>;
+    department?: InputMaybe<Scalars['String']>;
     description?: InputMaybe<Scalars['String']>;
     imgDescription?: InputMaybe<Scalars['String']>;
     imgName?: InputMaybe<Scalars['String']>;
@@ -123,9 +129,11 @@ export declare type Mutation = {
     createBuilds: Builds;
     createUser: Autentication;
     deleteBuilds: Scalars['Boolean'];
+    forgotPassword: User;
     login: Autentication;
     loginFacebook: Autentication;
     loginGoogle: Autentication;
+    recoverPassword: User;
     updateBuilds: BuildImage;
 };
 export declare type MutationCreateBuildsArgs = {
@@ -137,6 +145,9 @@ export declare type MutationCreateUserArgs = {
 export declare type MutationDeleteBuildsArgs = {
     id: Scalars['Int'];
 };
+export declare type MutationForgotPasswordArgs = {
+    email: Scalars['String'];
+};
 export declare type MutationLoginArgs = {
     loginVariables: LoginInput;
 };
@@ -145,6 +156,9 @@ export declare type MutationLoginFacebookArgs = {
 };
 export declare type MutationLoginGoogleArgs = {
     loginVariables: LoginGoogleInput;
+};
+export declare type MutationRecoverPasswordArgs = {
+    recoverVariables: RecoverPasswordInput;
 };
 export declare type MutationUpdateBuildsArgs = {
     fields: BuildsUpdateInput;
@@ -161,6 +175,11 @@ export declare type Query = {
 export declare type QueryBuildsByIdArgs = {
     id: Scalars['Int'];
 };
+export declare type RecoverPasswordInput = {
+    code: Scalars['String'];
+    mail: Scalars['String'];
+    password: Scalars['String'];
+};
 export declare type Type_Build = {
     __typename?: 'Type_build';
     date_add: Scalars['DateTime'];
@@ -175,6 +194,7 @@ export declare type User = {
     coint: Scalars['String'];
     created_at: Scalars['Boolean'];
     facebook_id: Scalars['String'];
+    forgotPassword: Scalars['String'];
     google_id: Scalars['String'];
     id: Scalars['Float'];
     last_name: Scalars['String'];
@@ -190,6 +210,7 @@ export declare type UserInput = {
     NIT?: InputMaybe<Scalars['String']>;
     businessName?: InputMaybe<Scalars['String']>;
     cell_phone: Scalars['String'];
+    forgotPassword?: InputMaybe<Scalars['String']>;
     last_name?: InputMaybe<Scalars['String']>;
     mail: Scalars['String'];
     name: Scalars['String'];
@@ -221,6 +242,26 @@ export declare type CreateUserMutation = {
     createUser: {
         __typename?: 'Autentication';
         token: string;
+    };
+};
+export declare type ForgotPasswordMutationVariables = Exact<{
+    email: Scalars['String'];
+}>;
+export declare type ForgotPasswordMutation = {
+    __typename?: 'Mutation';
+    forgotPassword: {
+        __typename?: 'User';
+        mail: string;
+    };
+};
+export declare type RecoverPasswordMutationVariables = Exact<{
+    recoverVariables: RecoverPasswordInput;
+}>;
+export declare type RecoverPasswordMutation = {
+    __typename?: 'Mutation';
+    recoverPassword: {
+        __typename?: 'User';
+        mail: string;
     };
 };
 export declare type CreateBuildsMutationVariables = Exact<{
@@ -348,6 +389,8 @@ export declare type GetBuildByIdQuery = {
 };
 export declare const LoginDocument = "\n    mutation Login($loginVariables: LoginInput!) {\n  login(loginVariables: $loginVariables) {\n    token\n  }\n}\n    ";
 export declare const CreateUserDocument = "\n    mutation CreateUser($variable: UserInput!) {\n  createUser(variable: $variable) {\n    token\n  }\n}\n    ";
+export declare const ForgotPasswordDocument = "\n    mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email) {\n    mail\n  }\n}\n    ";
+export declare const RecoverPasswordDocument = "\n    mutation RecoverPassword($recoverVariables: RecoverPasswordInput!) {\n  recoverPassword(recoverVariables: $recoverVariables) {\n    mail\n  }\n}\n    ";
 export declare const CreateBuildsDocument = "\n    mutation CreateBuilds($variables: BuildsInput!) {\n  createBuilds(variables: $variables) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    imgName\n    imgDescription\n    price\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const UpdateBuildsDocument = "\n    mutation UpdateBuilds($fields: BuildsUpdateInput!, $updateBuildsId: Int!) {\n  updateBuilds(fields: $fields, id: $updateBuildsId) {\n    id\n    name\n    description\n    propertyType\n    address\n    numberRooms\n    numberBathrooms\n    stratum\n    lotArea\n    lotMeters\n    parkingLot\n    price\n    imgs {\n      id\n      url\n    }\n    managementValue\n    othersCost\n    status\n  }\n}\n    ";
 export declare const DeleteBuildsDocument = "\n    mutation DeleteBuilds($deleteBuildsId: Int!) {\n  deleteBuilds(id: $deleteBuildsId)\n}\n    ";
@@ -369,6 +412,18 @@ declare const injectedRtkApi: import("@reduxjs/toolkit/dist/query").Api<import("
         document: string | import("graphql").DocumentNode;
         variables?: any;
     }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">;
+    ForgotPassword: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+        email: Scalars['String'];
+    }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+        document: string | import("graphql").DocumentNode;
+        variables?: any;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, ForgotPasswordMutation, "api">;
+    RecoverPassword: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+        recoverVariables: RecoverPasswordInput;
+    }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+        document: string | import("graphql").DocumentNode;
+        variables?: any;
+    }, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, RecoverPasswordMutation, "api">;
     CreateBuilds: import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
         variables: BuildsInput;
     }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
@@ -412,7 +467,17 @@ export declare const useLoginMutation: import("@reduxjs/toolkit/dist/query/react
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;
     variables?: any;
-}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">>, useCreateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, CreateUserMutation, "api">>, useForgotPasswordMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+    email: Scalars['String'];
+}>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+    document: string | import("graphql").DocumentNode;
+    variables?: any;
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, ForgotPasswordMutation, "api">>, useRecoverPasswordMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
+    recoverVariables: RecoverPasswordInput;
+}>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
+    document: string | import("graphql").DocumentNode;
+    variables?: any;
+}, unknown, import("@rtk-query/graphql-request-base-query/dist/GraphqlBaseQueryTypes").ErrorResponse, Partial<Pick<import("graphql-request").ClientError, "request" | "response">>, {}>, never, RecoverPasswordMutation, "api">>, useCreateBuildsMutation: import("@reduxjs/toolkit/dist/query/react/buildHooks").UseMutation<import("@reduxjs/toolkit/dist/query").MutationDefinition<Exact<{
     variables: BuildsInput;
 }>, import("@reduxjs/toolkit/dist/query").BaseQueryFn<{
     document: string | import("graphql").DocumentNode;

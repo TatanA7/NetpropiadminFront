@@ -46,6 +46,8 @@ export type BuildImage = {
 export type Builds = {
   __typename?: 'Builds';
   address: Scalars['String'];
+  city: Scalars['String'];
+  department: Scalars['String'];
   description: Scalars['String'];
   id: Scalars['Float'];
   images: Array<Img>;
@@ -69,7 +71,9 @@ export type Builds = {
 export type BuildsInput = {
   acquired_in?: InputMaybe<Scalars['String']>;
   address?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
   deletedAt?: InputMaybe<Array<Scalars['String']>>;
+  department?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   imgDescription?: InputMaybe<Scalars['String']>;
   imgName?: InputMaybe<Scalars['String']>;
@@ -90,7 +94,9 @@ export type BuildsInput = {
 
 export type BuildsUpdateInput = {
   address?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
   deletedAt?: InputMaybe<Array<Scalars['String']>>;
+  department?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   imgDescription?: InputMaybe<Scalars['String']>;
   imgName?: InputMaybe<Scalars['String']>;
@@ -124,9 +130,11 @@ export type Mutation = {
   createBuilds: Builds;
   createUser: Autentication;
   deleteBuilds: Scalars['Boolean'];
+  forgotPassword: User;
   login: Autentication;
   loginFacebook: Autentication;
   loginGoogle: Autentication;
+  recoverPassword: User;
   updateBuilds: BuildImage;
 };
 
@@ -146,6 +154,11 @@ export type MutationDeleteBuildsArgs = {
 };
 
 
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
+};
+
+
 export type MutationLoginArgs = {
   loginVariables: LoginInput;
 };
@@ -158,6 +171,11 @@ export type MutationLoginFacebookArgs = {
 
 export type MutationLoginGoogleArgs = {
   loginVariables: LoginGoogleInput;
+};
+
+
+export type MutationRecoverPasswordArgs = {
+  recoverVariables: RecoverPasswordInput;
 };
 
 
@@ -180,6 +198,12 @@ export type QueryBuildsByIdArgs = {
   id: Scalars['Int'];
 };
 
+export type RecoverPasswordInput = {
+  code: Scalars['String'];
+  mail: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type Type_Build = {
   __typename?: 'Type_build';
   date_add: Scalars['DateTime'];
@@ -195,6 +219,7 @@ export type User = {
   coint: Scalars['String'];
   created_at: Scalars['Boolean'];
   facebook_id: Scalars['String'];
+  forgotPassword: Scalars['String'];
   google_id: Scalars['String'];
   id: Scalars['Float'];
   last_name: Scalars['String'];
@@ -211,6 +236,7 @@ export type UserInput = {
   NIT?: InputMaybe<Scalars['String']>;
   businessName?: InputMaybe<Scalars['String']>;
   cell_phone: Scalars['String'];
+  forgotPassword?: InputMaybe<Scalars['String']>;
   last_name?: InputMaybe<Scalars['String']>;
   mail: Scalars['String'];
   name: Scalars['String'];
@@ -240,6 +266,20 @@ export type CreateUserMutationVariables = Exact<{
 
 
 export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'Autentication', token: string } };
+
+export type ForgotPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'User', mail: string } };
+
+export type RecoverPasswordMutationVariables = Exact<{
+  recoverVariables: RecoverPasswordInput;
+}>;
+
+
+export type RecoverPasswordMutation = { __typename?: 'Mutation', recoverPassword: { __typename?: 'User', mail: string } };
 
 export type CreateBuildsMutationVariables = Exact<{
   variables: BuildsInput;
@@ -287,6 +327,20 @@ export const CreateUserDocument = `
     mutation CreateUser($variable: UserInput!) {
   createUser(variable: $variable) {
     token
+  }
+}
+    `;
+export const ForgotPasswordDocument = `
+    mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email) {
+    mail
+  }
+}
+    `;
+export const RecoverPasswordDocument = `
+    mutation RecoverPassword($recoverVariables: RecoverPasswordInput!) {
+  recoverPassword(recoverVariables: $recoverVariables) {
+    mail
   }
 }
     `;
@@ -404,6 +458,12 @@ const injectedRtkApi = api.injectEndpoints({
     CreateUser: build.mutation<CreateUserMutation, CreateUserMutationVariables>({
       query: (variables) => ({ document: CreateUserDocument, variables })
     }),
+    ForgotPassword: build.mutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>({
+      query: (variables) => ({ document: ForgotPasswordDocument, variables })
+    }),
+    RecoverPassword: build.mutation<RecoverPasswordMutation, RecoverPasswordMutationVariables>({
+      query: (variables) => ({ document: RecoverPasswordDocument, variables })
+    }),
     CreateBuilds: build.mutation<CreateBuildsMutation, CreateBuildsMutationVariables>({
       query: (variables) => ({ document: CreateBuildsDocument, variables })
     }),
@@ -423,5 +483,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useLoginMutation, useCreateUserMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useDeleteBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
+export const { useLoginMutation, useCreateUserMutation, useForgotPasswordMutation, useRecoverPasswordMutation, useCreateBuildsMutation, useUpdateBuildsMutation, useDeleteBuildsMutation, useGetBuildsQuery, useLazyGetBuildsQuery, useGetBuildByIdQuery, useLazyGetBuildByIdQuery } = injectedRtkApi;
 
